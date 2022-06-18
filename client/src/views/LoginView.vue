@@ -4,7 +4,7 @@
         <a-form layout="vertical" :model="formState" name="normal_login" class="login-form" @finish="onFinish"
             @finishFailed="onFinishFailed">
             <a-form-item label="Email" name="email"
-                :rules="[{ required: true, message: 'Please input your email!', type: 'email' }]">
+                :rules="[{ required: true, message: 'Please enter your email!', type: 'email' }]">
                 <a-input v-model:value="formState.email">
                     <template #prefix>
                         <UserOutlined class="site-form-item-icon" />
@@ -13,7 +13,7 @@
             </a-form-item>
 
             <a-form-item label="Password" name="password"
-                :rules="[{ required: true, message: 'Please input your password![min 6 characters required.]', min: 6 }]">
+                :rules="[{ required: true, message: 'Please enter your password![min 6 characters required.]', min: 6 }]">
                 <a-input-password v-model:value="formState.password">
                     <template #prefix>
                         <LockOutlined class="site-form-item-icon" />
@@ -25,7 +25,7 @@
                 <a-form-item name="remember" no-style>
                     <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
                 </a-form-item>
-                <a class="login-form-forgot" href="">Forgot password</a>
+                <a class="login-form-forgot" href="">Forgot password?</a>
             </div>
 
             <a-form-item>
@@ -35,7 +35,7 @@
             </a-form-item>
             <a-form-item>
                 <a-button type="primary" class="login-form-button" ghost>
-                    <a href="">Register now!</a>
+                    <a href="/SignUp">Register now!</a>
                 </a-button>
             </a-form-item>
 
