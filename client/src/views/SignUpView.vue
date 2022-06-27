@@ -54,6 +54,22 @@
     </a-form-item>
 
     <a-form-item
+    v-if="formState.role==='mentor'"
+      label="Skills"
+      name="skills"
+      :rules="[{ required: true, type:'array'}]"
+    >
+      <a-select
+      v-model:value="formState.skills"
+      mode="tags"
+      style="width: 100%"
+      placeholder="Enter or Select Skills"
+      :options="options"
+      >
+      </a-select>
+    </a-form-item>
+
+    <a-form-item
       label="Interests"
       name="interests"
       :rules="[{ required: true, type:'array'}]"
@@ -64,7 +80,6 @@
       style="width: 100%"
       placeholder="Enter or Select Interests"
       :options="options"
-      @change="handleChange"
       >
       </a-select>
     </a-form-item>
@@ -89,7 +104,6 @@
       label="Password"
       name="password"
       has-feedback  
-      :rules="[{ required: true, message: 'Please check your password!' },{min: 6, message:'Minimum 6 characters'}]"
     >
       <a-input-password v-model:value="formState.password" placeholder="Enter a strong password" />
     </a-form-item>
@@ -140,6 +154,7 @@ interface FormState {
   password: string;
   confirmPassword: string;
   agreement: boolean;
+  skills:{},
   interests:{},
 }
 export default defineComponent({
@@ -151,6 +166,7 @@ export default defineComponent({
       contact: undefined,
       role: 'Please select account type',
       email: '',
+      skills:[],
       interests:[],
       password: '',
       confirmPassword: '',
@@ -167,7 +183,7 @@ export default defineComponent({
     
     let validatePass = async (_rule: Rule, value: string) => {
       if (value === '') {
-        return Promise.reject('Please input the password again');
+        return Promise.reject('Please Retype password ');
       } else if (value !== formState.password) {
         return Promise.reject("Passwords does not match!");
       } else {
@@ -176,7 +192,7 @@ export default defineComponent({
     };
 
     const rules: Record<string, Rule[]> = {
-      password: [{ required: true, message: 'Please confirm your password!', trigger: 'change' }],
+      password: [{ required: true, message: 'Please enter your password!', trigger: 'change' },{min: 6, message:'Minimum 6 characters'}],
       confirmPassword: [{ required: true, validator: validatePass, trigger: 'change' }],
     };
 
@@ -184,9 +200,9 @@ export default defineComponent({
       return !(formState.email && formState.password !== '' && formState.password === formState.confirmPassword && formState.agreement);
     });
 
-    const handleChange = (value: string) => {
-      console.log(`selected ${value}`);
-    };
+    // const handleChange = (value: string) => {
+    //   console.log(`selected ${value}`);
+    // };
 
     const onFinish = (values: any) => {
       console.log('Success:', values);
@@ -200,8 +216,8 @@ export default defineComponent({
       validateMessages,
       disabled,
       rules,
-      handleChange,
-      options: [...Array(26)].map((_, i) => ({ value: (i + 10).toString(36) + (i + 1) })),
+      // handleChange,
+      options: [...Array(5)].map((_, i) => ({ value: (i + 10).toString(36) + (i + 1) })),
       onFinish,
       onFinishFailed,
     };
@@ -212,7 +228,7 @@ export default defineComponent({
 <style scoped>
 @media screen and (min-width: 640px) {
     .signup-view {
-        width: 70%;
+        width: 45%;
     }
 }
 
@@ -229,15 +245,11 @@ export default defineComponent({
 .ant-form{
   align-content: center;
 }
-.ant-input-password{
+.ant-input,
+.ant-input-password,
+.ant-select
+{
   border-radius: 5px;
-}
-.ant-input{
-  border-radius: 5px;
-}
-.ant-select{
-  border-radius: 5px  ;
   width: 100%;
 }
-
 </style>
