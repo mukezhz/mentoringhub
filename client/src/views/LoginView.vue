@@ -30,7 +30,7 @@
 
             <a-form-item>
                 <a-button type="primary"  block :disabled="disabled" html-type="submit" class="login-form-button">
-                    Log in
+                    SIGN In
                 </a-button>
             </a-form-item>
             <a-form-item>

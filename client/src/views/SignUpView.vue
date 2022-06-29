@@ -1,9 +1,9 @@
 <template>
 <div class="signup-view">
-  <div align="center">
-    <a-typography-title :level="2">Sign Up</a-typography-title>
-    <a-typography-text>Create a new account for free.</a-typography-text>
-  </div>
+    <div align="center">
+        <a-typography-title :level="2">Sign Up</a-typography-title>
+        <a-typography-text>Create a new account for free.</a-typography-text>
+    </div>
   <a-divider></a-divider>
   <a-form
     name="registration"
@@ -123,7 +123,7 @@
     </a-form-item>
 
     <a-form-item :wrapper-col="{ offset: 6 , span: 16 }">
-      <a-button :disabled="disabled" block shape="round" type="primary" html-type="submit" class="login-form-button">Create Account</a-button>
+      <a-button :disabled="disabled" block shape="round" type="primary" html-type="submit" class="login-form-button">SIGN UP</a-button>
     </a-form-item>
     
   <a-form-item :wrapper-col="{ offset: 6 , span: 16 }">
@@ -238,7 +238,6 @@ export default defineComponent({
     }
 }
 .signup-view {
-    /* width: 30%; */
     margin: 8vh auto;
     padding-bottom: 20px;
 }
