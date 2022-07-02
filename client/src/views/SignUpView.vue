@@ -116,9 +116,11 @@
   <div class="text-center">
     <a-typography-text>Already have an account? </a-typography-text>
   </div>
+  <router-link to="/login" >
   <a-button type="default" block shape="round" class="login-form-button">
-    <router-link to="/login" >Sign In</router-link>
+    Sign In
   </a-button>
+  </router-link>
   </a-form-item>
   </a-form>
   
