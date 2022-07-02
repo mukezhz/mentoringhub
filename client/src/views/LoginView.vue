@@ -4,7 +4,7 @@
         <a-form layout="vertical" :model="formState" name="normal_login" class="login-form" @finish="onFinish"
             @finishFailed="onFinishFailed">
             <a-form-item label="Email" name="email"
-                :rules="[{ required: true, message: 'Please input your email!', type: 'email' }]">
+                :rules="[{ required: true, message: 'Please enter your email!', type: 'email' }]">
                 <a-input v-model:value="formState.email">
                     <template #prefix>
                         <UserOutlined class="site-form-item-icon" />
@@ -13,7 +13,7 @@
             </a-form-item>
 
             <a-form-item label="Password" name="password"
-                :rules="[{ required: true, message: 'Please input your password![min 6 characters required.]', min: 6 }]">
+                :rules="[{ required: true, message: 'Please enter your password!', min: 6 }]">
                 <a-input-password v-model:value="formState.password">
                     <template #prefix>
                         <LockOutlined class="site-form-item-icon" />
@@ -25,17 +25,17 @@
                 <a-form-item name="remember" no-style>
                     <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
                 </a-form-item>
-                <a class="login-form-forgot" href="">Forgot password</a>
+                <a class="login-form-forgot" href="/resetpassword">Forgot password?</a>
             </div>
 
             <a-form-item>
-                <a-button type="primary" html-type="submit" class="login-form-button">
+                <a-button type="primary"  block :disabled="disabled" html-type="submit" class="login-form-button">
                     Log in
                 </a-button>
             </a-form-item>
             <a-form-item>
-                <a-button type="primary" class="login-form-button" ghost>
-                    <a href="">Register now!</a>
+                <a-button type="primary" block class="login-form-button" ghost>
+                    <a href="/sign-up">Register now!</a>
                 </a-button>
             </a-form-item>
 
@@ -111,10 +111,6 @@ export default defineComponent({
 
 #components-form-demo-normal-login .login-form-forgot {
     margin-bottom: 24px;
-}
-
-.login-form-button {
-    width: 100%;
 }
 
 .ant-col label,
