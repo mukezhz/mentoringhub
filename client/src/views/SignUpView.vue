@@ -174,7 +174,7 @@ export default defineComponent({
     });
 
     const validateMessages = {
-      required: '${label} is required!',
+      required: '${label} is a required field!',
       types: {
         email: '${label} is not a valid email!',
         number: '${label} is not a valid number!',
