@@ -1,56 +1,61 @@
 <template>
   <a-layout style="min-height: 100vh">
-    <a-layout-sider v-model:collapsed="collapsed" collapsible>
+    <a-layout-sider collapsible>
       <div class="logo" />
-      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-        <a-menu-item key="1">
-          <pie-chart-outlined />
-          <span>Option 1</span>
-        </a-menu-item>
-        <a-menu-item key="2">
-          <desktop-outlined />
-          <span>Option 2</span>
-        </a-menu-item>
-        <a-sub-menu key="sub1">
-          <template #title>
-            <span>
-              <user-outlined />
-              <span>User</span>
-            </span>
-          </template>
-          <a-menu-item key="3">Tom</a-menu-item>
-          <a-menu-item key="4">Bill</a-menu-item>
-          <a-menu-item key="5">Alex</a-menu-item>
-        </a-sub-menu>
-        <a-sub-menu key="sub2">
-          <template #title>
-            <span>
-              <team-outlined />
-              <span>Team</span>
-            </span>
-          </template>
-          <a-menu-item key="6">Team 1</a-menu-item>
-          <a-menu-item key="8">Team 2</a-menu-item>
-        </a-sub-menu>
-        <a-menu-item key="9">
-          <file-outlined />
-          <span>File</span>
-        </a-menu-item>
+      <a-menu theme="dark" mode="inline">
+        <router-link to="dashboard">
+          <a-menu-item key="1">
+            <pie-chart-outlined />
+            <span> Home</span>
+          </a-menu-item>
+        </router-link>
+
+        <router-link to="mentor">
+          <a-menu-item key="2">
+            <smile-outlined />
+            <span> Mentors</span>
+          </a-menu-item>
+        </router-link>
+
+        <router-link to="room">
+          <a-menu-item key="3">
+            <file-outlined />
+            <span> Room</span>
+          </a-menu-item>
+        </router-link>
+
+        <router-link to="application">
+          <a-menu-item key="4">
+            <desktop-outlined />
+            <span> Application</span>
+          </a-menu-item>
+        </router-link>
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header style="background: #fff; padding: 0" />
+      <a-layout-header style="padding: 0 ">
+        <a-menu>
+          <a-row justify="space-between">
+            <a-col flex="100px">Icon</a-col>
+            <!-- <a-col flex="auto">auto</a-col> -->
+            <a-sub-menu key="sub1">
+              <template #icon>
+                <NotificationOutlined />
+              </template>
+              <template #title flex="auto">Notification</template>
+              <a-menu-item key="5">This is notification 1.</a-menu-item>
+              <a-menu-item key="6">This is notification 2.</a-menu-item>
+            </a-sub-menu>
+          </a-row>
+        </a-menu>
+
+      </a-layout-header>
+
       <a-layout-content style="margin: 0 16px">
-        <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>User</a-breadcrumb-item>
-          <a-breadcrumb-item>Bill</a-breadcrumb-item>
-        </a-breadcrumb>
-        <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-          Bill is a cat.
-        </div>
+        <RouterView />
       </a-layout-content>
       <a-layout-footer style="text-align: center">
-        Ant Design ©2018 Created by Ant UED
+        Mentoring Hub &copy; 2022
       </a-layout-footer>
     </a-layout>
   </a-layout>
@@ -60,17 +65,23 @@ import {
   PieChartOutlined,
   DesktopOutlined,
   UserOutlined,
+  SmileOutlined,
   TeamOutlined,
   FileOutlined,
+  NotificationOutlined
 } from '@ant-design/icons-vue';
+import { Col, Row } from 'ant-design-vue'
 import { defineComponent, ref } from 'vue';
+import { RouterView, RouterLink } from 'vue-router';
 export default defineComponent({
   components: {
     PieChartOutlined,
     DesktopOutlined,
+    SmileOutlined,
     UserOutlined,
     TeamOutlined,
     FileOutlined,
+    NotificationOutlined
   },
   data() {
     return {
@@ -94,4 +105,8 @@ export default defineComponent({
 [data-theme='dark'] .site-layout .site-layout-background {
   background: #141414;
 }
+</style>
+
+<style scoped>
+
 </style>
