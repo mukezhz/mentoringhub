@@ -39,6 +39,8 @@ LIBRARY_APPS = [
 ]
 USER_APPS = [
     "users.apps.UsersConfig",
+    "meetings.apps.MeetingsConfig",
+    # "mentorships.apps.MentorshipsConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + LIBRARY_APPS + USER_APPS
 
@@ -128,6 +130,8 @@ STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIR = [
     BASE_DIR / "static",
 ]
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "uploads"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

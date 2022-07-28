@@ -2,8 +2,18 @@
 from django.contrib import admin
 from .models import CustomUser, UserProfile, UserInterest, UserSkill
 
-# Register your models here. admin.site.register(CustomUser)
-admin.site.register(CustomUser)
-admin.site.register(UserProfile)
-admin.site.register(UserInterest)
-admin.site.register(UserSkill)
+@admin.register(CustomUser)
+class CustomUserAdminModel(admin.ModelAdmin):
+    pass
+
+@admin.register(UserProfile)
+class UserProfileAdminModel(admin.ModelAdmin):
+    pass
+
+@admin.register(UserInterest)
+class UserInterestAdminModel(admin.ModelAdmin):
+    pass
+
+@admin.register(UserSkill)
+class UserSkillAdminModel(admin.ModelAdmin):
+    pass
