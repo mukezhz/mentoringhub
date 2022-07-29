@@ -35,7 +35,7 @@
             </a-form-item>
             <a-form-item>
                 <a-button type="primary" block class="login-form-button" ghost>
-                    <a href="/sign-up">Register now!</a>
+                    <a href="/signup">Register now!</a>
                 </a-button>
             </a-form-item>
 

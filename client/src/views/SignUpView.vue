@@ -143,6 +143,7 @@
 
 
 <script lang="ts">
+import { auth } from "../utils/auth"
 import { defineComponent, reactive, computed, ref } from 'vue';
 import type { Rule } from 'ant-design-vue/es/form'; 
 
@@ -206,9 +207,22 @@ export default defineComponent({
     //   console.log(`selected ${value}`);
     // };
 
-    const onFinish = (values: any) => {
-      console.log('Success:', values);
-    };
+    const onFinish = async (values: { email: string, password: string, confirmPassword: string}) => {
+            const { email, password, confirmPassword} = values
+            // TODO: if remember is true need to set email and password saved to cached or in localStorage
+            try {
+                const res = await auth.register(email, password, confirmPassword)
+                const { data } = await res.json()
+                const { errors, success, token } = data.tokenAuth
+                if (success) {
+                    localStorage.setItem('token', token)
+                }
+                console.log(errors);
+            } catch (e) {
+                console.log(e);
+            }
+
+        };
 
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
