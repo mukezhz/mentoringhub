@@ -37,6 +37,7 @@ LIBRARY_APPS = [
     "django_filters",
     "django_countries",
     "corsheaders",
+    "anymail",
 ]
 USER_APPS = [
     "users.apps.UsersConfig",
@@ -172,11 +173,19 @@ GRAPHQL_JWT = {
 # EMAIL_HOST = os.getenv("EMAIL_HOST")
 # EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 # EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_TIMEOUT = 5000
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 5000
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
+ANYMAIL = {
+    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY"),
+    "MAILGUN_API_URL": os.getenv("MAILGUN_API_URL"),
+    "MAILGUN_SENDER_DOMAIN": os.getenv("MAILGUN_SENDER_DOMAIN"),
+}
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+SERVER_EMAIL = os.getenv("SERVER_EMAIL")
+EMAIL_BACKEND = "anymail.backends.console.EmailBackend"
 
 AUTH_USER_MODEL = "users.CustomUser"
 

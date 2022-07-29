@@ -30,6 +30,7 @@ class UserProfile(models.Model):
     GENDER_OTHER = "other"
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=256, blank=False, null=False)
     date_of_birth = models.DateField(
         verbose_name="Date of birth", blank=True, null=True
     )

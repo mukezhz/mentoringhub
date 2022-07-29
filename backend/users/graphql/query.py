@@ -16,10 +16,12 @@ class UserProfileQuery(ObjectType):
     def resolve_user_profiles(root, info, **kwargs):
         return UserProfile.objects.all()
 
+
 class UserProfileOneQuery(ObjectType):
     """
     quer user profile for a single user
     """
+
     user_profile = Field(UserProfile)
 
     @login_required
@@ -47,6 +49,7 @@ class UserInterestOneQuery(ObjectType):
     """
     quer user profile for a single user
     """
+
     user_interest = Field(UserProfile)
 
     @login_required
@@ -54,9 +57,11 @@ class UserInterestOneQuery(ObjectType):
         user = info.context.user
         try:
             profile = UserProfile.objects.get(user=user)
-            return profile
+            interest = UserInterest.objects.get(userprofile=profile)
+            return interest
         except UserProfile.DoesNotExist:
             return None
+
 
 class UserSkillQuery(ObjectType):
     """
@@ -67,3 +72,21 @@ class UserSkillQuery(ObjectType):
 
     def resolve_user_skills(root, info, **kwargs):
         return UserSkill.objects.all()
+
+
+class UserSkillOneQuery(ObjectType):
+    """
+    query user skill for a single user
+    """
+
+    user_skill = Field(UserProfile)
+
+    @login_required
+    def resolve_user_skill(root, info, **kwargs):
+        user = info.context.user
+        try:
+            profile = UserProfile.objects.get(user=user)
+            skill = UserSkill.objects.get(userprofile=profile)
+            return skill
+        except UserProfile.DoesNotExist:
+            return None
