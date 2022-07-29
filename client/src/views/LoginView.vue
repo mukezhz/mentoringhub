@@ -29,7 +29,7 @@
             </div>
 
             <a-form-item>
-                <a-button type="primary"  block :disabled="disabled" html-type="submit" class="login-form-button">
+                <a-button type="primary" html-type="submit" class="login-form-button" :disabled="disabled">
                     Log in
                 </a-button>
             </a-form-item>
@@ -43,6 +43,7 @@
     </div>
 </template>
 <script lang="ts">
+import { auth } from "../utils/auth"
 import { defineComponent, reactive, computed } from 'vue';
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
 interface FormState {
@@ -61,15 +62,28 @@ export default defineComponent({
             password: '',
             remember: true,
         });
-        const onFinish = (values: any) => {
-            console.log('Success:', values);
+        const onFinish = async (values: { email: string, password: string, remember: string }) => {
+            const { email, password, remember } = values
+            // TODO: if remember is true need to set email and password saved to cached or in localStorage
+            try {
+                const res = await auth.login(email, password)
+                const { data } = await res.json()
+                const { errors, success, token } = data.tokenAuth
+                if (success) {
+                    localStorage.setItem('token', token)
+                }
+                console.log(errors);
+            } catch (e) {
+                console.log(e);
+            }
+
         };
 
         const onFinishFailed = (errorInfo: any) => {
             console.log('Failed:', errorInfo);
         };
         const disabled = computed(() => {
-            return !(formState.email && formState.password);
+            return !(formState.email && formState.password.length >= 6);
         });
         return {
             formState,
