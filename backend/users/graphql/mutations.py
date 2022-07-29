@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from graphene import ObjectType, Mutation, Boolean, JSONString, String, DateTime
 from graphql_auth import mutations
+from graphql_jwt.decorators import login_required
 
 # from .types import CustomUserType
 from ..models import UserProfile, UserInterest, UserSkill
@@ -50,7 +51,7 @@ class CreateUserProfile(Mutation):
     success = Boolean()
     msg = String()
     # custom_user = Field(CustomUserType)
-
+    @login_required
     def mutate(root, info, **kwargs):
         # if info.context.user is not
         try:
@@ -80,7 +81,8 @@ class CreateUserProfile(Mutation):
             return CreateUserProfile(success=False, msg="Object doesn't exist")
         except PermissionDenied:
             return CreateUserProfile(success=False, msg="User is not authenticated")
-        except Exception:
+        except Exception as e:
+            print("askdjfasdjkfh asdkj")
             return CreateUserProfile(success=False, msg="Other error")
 
 
@@ -92,6 +94,7 @@ class CreateInterest(Mutation):
     success = String()
     msg = String()
 
+    @login_required
     def mutate(root, info, **kwargs):
         try:
             if not info.context.user.is_authenticated:
@@ -112,6 +115,7 @@ class CreateInterest(Mutation):
         except Exception:
             return CreateInterest(success=False, msg="Some unknown error")
 
+
 class CreateSkill(Mutation):
     class Arguments:
         domain = String()
@@ -120,6 +124,7 @@ class CreateSkill(Mutation):
     success = String()
     msg = String()
 
+    @login_required
     def mutate(root, info, **kwargs):
         try:
             if not info.context.user.is_authenticated:
