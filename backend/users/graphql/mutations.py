@@ -47,6 +47,7 @@ class CreateUserProfile(Mutation):
         mobile_phone = String(required=False)
         role = String(required=True)
         profession = String(required=True)
+        full_name = String(required=True)
 
     success = Boolean()
     msg = String()
@@ -60,6 +61,7 @@ class CreateUserProfile(Mutation):
             user = info.context.user
             date_of_birth = kwargs.get("date_of_birth")
             address = kwargs.get("address")
+            full_name = kwargs.get("full_name")
             city = kwargs.get("city")
             country = kwargs.get("country")
             gender = kwargs.get("gender")
@@ -75,6 +77,7 @@ class CreateUserProfile(Mutation):
             u.mobile_phone = mobile_phone
             u.role = role
             u.profession = profession
+            u.full_name = full_name
             u.save()
             return CreateUserProfile(success=True, msg="Profile Created")
         except ObjectDoesNotExist:
