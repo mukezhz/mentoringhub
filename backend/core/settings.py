@@ -36,6 +36,7 @@ LIBRARY_APPS = [
     "graphql_auth",
     "django_filters",
     "django_countries",
+    "corsheaders",
 ]
 USER_APPS = [
     "users.apps.UsersConfig",
@@ -47,12 +48,15 @@ INSTALLED_APPS = DJANGO_APPS + LIBRARY_APPS + USER_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = "core.urls"
 
