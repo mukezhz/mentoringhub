@@ -37,7 +37,7 @@ export const router = createRouter({
     },
     {
       path: "/sign-up",
-      name: "Sign-Up",
+      name: "signup",
       component: () => import("../views/SignUpView.vue"),
       meta: {
         requiresAuth: false,
