@@ -213,9 +213,10 @@ export default defineComponent({
             try {
                 const res = await auth.register(email, password, confirmPassword)
                 const { data } = await res.json()
-                const { errors, success, token } = data.tokenAuth
+                const { errors, success, token, refreshToken } = data.register
                 if (success) {
                     localStorage.setItem('token', token)
+                    localStorage.setItem('refreshToken', refreshToken)
                 }
                 console.log(errors);
             } catch (e) {

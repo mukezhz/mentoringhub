@@ -92,5 +92,6 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
   // token needs to be verified by the server
   if ((!token || !token.length) && to.meta.requiresAuth) next("/login");
+  if ((token || token?.length) && to.name === "login") next("/dashboard");
   next();
 });

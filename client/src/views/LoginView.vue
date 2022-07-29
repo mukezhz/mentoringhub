@@ -34,11 +34,13 @@
         <a class="login-form-forgot" href="/resetpassword">Forgot password?</a>
       </div>
 
+
       <a-form-item>
         <a-button type="primary" html-type="submit" class="login-form-button" :disabled="disabled">
           Log in
         </a-button>
       </a-form-item>
+
       <a-form-item>
         <a-button type="primary" block class="login-form-button" ghost>
           <a href="/signup">Register now!</a>
@@ -50,9 +52,11 @@
 </template>
 <script lang="ts">
 import { auth } from "../utils/auth";
+import { message } from 'ant-design-vue';
 import { defineComponent, reactive, computed } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+// import { Toast } from 'vuex-toast'
 interface FormState {
   email: string;
   password: string;
@@ -64,7 +68,9 @@ export default defineComponent({
     LockOutlined,
     RouterLink,
   },
+
   setup() {
+    const router = useRouter()
     const formState = reactive<FormState>({
       email: "",
       password: "",
@@ -81,10 +87,22 @@ export default defineComponent({
         const res = await auth.login(email, password);
         const { data } = await res.json();
         const { errors, success, token } = data.tokenAuth;
+        console.log(errors)
+        for (const i in errors) {
+          for (const j of errors[i]) {
+            message.error(j.message)
+          }
+        }
         if (success) {
           localStorage.setItem("token", token);
+          message.success('Login Successful!');
+          router.push({
+            name: 'dashboard'
+          })
         }
-        console.log(errors);
+        // if (errors.length) {
+        //   error("errors")
+        // }
       } catch (e) {
         console.log(e);
       }
