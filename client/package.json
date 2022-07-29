@@ -10,10 +10,14 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@dafcoe/vue-notification": "^0.1.6",
     "ant-design-vue": "^3.2.6",
+    "axios": "^0.27.2",
     "pinia": "^2.0.14",
     "vue": "^3.2.36",
-    "vue-router": "^4.0.15"
+    "vue-axios": "^3.4.1",
+    "vue-router": "^4.0.15",
+    "vue-toasted": "^1.1.28"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
