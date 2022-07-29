@@ -1,6 +1,5 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, routerKey } from "vue-router";
 import LandingView from "../views/LandingView.vue";
-import LoginView from "../views/LoginView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import MentorView from "@/views/MentorView.vue";
 import RoomView from "@/views/RoomView.vue";
@@ -13,6 +12,9 @@ export const router = createRouter({
       path: "/",
       name: "home",
       component: LandingView,
+      meta: {
+        requiresAuth: false,
+      },
     },
     {
       path: "/about",
@@ -21,6 +23,9 @@ export const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/AboutView.vue"),
+      meta: {
+        requiresAuth: false,
+      },
     },
     {
       path: "/login",
@@ -34,6 +39,9 @@ export const router = createRouter({
       path: "/signup",
       name: "signup",
       component: () => import("../views/SignUpView.vue"),
+      meta: {
+        requiresAuth: false,
+      },
     },
     {
       path: "/landing",
@@ -42,11 +50,17 @@ export const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/LandingView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/dashboard",
       name: "dashboard",
       component: () => import("../layouts/Default.vue"),
+      meta: {
+        requiresAuth: true,
+      },
       children: [
         {
           path: "/dashboard",
@@ -67,10 +81,16 @@ export const router = createRouter({
           path: "/application",
           name: "application",
           component: ApplicationView,
-        } 
+        },
       ],
     },
   ],
 });
 
 // export default router
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("token");
+  // token needs to be verified by the server
+  if ((!token || !token.length) && to.meta.requiresAuth) next("/login");
+  next();
+});
