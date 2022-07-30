@@ -11,7 +11,7 @@
                 <a-col :xs="20" :sm="16" :md="16" :lg="12" :xl="6" style="margin: 0 auto">
                     <a-card hoverable style="padding: 1rem; margin: 1rem;">
                         <template #cover>
-                            <img alt="mentor" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />
+                            <img alt="mentor" src="https://www.insidehimalayas.com/wp-content/uploads/2017/11/Nepali-Man-Patan-Durbar-Square-1_edit.jpg" />
                         </template>
                         <a-card title="mentor" :bordered="false"></a-card>
                         <!-- <a-tag color="purple" v-for="(skill, index) in mentor.skills" :key="index"> {{ skill }} -->
