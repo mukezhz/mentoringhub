@@ -31,7 +31,7 @@
         <a-form-item name="remember" no-style>
           <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
         </a-form-item>
-        <a class="login-form-forgot" href="/resetpassword">Forgot password?</a>
+        <router-link to="/resetpassword" class="login-form-forgot">Forgot Password?</router-link>
       </div>
 
       <a-form-item>
@@ -40,9 +40,11 @@
         </a-button>
       </a-form-item>
       <a-form-item>
-        <a-button type="primary" block class="login-form-button" ghost>
-          <a href="/signup">Register now!</a>
+      <router-link to="/signup" >
+        <a-button type="primary" block ghost class="login-form-button">
+          Register Now!
         </a-button>
+      </router-link>
       </a-form-item>
 
     </a-form>
