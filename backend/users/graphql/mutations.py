@@ -1,5 +1,6 @@
+from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
-from graphene import ObjectType, Mutation, Boolean, JSONString, String, DateTime
+from graphene import ObjectType, Mutation, Boolean, JSONString, String
 from graphql_auth import mutations
 from graphql_jwt.decorators import login_required
 
@@ -39,7 +40,7 @@ class CreateUserProfile(Mutation):
     """Mutation for UserProfile."""
 
     class Arguments:
-        date_of_birth = DateTime(required=False)
+        date_of_birth = String(required=False)
         address = String(required=False)
         city = String(required=False)
         country = String(required=False)
@@ -52,7 +53,7 @@ class CreateUserProfile(Mutation):
     success = Boolean()
     msg = String()
     # custom_user = Field(CustomUserType)
-    @login_required
+    # @login_required
     def mutate(root, info, **kwargs):
         # if info.context.user is not
         try:
@@ -69,7 +70,8 @@ class CreateUserProfile(Mutation):
             role = kwargs.get("role")
             profession = kwargs.get("profession")
             u, _ = UserProfile.objects.get_or_create(user=user)
-            u.date_of_birth = date_of_birth
+            print("hello world", datetime.fromtimestamp(int(date_of_birth) / 1000))
+            u.date_of_birth = datetime.fromtimestamp(int(date_of_birth) / 1000)
             u.address = address
             u.city = city
             u.country = country
@@ -85,7 +87,7 @@ class CreateUserProfile(Mutation):
         except PermissionDenied:
             return CreateUserProfile(success=False, msg="User is not authenticated")
         except Exception as e:
-            print("askdjfasdjkfh asdkj")
+            print(e)
             return CreateUserProfile(success=False, msg="Other error")
 
 
@@ -149,7 +151,37 @@ class CreateSkill(Mutation):
             return CreateSkill(success=False, msg="Some unknown error")
 
 
+class UpdateRole(Mutation):
+    class Arguments:
+        role = String()
+
+    success = String()
+    msg = String()
+
+    # @login_required
+    def mutate(root, info, **kwargs):
+        try:
+            if not info.context.user.is_authenticated:
+                raise PermissionDenied
+            user = info.context.user
+            role = kwargs.get("role")
+            existing_role = user.userprofile.role
+            if role == existing_role:
+                return UpdateRole(
+                    success=False, msg="Didn't update role already exists"
+                )
+            user.userprofile.role = role
+            user.userprofile.save()
+            return UpdateRole(success=True, msg="Role has been updated successfully")
+
+        except PermissionDenied:
+            return UpdateRole(success=False, msg="User doesn't have permission")
+        except Exception:
+            return UpdateRole(success=False, msg="Some unknown error")
+
+
 class UserProfileMutation(ObjectType):
     create_user_profile = CreateUserProfile.Field()
     create_user_interest = CreateInterest.Field()
     create_user_skill = CreateSkill.Field()
+    update_user_role = UpdateRole.Field()
