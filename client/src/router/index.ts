@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, routerKey } from "vue-router";
+import PageNotFound from '../views/404.vue'
 import LandingView from "../views/LandingView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import MentorView from "@/views/MentorView.vue";
@@ -8,6 +9,15 @@ import ApplicationView from "../views/ApplicationView.vue";
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      // will match everything
+      path: '/:pathMatch(.*)*',
+      name: 'Error Page',
+      component: PageNotFound,
+      meta: {
+        requiresAuth: false,
+      },
+    },
     {
       path: "/",
       name: "home",

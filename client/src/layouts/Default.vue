@@ -1,40 +1,41 @@
 <template>
-  <a-layout style="min-height: 100vh">
-    <a-layout-sider collapsible>
+  <a-layout has-slider style="min-height: 100vh">
+    <a-layout-sider collapsible >
       <div class="logo" />
       <a-menu theme="dark" mode="inline">
         <router-link to="dashboard">
           <a-menu-item key="1">
             <pie-chart-outlined />
-            <span> Home</span>
+            <span>Home</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="mentor">
           <a-menu-item key="2">
             <smile-outlined />
-            <span> Mentors</span>
+            <span>Mentors</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="room">
           <a-menu-item key="3">
             <file-outlined />
-            <span> Room</span>
+            <span>Room</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="application">
           <a-menu-item key="4">
             <desktop-outlined />
-            <span> Application</span>
+            <span>Applications</span>
           </a-menu-item>
         </router-link>
       </a-menu>
     </a-layout-sider>
+
     <a-layout>
       <a-layout-header style="padding: 0 ">
-        <a-menu>
+        <a-menu theme="dark">
           <a-row justify="space-between">
             <a-col flex="100px">Icon</a-col>
             <!-- <a-col flex="auto">auto</a-col> -->
@@ -42,7 +43,7 @@
               <template #icon>
                 <NotificationOutlined />
               </template>
-              <template #title flex="auto">Notification</template>
+              <template #title flex="auto">Notifications  </template>
               <a-menu-item key="5">This is notification 1.</a-menu-item>
               <a-menu-item key="6">This is notification 2.</a-menu-item>
             </a-sub-menu>
@@ -51,7 +52,8 @@
 
       </a-layout-header>
 
-      <a-layout-content style="margin: 0 16px">
+      <a-layout-content style="margin: 10px 16px">
+
         <RouterView />
       </a-layout-content>
       <a-layout-footer style="text-align: center">
