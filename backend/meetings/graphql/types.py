@@ -5,4 +5,4 @@ from ..models import Meeting
 class MeetingType(DjangoObjectType):
     class Meta:
         model = Meeting
-        fields = '__all__'
+        fields = "__all__"
