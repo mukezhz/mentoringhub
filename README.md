@@ -40,6 +40,7 @@ docker run -dit \
 - Install the poetry
 ```
 $ cd backend
+$ cp .env_sample .env
 $ pip install poetry
 $ poetry install
 $ cd ..
@@ -51,6 +52,7 @@ $ make backend
 - Install the npm
 ```
 $ cd webrtc
+$ cp .env_sample .env
 $ npm install
 $ cd ..
 $ make webrtc
