@@ -16,6 +16,9 @@
         <a-menu-item key="5">
           <router-link :to="{ name: 'login' }">Login</router-link>
         </a-menu-item>
+        <a-menu-item key="6">
+          <router-link :to="{ name: 'premeet' }">Pre Meet</router-link>
+        </a-menu-item>
       </a-menu>
     </a-layout-header>
 
