@@ -41,24 +41,9 @@
             </a-form-item>
             <a-form-item>
                 <a-button type="primary" block class="login-form-button" ghost>
-                    <a href="/sign-up">Register now!</a>
+                    <a href="/signup">Register now!</a>
                 </a-button>
             </a-form-item>
-
-      <a-form-item>
-        <a-button type="primary" html-type="submit" class="login-form-button" :disabled="disabled">
-          Log in
-        </a-button>
-      </a-form-item>
-
-      <a-form-item>
-      <router-link to="/signup" >
-        <a-button type="primary" block ghost class="login-form-button">
-          Register Now!
-        </a-button>
-      </router-link>
-      </a-form-item>
-
     </a-form>
   </div>
 </template>
