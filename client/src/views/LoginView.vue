@@ -34,6 +34,16 @@
         <router-link to="/resetpassword" class="login-form-forgot">Forgot Password?</router-link>
       </div>
 
+            <a-form-item>
+                <a-button type="primary" html-type="submit" class="login-form-button" :disabled="disabled">
+                    Log in
+                </a-button>
+            </a-form-item>
+            <a-form-item>
+                <a-button type="primary" block class="login-form-button" ghost>
+                    <a href="/sign-up">Register now!</a>
+                </a-button>
+            </a-form-item>
 
       <a-form-item>
         <a-button type="primary" html-type="submit" class="login-form-button" :disabled="disabled">
