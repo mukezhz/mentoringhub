@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory, routerKey } from "vue-router";
-import PageNotFound from '../views/404.vue'
-import LandingView from "../views/LandingView.vue";
+import PageNotFound from '@/views/404.vue'
+import LandingView from "@/views/LandingView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import MentorView from "@/views/MentorView.vue";
 import RoomView from "@/views/RoomView.vue";
-import ApplicationView from "../views/ApplicationView.vue";
+import ApplicationView from "@/views/ApplicationView.vue";
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -93,6 +93,16 @@ export const router = createRouter({
           component: ApplicationView,
         },
       ],
+    },
+    {
+      path: "/premeet",
+      name: "premeet",
+      component: () => import("../views/PreMeetView.vue"),
+    },
+    {
+      path: "/meet",
+      name: "meet",
+      component: () => import("../views/MeetView.vue"),
     },
   ],
 });

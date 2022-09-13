@@ -13,6 +13,7 @@
     "@dafcoe/vue-notification": "^0.1.6",
     "ant-design-vue": "^3.2.6",
     "axios": "^0.27.2",
+    "livekit-client": "^1.3.1",
     "pinia": "^2.0.14",
     "vue": "^3.2.36",
     "vue-axios": "^3.4.1",
