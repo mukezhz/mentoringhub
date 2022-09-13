@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Meeting {
+  id                   String        @id @default(uuid())
+  room                 String        @unique
+  title                String
+  description          String?
+  participants         Json          @default("{}")
+  start_date           BigInt        @default(0)
+  status               StatusMeeting @default(NEW)
+  cover_image          String?
+  app_id               String
+  country              String
+  waiting_room_enabled Boolean       @default(true)
+  created_at           BigInt        @default(0)
+  updated_at           BigInt        @default(0)
+  token                String?       @default("")
+  metadata             String?
+  webhook_url          String?       @default("")
+
+  JoinCode JoinCode[]
+  Waiting  Waiting[]
+
+  @@index([start_date], type: BTree)
+  @@map(name: "meetings")
+}
+
+enum StatusMeeting {
+  NEW
+  CANCELED
+  ENDED
+}
+
+model JoinCode {
+  meeting_id  String
+  Meeting     Meeting? @relation(fields: [meeting_id], references: [id], onDelete: Cascade)
+  expire_time BigInt   @default(0)
+  identity    String
+  join_code   String   @unique
+
+  @@id([meeting_id, identity], name: "join_code_identifier")
+  @@map(name: "join_codes")
+}
+
+model Waiting {
+  meeting_id String
+  Meeting    Meeting?      @relation(fields: [meeting_id], references: [id], onDelete: Cascade)
+  user_id    String
+  user_name  String
+  token      String?
+  status     StatusWaiting @default(WAITING)
+
+  @@id([meeting_id, user_id], name: "waiting_identifier")
+  @@map(name: "waiting_users")
+}
+
+enum StatusWaiting {
+  WAITING
+  APPROVED
+  REJECTED
+}
+
+model Streaming {
+  id         String   @id @default(uuid())
+  room_id    String
+  egress_id  String
+  room_name  String
+  hostname   String
+  email      String?
+  identity   String
+  platform   String
+  egress     Egress   @relation(fields: [egress_id], references: [egress_id], onDelete: Cascade)
+  started_at BigInt   @default(0)
+  ended_at   BigInt   @default(0)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map(name: "streamings")
+}
+
+model Egress {
+  egress_id  String      @id
+  status     String
+  started_at BigInt      @default(0)
+  ended_at   BigInt      @default(0)
+  layout     String
+  Streaming  Streaming[]
+
+  @@map(name: "egress")
+}

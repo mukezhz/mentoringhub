@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "Mentoring hub"
+version = "0.1.0"
+description = ""
+authors = ["mukezhz <mukezhz@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "3.2"
+django-graphql-auth = "^0.3.16"
+django-countries = "^7.3.2"
+psycopg2 = "^2.9.3"
+Pillow = "^9.2.0"
+django-cors-headers = "^3.13.0"
+django-anymail = {extras = ["mailgun"], version = "^8.6"}
+
+[tool.poetry.dev-dependencies]
+black = {version = "^22.3.0", allow-prereleases = true}
+gunicorn = "^20.1.0"
+ipython = "^8.4.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

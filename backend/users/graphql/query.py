@@ -1,0 +1,102 @@
+from dataclasses import Field
+from graphene import ObjectType, List, Field, String
+from graphql_jwt.decorators import login_required
+from .types import UserProfileType, UserInterestType, UserSkillType
+from ..models import UserProfile, UserInterest, UserSkill
+
+
+class UserProfileQuery(ObjectType):
+    """
+    user profile query for all
+    """
+
+    user_profiles = List(UserProfileType)
+    profiles = List(UserProfileType, role=String(required=True))
+
+    @login_required
+    def resolve_user_profiles(root, info, **kwargs):
+        return UserProfile.objects.all()
+
+    @login_required
+    def resolve_profiles(root, info, **kwargs):
+        role = kwargs.get("role") or ""
+        try:
+            profiles = UserProfile.objects.filter(role=role.upper())
+            return profiles
+        except UserProfile.DoesNotExist:
+            return None
+
+
+class UserProfileOneQuery(ObjectType):
+    """
+    quer user profile for a single user
+    """
+
+    user_profile = Field(UserProfile)
+
+    @login_required
+    def resolve_user_profile(root, info, **kwargs):
+        user = info.context.user
+        try:
+            profile = UserProfile.objects.get(user=user)
+            return profile
+        except UserProfile.DoesNotExist:
+            return None
+
+
+class UserInterestQuery(ObjectType):
+    """
+    user interest query
+    """
+
+    user_interests = List(UserInterestType)
+
+    def resolve_user_interests(root, info, **kwargs):
+        return UserInterest.objects.all()
+
+
+class UserInterestOneQuery(ObjectType):
+    """
+    quer user profile for a single user
+    """
+
+    user_interest = Field(UserProfile)
+
+    @login_required
+    def resolve_user_interest(root, info, **kwargs):
+        user = info.context.user
+        try:
+            profile = UserProfile.objects.get(user=user)
+            interest = UserInterest.objects.get(userprofile=profile)
+            return interest
+        except UserProfile.DoesNotExist:
+            return None
+
+
+class UserSkillQuery(ObjectType):
+    """
+    user skill query
+    """
+
+    user_skills = List(UserSkillType)
+
+    def resolve_user_skills(root, info, **kwargs):
+        return UserSkill.objects.all()
+
+
+class UserSkillOneQuery(ObjectType):
+    """
+    query user skill for a single user
+    """
+
+    user_skill = Field(UserProfile)
+
+    @login_required
+    def resolve_user_skill(root, info, **kwargs):
+        user = info.context.user
+        try:
+            profile = UserProfile.objects.get(user=user)
+            skill = UserSkill.objects.get(userprofile=profile)
+            return skill
+        except UserProfile.DoesNotExist:
+            return None
