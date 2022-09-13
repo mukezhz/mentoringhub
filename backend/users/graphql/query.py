@@ -1,5 +1,5 @@
 from dataclasses import Field
-from graphene import ObjectType, List, Field
+from graphene import ObjectType, List, Field, String
 from graphql_jwt.decorators import login_required
 from .types import UserProfileType, UserInterestType, UserSkillType
 from ..models import UserProfile, UserInterest, UserSkill
@@ -7,14 +7,24 @@ from ..models import UserProfile, UserInterest, UserSkill
 
 class UserProfileQuery(ObjectType):
     """
-    user profile query fpr all
+    user profile query for all
     """
 
     user_profiles = List(UserProfileType)
+    profiles = List(UserProfileType, role=String(required=True))
 
     @login_required
     def resolve_user_profiles(root, info, **kwargs):
         return UserProfile.objects.all()
+
+    @login_required
+    def resolve_profiles(root, info, **kwargs):
+        role = kwargs.get("role") or ""
+        try:
+            profiles = UserProfile.objects.filter(role=role.upper())
+            return profiles
+        except UserProfile.DoesNotExist:
+            return None
 
 
 class UserProfileOneQuery(ObjectType):

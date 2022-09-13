@@ -25,6 +25,7 @@ class UserProfileType(DjangoObjectType):
             "mobile_phone",
             "role",
             "profession",
+            "full_name"
         )
 
 
