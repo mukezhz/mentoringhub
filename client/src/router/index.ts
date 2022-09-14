@@ -100,6 +100,11 @@ export const router = createRouter({
       component: () => import("../views/PreMeetView.vue"),
     },
     {
+      path: "/userprofile",
+      name: "userprofile",
+      component: () => import("../views/UserProfile.vue"),
+    },
+    {
       path: "/meet",
       name: "meet",
       component: () => import("../views/MeetView.vue"),
