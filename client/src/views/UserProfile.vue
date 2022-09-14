@@ -55,12 +55,11 @@
                         </template>
                         </a-card-meta>
                         <a-divider>
-                            User Details
+                            <a-typography >User Details</a-typography>
                         </a-divider>
                         <a-descriptions bordered :column="1">
-                            <a-descriptions-item label="Full Name">Zhou Maomao</a-descriptions-item>
-                            <a-descriptions-item label="Contact">1810000000</a-descriptions-item>
-                            <a-descriptions-item label="Address">Hangzhou, Zhejiang</a-descriptions-item>
+                            <a-descriptions-item label="Email">Zhou Maomao</a-descriptions-item>
+                            <a-descriptions-item label="Role">Mentor</a-descriptions-item>
                         </a-descriptions>
                     </a-card>
                 </a-col>
