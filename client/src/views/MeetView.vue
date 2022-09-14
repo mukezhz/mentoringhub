@@ -7,7 +7,7 @@
       {{ name }}
     </li>
   </ul> -->
-  <h1>Meet</h1>
+  <a-typography-title>Meet</a-typography-title>
   <!-- Local div -->
   <div>
     <video
