@@ -3,7 +3,7 @@
     <a-layout-header>
       <div class="logo" />
 
-      <!-- Menu Start -->
+<!-- Menu Start -->
       <a-menu 
       theme="dark" 
       mode="horizontal" 
@@ -41,7 +41,7 @@
 
       </a-menu>
     </a-layout-header>
-
+<!-- Menu End -->
     <a-layout-content style="padding: 0 50px">
       <div
         :style="{
@@ -52,7 +52,7 @@
           textAlign: 'center',
         }"
       >
-        <h1>Join the Mentoring Hub!</h1>
+        <a-typography-title>Join the Mentoring Hub!</a-typography-title>
         <br />
         <img 
         src="" alt="" />
@@ -66,8 +66,45 @@
     </a-layout-content>
 
     <a-layout-content style="padding: 0 50px">
+      <div
+        :style="{
+          background: '#fff',
+          padding: '24px',
+          margin: '20px',
+          minHeight: '280px',
+        }"
+      >
+      <a-row justify="center">
+        <a-typography-title :level="2">About Us</a-typography-title>
+        <a-row justify="center">
+
+        <a-col span="20">
+        <p>
+          Mentoring Hub is a web-based platform which helps to connect mentees
+          with their ideal mentor. This application will try to enhance
+          learner’s knowledge about real world problems and also help them to
+          acquire skills sets provided by the professionals. By using the
+          platform, mentees can interact with their ideal mentor online. mentees
+          all around the globe can interact with mentors ie. Now they are free
+          from any barrier. Mentees from any place, urban or remote area can
+          communicate with mentors. As we know, guidance from the professionals
+          are important for the mentees to develop careers in their respective
+          fields. Using this platform, mentees can get help from professionals
+          in different domains to solve their problems.
+        </p>
+      </a-col>
+    </a-row>
+      </a-row>
+        <div class="logo" />
+      </div>
+    </a-layout-content>
+
+    <a-layout-content style="padding: 0 50px">
       <div :style="{ background: '#fff', padding: '24px', margin: '20px' }">
-        <h2>Our Mentors <br /></h2>
+        <a-row justify="center">
+          <a-typography-title :level="2">Our Mentors</a-typography-title>
+        </a-row>
+        
 
         <div>
           <a-row>
@@ -102,48 +139,32 @@
 
     <a-layout-content style="padding: 0 50px">
       <div
-        :style="{
-          background: '#fff',
-          padding: '24px',
-          margin: '20px',
-          minHeight: '280px',
+      :style="{ 
+        background: '#fff',
+        padding: '24px',
+        margin: '20px',
+        minHeight: '280px',
         }"
       >
-        <h2 id="faq">FAQ<br /></h2>
-        <p>General</p>
-        <p>What is mentoring hub ?</p>
-        <p>Why Mentoring ?</p>
-        <p>Privacy</p>
+        <a-typography-title id="faq"
+        :level="2">Frequently Asked Questions</a-typography-title>
+          <a-collapse v-model:activeKey="activeKey" accordion>
+            <a-collapse-panel key="1" header="General">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id recusandae repudiandae earum temporibus quod omnis dignissimos mollitia voluptate quam cum quae nisi ea corrupti iure nesciunt facilis odio, voluptas ratione.</p>
+            </a-collapse-panel>
+            <a-collapse-panel key="2" header="What is Mentoring Hub?">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore amet inventore numquam provident ad. Maiores, quis harum explicabo, earum ullam fugit inventore, quasi amet odit aperiam iure! Id, odit nemo.</p>
+            </a-collapse-panel>
+            <a-collapse-panel key="3" header="Why Mentoring Hub">
+              <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus recusandae, sunt nulla veritatis a deleniti aliquam non sint accusamus aspernatur optio </p>
+            </a-collapse-panel>
+            <a-collapse-panel key="4" header="Privacy Policy">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos sed porro aperiam voluptate expedita rerum dicta excepturi deleniti! Eaque architecto dolor neque nam, qui vitae dolorum dignissimos vel unde explicabo!</p>
+            </a-collapse-panel>
+          </a-collapse>
       </div>
     </a-layout-content>
 
-    <a-layout-content style="padding: 0 50px">
-      <div
-        :style="{
-          background: '#fff',
-          padding: '24px',
-          margin: '20px',
-          minHeight: '280px',
-        }"
-      >
-        <h2>About Us</h2>
-        <br />
-        <p>
-          Mentoring Hub is a web-based platform which helps to connect mentees
-          with their ideal mentor. This application will try to enhance
-          learner’s knowledge about real world problems and also help them to
-          acquire skills sets provided by the professionals. By using the
-          platform, mentees can interact with their ideal mentor online. mentees
-          all around the globe can interact with mentors ie. Now they are free
-          from any barrier. Mentees from any place, urban or remote area can
-          communicate with mentors. As we know, guidance from the professionals
-          are important for the mentees to develop careers in their respective
-          fields. Using this platform, mentees can get help from professionals
-          in different domains to solve their problems.
-        </p>
-        <div class="logo" />
-      </div>
-    </a-layout-content>
     <a-layout-footer style="text-align: center">
       Mentoring Hub &copy; 2022
     </a-layout-footer>
@@ -157,6 +178,7 @@ export default defineComponent({
     RouterLink,
   },
   setup() {
+    const activeKey = ref([]);
     let mentors = reactive([
       {
         id: "01",
@@ -192,6 +214,7 @@ export default defineComponent({
     return {
       selectedKeys: ref<string[]>(["2"]),
       mentors,
+      activeKey,
     };
   },
 });
