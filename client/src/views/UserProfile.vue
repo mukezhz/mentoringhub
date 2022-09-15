@@ -55,7 +55,7 @@
                         </template>
                         </a-card-meta>
                         <a-divider>
-                            <a-typography >User Details</a-typography>
+                            <a-typography>User Details</a-typography>
                         </a-divider>
                         <a-descriptions bordered :column="1">
                             <a-descriptions-item label="Email">{{formState.user.email}}</a-descriptions-item>
@@ -83,34 +83,31 @@
                   :name="['user', 'fname']" 
                   label="Full Name"
                   :rules="[{ required: true }]">
-                    <a-input placeholder="eg: John Doe" size="large" v-model:value="formState.user.fname" />
+                    <a-input 
+                    placeholder="eg: John Doe" 
+                    size="large" 
+                    v-model:value="formState.user.fname" />
                   </a-form-item>
 
                   <a-form-item 
-                  :name="['user', 'introduction']" 
-                  label="Introduction"
+                  :name="['user', 'bio']" 
+                  label="Bio"
                   :rules="[{required: true}]">
-                    <a-textarea placeholder="A few words about yourself." v-model:value="formState.user.introduction" />
+                    <a-textarea 
+                    placeholder="A few words to introduce yourself." 
+                    v-model:value="formState.user.bio" />
                   </a-form-item>
 
                   <a-form-item 
                   :name="['user', 'dob']"
                   :rules="[{required: true}]"
                   label="Date of Birth" >
-                    <a-date-picker v-model:value="formState.user.dob" value-format="YYYY-MM-DD" />
-                  </a-form-item>
-
-                  <a-form-item
-                  :name="['user', 'tags']"
-                  :rules="[{required: true}]"
-                  label="Skills and Interests">
-                    <a-select
-                      v-model:value="formState.user.tags"
-                      mode="tags"
-                      style="width: 100%"
-                      placeholder="Select Skills and Interests"
-                      :options="TagsOption"
-                    ></a-select>
+                    <a-date-picker 
+                    style="width: 100%"
+                    size="large"
+                    v-model:value="formState.user.dob" 
+                    placeholder="Select your Date of Birth"
+                    value-format="YYYY-MM-DD" />
                   </a-form-item>
 
                   <a-form-item
@@ -119,10 +116,38 @@
                   label="Country">
                     <a-select
                       v-model:value="formState.user.country"
-                      mode="multiple"
+                      size="large"
                       style="width: 100%"
-                      placeholder="Select a Country"
+                      placeholder="Select Country of Residence"
                       :options="countryOptions"
+                    ></a-select>
+                  </a-form-item>
+
+                  <a-form-item
+                  :name="['user', 'skills']"
+                  :rules="[{required: true}]"
+                  label="Skills">
+                    <a-select
+                      v-model:value="formState.user.skills"
+                      mode="tags"
+                      size="large"
+                      style="width: 100%"
+                      placeholder="Select your Skills"
+                      :options="skillsOption"
+                    ></a-select>
+                  </a-form-item>
+
+                  <a-form-item
+                  :name="['user', 'interests']"
+                  :rules="[{required: true}]"
+                  label="Interests">
+                    <a-select
+                      v-model:value="formState.user.interests"
+                      mode="tags"
+                      size="large"
+                      style="width: 100%"
+                      placeholder="Select your Interests"
+                      :options="interestsOption"
                     ></a-select>
                   </a-form-item>
 
@@ -133,17 +158,22 @@
                     <a-select
                       v-model:value="formState.user.country"
                       mode="multiple"
+                      size="large"
                       style="width: 100%"
-                      placeholder="Tags Mode"
+                      placeholder="Select Languages you can speak"
                       :options="languageOptions"
                     ></a-select>
                   </a-form-item>
-                 
-                  
-                 
-                  
+
+                  <a-divider>Please recheck the provided information before proceeding to Submit.</a-divider>
+
                   <a-form-item>
-                    <a-button type="primary" html-type="submit">Submit</a-button>
+                    <a-button 
+                    type="primary"
+                    shape="round"
+                    size="large"
+                    block
+                    html-type="submit">Submit</a-button>
                   </a-form-item>
                 </a-form>
               </a-col>
@@ -190,14 +220,15 @@
 
     const formState = reactive({
       user: {
-        fname: '',
+        fname:'',
         email:'',
         role:'',
-        tags:[{}],
-        country:'',
-        languages:'',
+        skills: undefined,
+        interests: undefined,
+        country:undefined,
+        languages: undefined,
         dob: undefined,
-        introduction: '',
+        bio:'',
       },
     });
     const onFinish = (values: any) => {
