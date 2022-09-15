@@ -182,8 +182,6 @@
         </div>
       </a-layout-content>
 
-
-
       <a-layout-footer :style="{ textAlign: 'center' }">
         Mentoring Hub © 2022 
       </a-layout-footer>
@@ -196,7 +194,6 @@
     SettingOutlined,
     LogoutOutlined,
  } from '@ant-design/icons-vue';
-
 
   export default defineComponent({
     components:{
@@ -242,6 +239,8 @@
   },
   });
   </script>
+
+  
   <style>
   #app{
     font-family: "Avenir", Helvetica, Arial, sans-serif;
