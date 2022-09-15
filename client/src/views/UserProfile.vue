@@ -69,7 +69,7 @@
               
               <a-col :span="8">
                 <a-typography-paragraph>
-                Please fill in the additional details to get the best experience and recommendations.
+                Please fill in the additional details to complete your profile & get the best experience and recommendations.
               </a-typography-paragraph>
               <a-divider />
                 <a-form
