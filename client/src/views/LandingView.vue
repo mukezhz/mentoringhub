@@ -2,23 +2,43 @@
   <a-layout class="layout">
     <a-layout-header>
       <div class="logo" />
-      <a-menu theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }">
-        <a-menu-item key="1">
-          <router-link :to="{ name: 'home' }"> Home </router-link>
-        </a-menu-item>
-        <a-menu-item key="2">Mentors</a-menu-item>
-        <a-menu-item key="3">
-          <a href="#faq"> F.A.Q </a>
-        </a-menu-item>
-        <a-menu-item key="4">
-          <router-link :to="{ name: 'about' }"> About </router-link>
-        </a-menu-item>
-        <a-menu-item key="5">
-          <router-link :to="{ name: 'login' }">Login</router-link>
-        </a-menu-item>
-        <a-menu-item key="6">
-          <router-link :to="{ name: 'premeet' }">Pre Meet</router-link>
-        </a-menu-item>
+
+      <!-- Menu Start -->
+      <a-menu 
+      theme="dark" 
+      mode="horizontal" 
+      :style="{ lineHeight: '64px' }">
+
+        <router-link :to="{ name: 'home' }">
+          <a-menu-item key="1">Home
+          </a-menu-item>
+        </router-link>
+
+        <a href=#faq>
+          <a-menu-item key="2">Mentors
+          </a-menu-item>
+        </a>
+
+        <a href="#faq">
+          <a-menu-item key="3">F.A.Q.
+          </a-menu-item>
+        </a>
+
+        <router-link :to="{ name: 'about' }"> 
+          <a-menu-item key="4">About 
+          </a-menu-item>
+        </router-link>
+
+        <router-link :to="{ name: 'premeet' }">
+          <a-menu-item key="5">Pre Meet
+          </a-menu-item>
+        </router-link>
+
+        <router-link :to="{ name: 'login' }">
+          <a-menu-item key="6">Login
+          </a-menu-item>
+        </router-link>
+
       </a-menu>
     </a-layout-header>
 
@@ -34,8 +54,14 @@
       >
         <h1>Join the Mentoring Hub!</h1>
         <br />
-        <img src="" alt="" />
-        <a-button type="primary">Connect Now</a-button>
+        <img 
+        src="" alt="" />
+
+        <router-link :to="{name: 'signup'}">
+        <a-button 
+        size="large"
+        type="primary">Connect Now</a-button>
+        </router-link>
       </div>
     </a-layout-content>
 
@@ -46,11 +72,7 @@
         <div>
           <a-row>
             <a-col
-              :xs="20"
-              :sm="16"
-              :md="16"
-              :lg="12"
-              :xl="8"
+              :xs="20" :sm="16" :md="16" :lg="12" :xl="8" 
               v-for="mentor in mentors"
               :key="mentor.id"
               style="margin: 0 auto"
@@ -104,7 +126,7 @@
           minHeight: '280px',
         }"
       >
-        <h2>About US</h2>
+        <h2>About Us</h2>
         <br />
         <p>
           Mentoring Hub is a web-based platform which helps to connect mentees
