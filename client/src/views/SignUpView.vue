@@ -1,7 +1,7 @@
 <template>
 <div class="signup-view">
     <div align="center">
-        <a-typography-title :level="2">Sign Up</a-typography-title>
+        <a-typography-title :level="2">Registration</a-typography-title>
         <a-typography-text>Create a new account for free.</a-typography-text>
     </div>
   <a-divider></a-divider>
@@ -22,7 +22,10 @@
         has-feedback
         :rules="[{trigger:'blur', required: true, message: 'Please enter your email!'},{ trigger: 'change', type:'email', message:'Please enter a valid email!' }]"
       >
-        <a-input v-model:value="formState.email" placeholder="eg. name@example.com"/>
+        <a-input 
+          size="large"
+          v-model:value="formState.email" 
+          placeholder="eg. name@example.com"/>
       </a-form-item>
 
       <a-form-item
@@ -30,7 +33,10 @@
         name="password"
         has-feedback  
       >
-        <a-input-password v-model:value="formState.password" placeholder="Enter a strong password" />
+        <a-input-password 
+          size="large"
+          v-model:value="formState.password" 
+          placeholder="Enter a strong password" />
       </a-form-item>
 
       <a-form-item
@@ -38,7 +44,10 @@
         name="confirmPassword"
         has-feedback
       >
-        <a-input-password v-model:value="formState.confirmPassword" placeholder="Retype your password" />
+        <a-input-password 
+          size="large"
+          v-model:value="formState.confirmPassword" 
+          placeholder="Retype your password" />
       </a-form-item>
 
       <a-form-item
@@ -46,7 +55,10 @@
       name="role"
       :rules="[{ required: true }]"
     >
-      <a-select v-model:value="formState.role" placeholder="Please select account type">
+      <a-select 
+        size="large"
+        v-model:value="formState.role" 
+        placeholder="Please select account type">
         <a-select-option value="mentor">Mentor</a-select-option>
         <a-select-option value="mentee">Mentee</a-select-option>
       </a-select>
@@ -63,14 +75,16 @@
         <a-button :disabled="disabled" block shape="round" type="primary" html-type="submit" class="login-form-button">SIGN UP</a-button>
       </a-form-item>
       
+      <a-divider>Already have an account?</a-divider>
+
     <a-form-item>
-      <div align="center">
-      <a-typography-text>Already have an account? </a-typography-text>
-      </div>
     <router-link to="/login" >
-    <a-button type="default" block shape="round" class="login-form-button">
-      Sign In
-    </a-button>
+      <a-button 
+        type="default" 
+        block 
+        shape="round" 
+        class="login-form-button">Sign In
+      </a-button>
     </router-link>
     </a-form-item>
     </a-form>
