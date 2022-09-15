@@ -6,7 +6,7 @@
     </div>
   <a-divider></a-divider>
 <a-row justify="center">
-  <a-col :span="10">
+  <a-col :span="8">
     <a-form
       name="registration"
       layout="vertical"
@@ -40,6 +40,18 @@
       >
         <a-input-password v-model:value="formState.confirmPassword" placeholder="Retype your password" />
       </a-form-item>
+
+      <a-form-item
+      label="Role"
+      name="role"
+      :rules="[{ required: true }]"
+    >
+      <a-select v-model:value="formState.role" placeholder="Please select account type">
+        <a-select-option value="mentor">Mentor</a-select-option>
+        <a-select-option value="mentee">Mentee</a-select-option>
+      </a-select>
+    </a-form-item>
+
 
       <a-form-item name="agreement">
         <a-checkbox v-model:checked="formState.agreement">
@@ -78,6 +90,7 @@ interface FormState {
   email: string;
   password: string;
   confirmPassword: string;
+  role: string;
   agreement: boolean;
 }
 export default defineComponent({
@@ -86,6 +99,7 @@ export default defineComponent({
       email: '',
       password: '',
       confirmPassword: '',
+      role:'Choose your account type',
       agreement: false,
     });
     
