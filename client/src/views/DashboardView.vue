@@ -58,30 +58,31 @@
     </div>
 </template>
 <script lang="ts">
-import {
-    PieChartOutlined,
-    DesktopOutlined,
-    UserOutlined,
-    TeamOutlined,
-    FileOutlined,
-} from '@ant-design/icons-vue';
-import { defineComponent, ref } from 'vue';
-export default defineComponent({
-    components: {
+    import { defineComponent, ref } from 'vue';
+    import {
         PieChartOutlined,
         DesktopOutlined,
         UserOutlined,
         TeamOutlined,
-        FileOutlined,
-    },
-    data() {
-        return {
-            collapsed: ref<boolean>(false),
-            selectedKeys: ref<string[]>(['1']),
-        };
-    },
-});
+        FileOutlined,} from '@ant-design/icons-vue';
+
+    export default defineComponent({
+        components: {
+            PieChartOutlined,
+            DesktopOutlined,
+            UserOutlined,
+            TeamOutlined,
+            FileOutlined,
+        },
+        data() {
+            return {
+                collapsed: ref<boolean>(false),
+                selectedKeys: ref<string[]>(['1']),
+            };
+        },
+    });
 </script>
+
 <style>
 #components-layout-demo-side .logo {
     height: 32px;
