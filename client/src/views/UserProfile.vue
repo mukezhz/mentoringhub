@@ -1,51 +1,13 @@
 <template>
     <a-layout>
-      <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-
-        <div class="logo" />
-
-        <a-row justify="end">
-            <a-col :span="1">
-          <!-- User Avatar   -->
-                <a-dropdown placement="bottomRight" size="large">
-                    <a-avatar size="large">
-                        <template #icon><UserOutlined /></template>
-                    </a-avatar>
-                    <template #overlay>
-                    <a-menu>
-                        <a-menu-item>
-                        <a rel="noopener noreferrer" href="#">
-                            <user-outlined /> Profile
-                        </a>
-                        </a-menu-item>
-                        <a-menu-item>
-                        <a rel="noopener noreferrer" href="#">
-                            <setting-outlined /> Settings
-                        </a>
-                        </a-menu-item>
-                        <a-menu-item>
-                        <a rel="noopener noreferrer" href="#">
-                            <logout-outlined /> Log Out
-                        </a>
-                        </a-menu-item>
-                    </a-menu>
-                    </template>
-                </a-dropdown>
-      <!-- User Avatar -->
-                
-            </a-col>
-        </a-row>
-      </a-layout-header>
-      <!-- header end -->
-      
       <!-- content start -->
 
       <a-layout-content :style="{ padding: '20px 70px', marginTop: '64px' }">
         <div :style="{ padding: '24px', minHeight: '380px' }">
             <a-row justify="center">
-                <a-col>
-                    <a-card style="width: 500px">
-                        <a-card-meta title="Name" description="role" >
+                <a-col :span="8">
+                    <a-card >
+                        <a-card-meta :title=formState.user.email :description=formState.user.role >
                         <template #avatar>
                             <a-avatar :size="{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }">
                                 <template #icon>
@@ -59,11 +21,24 @@
                         </a-divider>
                         <a-descriptions bordered :column="1">
                             <a-descriptions-item label="Email">{{formState.user.email}}</a-descriptions-item>
-                            <a-descriptions-item label="Role">Mentee</a-descriptions-item>
+                            <a-descriptions-item label="Role">mentor</a-descriptions-item>
                         </a-descriptions>
                     </a-card>
                 </a-col>
             </a-row>
+            <template v-if="formState.user.role =='mentor'">
+              <a-row justify="center">
+                <a-col :span="8">
+                  <a-divider></a-divider>
+                  <a-row justify="center">
+                    <MentorshipForm />
+                  </a-row>
+                </a-col>
+            </a-row>
+              
+          </template>
+            
+
             <a-divider>Additional Details</a-divider>
             <a-row justify="center">
               
@@ -190,6 +165,7 @@
   </template>
   <script lang="ts">
   import { defineComponent, ref, reactive } from 'vue';
+  import MentorshipForm from '../components/MentorshipForm.vue';
   import { UserOutlined, 
     SettingOutlined,
     LogoutOutlined,
@@ -200,6 +176,7 @@
         UserOutlined,
         SettingOutlined,
         LogoutOutlined,
+        MentorshipForm,
     },
 
     setup() {
@@ -219,7 +196,7 @@
       user: {
         fname:'',
         email:'',
-        role:'',
+        role:'mentor',
         skills: undefined,
         interests: undefined,
         country:undefined,
