@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, routerKey } from "vue-router";
-import PageNotFound from '@/views/404.vue'
+import PageNotFound from "@/views/404.vue";
 import LandingView from "@/views/LandingView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import MentorView from "@/views/MentorView.vue";
@@ -11,8 +11,8 @@ export const router = createRouter({
   routes: [
     {
       // will match everything
-      path: '/:pathMatch(.*)*',
-      name: 'Error Page',
+      path: "/:pathMatch(.*)*",
+      name: "Error Page",
       component: PageNotFound,
       meta: {
         requiresAuth: false,
@@ -69,7 +69,7 @@ export const router = createRouter({
       name: "dashboard",
       component: () => import("../layouts/Default.vue"),
       meta: {
-        requiresAuth: false,
+        requiresAuth: true,
       },
       children: [
         {
@@ -114,9 +114,10 @@ export const router = createRouter({
 
 // export default router
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem("token");
+  const authToken = localStorage.getItem("authtoken");
   // token needs to be verified by the server
-  if ((!token || !token.length) && to.meta.requiresAuth) next("/login");
-  if ((token || token?.length) && to.name === "login") next("/dashboard");
-  next();
+  if ((!authToken || !authToken.length) && to.meta.requiresAuth) next("/login");
+  if (authToken?.length && to.name === "login") next("/dashboard");
+  else if (authToken?.length && to.name === "home") next("/dashboard");
+  else next();
 });
