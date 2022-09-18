@@ -5,6 +5,22 @@ from ..models import CustomUser, UserProfile, UserInterest, UserSkill
 class CustomUserType(DjangoObjectType):
     class Meta:
         model = CustomUser
+        fields = (
+            "username",
+            "email",
+        )
+
+
+class UserInterestType(DjangoObjectType):
+    class Meta:
+        model = UserInterest
+        fileds = ("interest", "domain")
+
+
+class UserSkillType(DjangoObjectType):
+    class Meta:
+        model = UserSkill
+        fileds = ("skill", "domain")
 
 
 class UserProfileType(DjangoObjectType):
@@ -25,16 +41,8 @@ class UserProfileType(DjangoObjectType):
             "mobile_phone",
             "role",
             "profession",
-            "full_name"
+            "full_name",
+            "user",
+            "userinterest",
+            "userskill",
         )
-
-
-class UserInterestType(DjangoObjectType):
-    class Meta:
-        model = UserInterest
-        fileds = ("interest", "domain")
-
-class UserSkillType(DjangoObjectType):
-    class Meta:
-        model = UserSkill
-        fileds = ("skill", "domain")

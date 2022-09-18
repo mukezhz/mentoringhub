@@ -73,6 +73,8 @@
 import { auth } from "../utils/auth"
 import { defineComponent, reactive, computed } from 'vue';
 import type { Rule } from 'ant-design-vue/es/form'; 
+import { message } from "ant-design-vue";
+import { useRouter } from "vue-router";
 
 interface FormState {
   email: string;
@@ -82,6 +84,7 @@ interface FormState {
 }
 export default defineComponent({
   setup() {
+    const router = useRouter()
     const formState = reactive<FormState>({
       email: '',
       password: '',
@@ -110,14 +113,15 @@ export default defineComponent({
 
     const onFinish = async (values: { email: string, password: string, confirmPassword: string}) => {
             const { email, password, confirmPassword} = values
-            // TODO: if remember is true need to set email and password saved to cached or in localStorage
             try {
                 const res = await auth.register(email, password, confirmPassword)
                 const { data } = await res.json()
                 const { errors, success, token, refreshToken } = data.register
                 if (success) {
-                    localStorage.setItem('token', token)
+                    localStorage.setItem('authtoken', token)
                     localStorage.setItem('refreshToken', refreshToken)
+                    message.success("Account Created!")
+                    router.push({name: 'setting'})
                 }
                 console.log(errors);
             } catch (e) {

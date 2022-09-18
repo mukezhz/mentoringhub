@@ -1,5 +1,7 @@
+import { checkVerified } from "@/utils/account/checkVerified";
+import { account } from "@/utils/account";
 import { createRouter, createWebHistory, routerKey } from "vue-router";
-import PageNotFound from '@/views/404.vue'
+import PageNotFound from "@/views/404.vue";
 import LandingView from "@/views/LandingView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import MentorView from "@/views/MentorView.vue";
@@ -11,12 +13,17 @@ export const router = createRouter({
   routes: [
     {
       // will match everything
-      path: '/:pathMatch(.*)*',
-      name: 'Error Page',
+      path: "/:pathMatch(.*)*",
+      name: "Error Page",
       component: PageNotFound,
       meta: {
         requiresAuth: false,
       },
+    },
+    {
+      path: "/activate/:token",
+      name: "Activate Account",
+      component: () => import("../views/ActivateAccount.vue"),
     },
     {
       path: "/",
@@ -92,17 +99,17 @@ export const router = createRouter({
           name: "application",
           component: ApplicationView,
         },
+        {
+          path: "/profile",
+          name: "User Profile",
+          component: () => import("../views/UserProfile.vue"),
+        },
       ],
     },
     {
       path: "/premeet",
       name: "premeet",
       component: () => import("../views/PreMeetView.vue"),
-    },
-    {
-      path: "/userprofile",
-      name: "userprofile",
-      component: () => import("../views/UserProfile.vue"),
     },
     {
       path: "/meet",
@@ -113,10 +120,17 @@ export const router = createRouter({
 });
 
 // export default router
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem("token");
-  // token needs to be verified by the server
-  if ((!token || !token.length) && to.meta.requiresAuth) next("/login");
-  if ((token || token?.length) && to.name === "login") next("/dashboard");
-  next();
+router.beforeEach(async (to, from, next) => {
+  const token = localStorage.getItem("authtoken");
+  if (token?.length) {
+    const isVerified = await checkVerified(token);
+    if (!isVerified) next("/login");
+    localStorage.setItem("isverified", isVerified ? "1" : "");
+  }
+
+  if (!token && to.meta.requiresAuth) next("/login");
+  if (token?.length && to.name === "login") next("/dashboard");
+  else if (token?.length && to.name === "home") next("/dashboard");
+  else if (token?.length && to.name === "signup") next("/dashboard");
+  else next();
 });

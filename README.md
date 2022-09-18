@@ -40,17 +40,25 @@ docker run -dit \
 - Install the poetry
 ```
 $ cd backend
+$ cp .env_sample .env
 $ pip install poetry
 $ poetry install
 $ cd ..
 $ make backend
 ```
-
+## Run Livekit Server
+- Be in root directory [FINALPROJECT]
+- Pull the livekit server from docker
+```
+$ docker pull livekit/livekit-serve 
+$ make livekit
+```
 ## Run Webrtc
 - Be in root directory [FINALPROJECT]
 - Install the npm
 ```
 $ cd webrtc
+$ cp .env_sample .env
 $ npm install
 $ cd ..
 $ make webrtc

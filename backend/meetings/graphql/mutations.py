@@ -8,17 +8,8 @@ from graphql_jwt.decorators import login_required
 # from .types import CustomUserType
 from ..models import Meeting
 
-HOST = environ.get("MEETING_HOST") or "localhost:8000"
-MEETING_URL = f"/api/meetings"
-HEADERS = {"Content-Type": "application/json"}
-
 
 class CreateMeeting(Mutation):
-    """
-    Creating meeting.
-
-    """
-
     class Arguments:
         room = String(required=True)
         title = String(required=True)
@@ -35,8 +26,10 @@ class CreateMeeting(Mutation):
 
     @login_required
     def mutate(root, info, **kwargs):
-        url = f"{MEETING_URL}/create"
-        conn = client.HTTPConnection(HOST)
+        """
+        Creating meeting.
+        """
+        user = info.context.user
         try:
             room = kwargs.get("room")
             title = kwargs.get("title")
@@ -45,33 +38,25 @@ class CreateMeeting(Mutation):
             status = kwargs.get("status")
             cover_image = kwargs.get("cover_image")
             country = kwargs.get("country")
+            start_date = kwargs.get("start_date")
             app_id = kwargs.get("app_id")
-            payload = {
-                "room": room,
-                "title": title,
-                "description": description,
-                "participants": participants,
-                "status": status or "NEW",
-                "cover_image": cover_image,
-                "country": country,
-                "app_id": app_id,
-            }
-            conn.request("POST", url, body=json.dumps(payload), headers=HEADERS)
-            res = conn.getresponse()
-            data = res.read()
-            json_data = json.loads(data.decode("utf-8"))
-            if res.status >= 400:
-                raise GraphQLError(json_data.get("message"))
-
+            m, _ = Meeting.objects.get_or_create(users=user)
+            m.room = room
+            m.title = title
+            m.description = description
+            m.participants = participants
+            m.start_date = start_date
+            m.status = status
+            m.cover_image = cover_image
+            m.country = country
+            m.save()
             return CreateMeeting(
                 success=True,
                 msg="Meeting is created or updated successfully",
-                data=json_data.get("data"),
+                data=json.dumps(kwargs),
             )
         except Exception as e:
             return CreateMeeting(success=False, msg=e)
-        finally:
-            conn.close()
 
 
 class MeetingMutation(ObjectType):

@@ -1,15 +1,27 @@
 <template>
   <div class="login-view">
-    <a-typography-title class="text-center">Welcome to Mentoring Hub</a-typography-title>
-    <a-form layout="vertical" :model="formState" name="normal_login" class="login-form" @finish="onFinish"
-      @finishFailed="onFinishFailed">
-      <a-form-item label="Email" name="email" :rules="[
-        {
-          required: true,
-          message: 'Please enter your email!',
-          type: 'email',
-        },
-      ]">
+    <a-typography-title class="text-center"
+      >Welcome to Mentoring Hub</a-typography-title
+    >
+    <a-form
+      layout="vertical"
+      :model="formState"
+      name="normal_login"
+      class="login-form"
+      @finish="onFinish"
+      @finishFailed="onFinishFailed"
+    >
+      <a-form-item
+        label="Email"
+        name="email"
+        :rules="[
+          {
+            required: true,
+            message: 'Please enter your email!',
+            type: 'email',
+          },
+        ]"
+      >
         <a-input v-model:value="formState.email">
           <template #prefix>
             <UserOutlined class="site-form-item-icon" />
@@ -17,9 +29,13 @@
         </a-input>
       </a-form-item>
 
-      <a-form-item label="Password" name="password" :rules="[
-        { required: true, message: 'Please enter your password!', min: 6 },
-      ]">
+      <a-form-item
+        label="Password"
+        name="password"
+        :rules="[
+          { required: true, message: 'Please enter your password!', min: 6 },
+        ]"
+      >
         <a-input-password v-model:value="formState.password">
           <template #prefix>
             <LockOutlined class="site-form-item-icon" />
@@ -29,27 +45,37 @@
 
       <div class="login-form-wrap">
         <a-form-item name="remember" no-style>
-          <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
+          <a-checkbox v-model:checked="formState.remember"
+            >Remember me</a-checkbox
+          >
         </a-form-item>
-        <router-link to="/resetpassword" class="login-form-forgot">Forgot Password?</router-link>
+        <router-link to="/resetpassword" class="login-form-forgot"
+          >Forgot Password?</router-link
+        >
       </div>
 
-            <a-form-item>
-                <a-button type="primary" html-type="submit" class="login-form-button" :disabled="disabled">
-                    Log in
-                </a-button>
-            </a-form-item>
-            <a-form-item>
-                <a-button type="primary" block class="login-form-button" ghost>
-                    <a href="/signup">Register now!</a>
-                </a-button>
-            </a-form-item>
+      <a-form-item>
+        <a-button
+          type="primary"
+          html-type="submit"
+          class="login-form-button"
+          :disabled="disabled"
+        >
+          Log in
+        </a-button>
+      </a-form-item>
+      <a-form-item>
+        <a-button type="primary" block class="login-form-button" ghost>
+          <a href="/signup">Register now!</a>
+        </a-button>
+      </a-form-item>
     </a-form>
   </div>
 </template>
+
 <script lang="ts">
 import { auth } from "../utils/auth";
-import { message } from 'ant-design-vue';
+import { message } from "ant-design-vue";
 import { defineComponent, reactive, computed } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { RouterLink, useRouter } from "vue-router";
@@ -67,7 +93,7 @@ export default defineComponent({
   },
 
   setup() {
-    const router = useRouter()
+    const router = useRouter();
     const formState = reactive<FormState>({
       email: "",
       password: "",
@@ -84,22 +110,17 @@ export default defineComponent({
         const res = await auth.login(email, password);
         const { data } = await res.json();
         const { errors, success, token } = data.tokenAuth;
-        console.log(errors)
         for (const i in errors) {
           for (const j of errors[i]) {
-            message.error(j.message)
+            message.error(j.message);
           }
         }
         if (success) {
-          localStorage.setItem("token", token);
-          message.success('Login Successful!');
-          router.push({
-            name: 'dashboard'
-          })
+          localStorage.setItem("email", email);
+          localStorage.setItem("authtoken", token);
+          message.success("Login Successful!");
+          router.push("/dashboard");
         }
-        // if (errors.length) {
-        //   error("errors")
-        // }
       } catch (e) {
         console.log(e);
       }

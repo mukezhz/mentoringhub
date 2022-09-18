@@ -1,10 +1,10 @@
 """Graphql implementation for users."""
 import graphene
-from .graphql.query import MeetingAllQuery, MeetingOneQuery
+from .graphql.query import MeetingQuery
 from .graphql.mutations import MeetingMutation
 
 
-class Query(MeetingAllQuery, MeetingOneQuery, graphene.ObjectType):
+class Query(MeetingQuery, graphene.ObjectType):
     """Queries of Meeting."""
 
     pass

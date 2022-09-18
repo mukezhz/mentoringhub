@@ -119,32 +119,33 @@
 
     setup() {
 
+  setup() {
     const validateMessages = {
-      required: '${label} is required!',
+      required: "${label} is required!",
       types: {
-        email: '${label} is not a valid email!',
-        number: '${label} is not a valid number!',
+        email: "${label} is not a valid email!",
+        number: "${label} is not a valid number!",
       },
       number: {
-        range: '${label} must be between ${min} and ${max}',
+        range: "${label} must be between ${min} and ${max}",
       },
     };
 
     const formState = reactive({
       user: {
-        fname:'',
-        email:'',
-        role:'mentor',
+        fname: "",
+        email: "",
+        role: "",
         skills: undefined,
         interests: undefined,
-        country:undefined,
+        country: undefined,
         languages: undefined,
         dob: undefined,
-        bio:'',
+        bio: "",
       },
     });
     const onFinish = (values: any) => {
-      console.log('Success:', values);
+      console.log("Success:", values);
     };
     return {
       formState,
@@ -152,8 +153,8 @@
       validateMessages,
     };
   },
-  });
-  </script>
+});
+</script>
 
   
   <style>
