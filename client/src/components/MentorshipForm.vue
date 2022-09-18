@@ -1,53 +1,26 @@
 <template>
-    <div>
-      <a-button 
-      type="primary"
-      size="large" 
-      @click="visible = true">Apply for Mentorship</a-button>
-      <a-modal
-        v-model:visible="visible"
-        title="Mentorship Form"
-        ok-text="Apply"
-        cancel-text="Cancel"
-        @ok="onOk"
-      >
-        <a-form ref="formRef" :model="formState" layout="vertical" name="form_in_modal">
-            <a-form-item 
-            name="description" 
-            label="Q1. Why?"
-            :rules="[{required: true}]">
-            <a-textarea
-            v-model:value="formState.description"
-            placeholder="Please answer this questions carefully. "
-            :auto-size="{ minRows: 3, maxRows: 6 }"
-            />
-          </a-form-item>
+  <div>
+    <a-button type="primary" size="large" @click="visible = true">Apply for Mentorship</a-button>
+    <a-modal v-model:visible="visible" title="Mentorship Form" ok-text="Apply" cancel-text="Cancel" @ok="onOk">
+      <a-form ref="formRef" :model="formState" layout="vertical" name="form_in_modal">
+        <a-form-item name="description" label="Q1. Why?" :rules="[{required: true}]">
+          <a-textarea v-model:value="formState.description" placeholder="Please answer this questions carefully. "
+            :auto-size="{ minRows: 3, maxRows: 6 }" />
+        </a-form-item>
 
-          <a-form-item 
-            name="preferences" 
-            label="Q2. Preferences?"
-            :rules="[{required: true}]">
-            <a-textarea
-            v-model:value="formState.preferences"
-            placeholder="Please answer this questions carefully. "
-            :auto-size="{ minRows: 3, maxRows: 6 }"
-            />
-          </a-form-item>
+        <a-form-item name="preferences" label="Q2. Preferences?" :rules="[{required: true}]">
+          <a-textarea v-model:value="formState.preferences" placeholder="Please answer this questions carefully. "
+            :auto-size="{ minRows: 3, maxRows: 6 }" />
+        </a-form-item>
 
-          <a-form-item 
-            name="" 
-            label="Q3. ......?"
-            :rules="[{required: true}]">
-            <a-textarea
-            v-model:value="formState.question3"
-            placeholder="Please answer this questions carefully. "
-            :auto-size="{ minRows: 3, maxRows: 6 }"
-            />
-          </a-form-item>
-        </a-form>
-      </a-modal>
-    </div>
-  </template>
+        <a-form-item name="" label="Q3. ......?" :rules="[{required: true}]">
+          <a-textarea v-model:value="formState.question3" placeholder="Please answer this questions carefully. "
+            :auto-size="{ minRows: 3, maxRows: 6 }" />
+        </a-form-item>
+      </a-form>
+    </a-modal>
+  </div>
+</template>
   <script lang="ts">
   import { defineComponent, reactive, ref, toRaw } from 'vue';
   import type { FormInstance } from 'ant-design-vue';
