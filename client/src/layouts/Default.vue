@@ -68,7 +68,7 @@
                 <template #overlay>
                   <a-menu>
                     <a-menu-item>
-                      <router-link to="userprofile">
+                      <router-link to="profile">
                         <user-outlined /> Profile
                       </router-link>
                     </a-menu-item>
