@@ -1,168 +1,106 @@
 <template>
-    <a-layout>
-      <!-- content start -->
+  <a-layout>
+    <!-- content start -->
 
-      <a-layout-content :style="{ padding: '20px 70px', marginTop: '64px' }">
-        <div :style="{ padding: '24px', minHeight: '380px' }">
-            <a-row justify="center">
-                <a-col :span="8">
-                    <a-card >
-                        <a-card-meta :title=formState.user.email :description=formState.user.role >
-                        <template #avatar>
-                            <a-avatar :size="{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }">
-                                <template #icon>
-                                <UserOutlined />
-                                </template>
-                            </a-avatar>
-                        </template>
-                        </a-card-meta>
-                        <a-divider>
-                            <a-typography>User Details</a-typography>
-                        </a-divider>
-                        <a-descriptions bordered :column="1">
-                            <a-descriptions-item label="Email">{{formState.user.email}}</a-descriptions-item>
-                            <a-descriptions-item label="Role">mentor</a-descriptions-item>
-                        </a-descriptions>
-                    </a-card>
-                </a-col>
-            </a-row>
-            <template v-if="formState.user.role =='mentor'">
+    <a-layout-content :style="{ padding: '20px 70px', marginTop: '64px' }">
+      <div :style="{ padding: '24px', minHeight: '380px' }">
+        <a-row justify="center">
+          <a-col :span="8">
+            <a-card>
+              <a-card-meta :title=formState.user.email :description=formState.user.role>
+                <template #avatar>
+                  <a-avatar :size="{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }">
+                    <template #icon>
+                      <UserOutlined />
+                    </template>
+                  </a-avatar>
+                </template>
+              </a-card-meta>
+              <a-divider>
+                <a-typography>User Details</a-typography>
+              </a-divider>
+              <a-descriptions bordered :column="1">
+                <a-descriptions-item label="Email">{{formState.user.email}}</a-descriptions-item>
+                <a-descriptions-item label="Role">mentor</a-descriptions-item>
+              </a-descriptions>
+            </a-card>
+          </a-col>
+        </a-row>
+        <template v-if="formState.user.role =='mentor'">
+          <a-row justify="center">
+            <a-col :span="8">
+              <a-divider></a-divider>
               <a-row justify="center">
-                <a-col :span="8">
-                  <a-divider></a-divider>
-                  <a-row justify="center">
-                    <MentorshipForm />
-                  </a-row>
-                </a-col>
-            </a-row>
-              
-          </template>
-            
+                <MentorshipForm />
+              </a-row>
+            </a-col>
+          </a-row>
 
-            <a-divider>Additional Details</a-divider>
-            <a-row justify="center">
-              
-              <a-col :span="8">
-                <a-typography-paragraph>
-                Please fill in the additional details to complete your profile & get the best experience and recommendations.
-              </a-typography-paragraph>
-              <a-divider />
-                <a-form
-                  :model="formState"
-                  layout="vertical"
-                  name="nest-messages"
-                  :validate-messages="validateMessages"
-                  @finish="onFinish"
-                >
-                  <a-form-item 
-                  :name="['user', 'fname']" 
-                  label="Full Name"
-                  :rules="[{ required: true }]">
-                    <a-input 
-                    placeholder="eg: John Doe" 
-                    size="large" 
-                    v-model:value="formState.user.fname" />
-                  </a-form-item>
+        </template>
 
-                  <a-form-item 
-                  :name="['user', 'bio']" 
-                  label="Bio"
-                  :rules="[{required: true}]">
-                    <a-textarea 
-                    placeholder="A few words to introduce yourself." 
-                    v-model:value="formState.user.bio" />
-                  </a-form-item>
 
-                  <a-form-item 
-                  :name="['user', 'dob']"
-                  :rules="[{required: true}]"
-                  label="Date of Birth" >
-                    <a-date-picker 
-                    style="width: 100%"
-                    size="large"
-                    v-model:value="formState.user.dob" 
-                    placeholder="Select your Date of Birth"
-                    value-format="YYYY-MM-DD" />
-                  </a-form-item>
+        <a-divider>Additional Details</a-divider>
+        <a-row justify="center">
 
-                  <a-form-item
-                  :name="['user', 'country']"
-                  :rules="[{required: true}]"
-                  label="Country">
-                    <a-select
-                      v-model:value="formState.user.country"
-                      size="large"
-                      style="width: 100%"
-                      placeholder="Select Country of Residence"
-                      :options="countryOptions"
-                    ></a-select>
-                  </a-form-item>
+          <a-col :span="8">
+            <a-typography-paragraph>
+              Please fill in the additional details to complete your profile & get the best experience and
+              recommendations.
+            </a-typography-paragraph>
+            <a-divider />
+            <a-form :model="formState" layout="vertical" name="nest-messages" :validate-messages="validateMessages"
+              @finish="onFinish">
+              <a-form-item :name="['user', 'fname']" label="Full Name" :rules="[{ required: true }]">
+                <a-input placeholder="eg: John Doe" size="large" v-model:value="formState.user.fname" />
+              </a-form-item>
 
-                  <a-form-item
-                  :name="['user', 'skills']"
-                  :rules="[{required: true}]"
-                  label="Skills">
-                    <a-select
-                      v-model:value="formState.user.skills"
-                      mode="tags"
-                      size="large"
-                      style="width: 100%"
-                      placeholder="Select your Skills"
-                      :options="skillsOption"
-                    ></a-select>
-                  </a-form-item>
+              <a-form-item :name="['user', 'bio']" label="Bio" :rules="[{required: true}]">
+                <a-textarea placeholder="A few words to introduce yourself." v-model:value="formState.user.bio" />
+              </a-form-item>
 
-                  <a-form-item
-                  :name="['user', 'interests']"
-                  :rules="[{required: true}]"
-                  label="Interests">
-                    <a-select
-                      v-model:value="formState.user.interests"
-                      mode="tags"
-                      size="large"
-                      style="width: 100%"
-                      placeholder="Select your Interests"
-                      :options="interestsOption"
-                    ></a-select>
-                  </a-form-item>
+              <a-form-item :name="['user', 'dob']" :rules="[{required: true}]" label="Date of Birth">
+                <a-date-picker style="width: 100%" size="large" v-model:value="formState.user.dob"
+                  placeholder="Select your Date of Birth" value-format="YYYY-MM-DD" />
+              </a-form-item>
 
-                  <a-form-item
-                  :name="['user', 'languages']"
-                  :rules="[{required: true}]"
-                  label="Languages">
-                    <a-select
-                      v-model:value="formState.user.country"
-                      mode="multiple"
-                      size="large"
-                      style="width: 100%"
-                      placeholder="Select Languages you can speak"
-                      :options="languageOptions"
-                    ></a-select>
-                  </a-form-item>
+              <a-form-item :name="['user', 'country']" :rules="[{required: true}]" label="Country">
+                <a-select v-model:value="formState.user.country" size="large" style="width: 100%"
+                  placeholder="Select Country of Residence" :options="countryOptions"></a-select>
+              </a-form-item>
 
-                  <a-divider>Please recheck the provided information before proceeding to Submit.</a-divider>
+              <a-form-item :name="['user', 'skills']" :rules="[{required: true}]" label="Skills">
+                <a-select v-model:value="formState.user.skills" mode="tags" size="large" style="width: 100%"
+                  placeholder="Select your Skills" :options="skillsOption"></a-select>
+              </a-form-item>
 
-                  <a-form-item>
-                    <a-button 
-                    type="primary"
-                    shape="round"
-                    size="large"
-                    block
-                    html-type="submit">Submit</a-button>
-                  </a-form-item>
-                </a-form>
-              </a-col>
-            </a-row>
+              <a-form-item :name="['user', 'interests']" :rules="[{required: true}]" label="Interests">
+                <a-select v-model:value="formState.user.interests" mode="tags" size="large" style="width: 100%"
+                  placeholder="Select your Interests" :options="interestsOption"></a-select>
+              </a-form-item>
 
-        </div>
-      </a-layout-content>
+              <a-form-item :name="['user', 'languages']" :rules="[{required: true}]" label="Languages">
+                <a-select v-model:value="formState.user.country" mode="multiple" size="large" style="width: 100%"
+                  placeholder="Select Languages you can speak" :options="languageOptions"></a-select>
+              </a-form-item>
 
-      <a-layout-footer :style="{ textAlign: 'center' }">
-        Mentoring Hub © 2022 
-      </a-layout-footer>
-    </a-layout>
-    
-  </template>
+              <a-divider>Please recheck the provided information before proceeding to Submit.</a-divider>
+
+              <a-form-item>
+                <a-button type="primary" shape="round" size="large" block html-type="submit">Submit</a-button>
+              </a-form-item>
+            </a-form>
+          </a-col>
+        </a-row>
+
+      </div>
+    </a-layout-content>
+
+    <a-layout-footer :style="{ textAlign: 'center' }">
+      Mentoring Hub © 2022
+    </a-layout-footer>
+  </a-layout>
+
+</template>
   <script lang="ts">
   import { defineComponent, ref, reactive } from 'vue';
   import MentorshipForm from '../components/MentorshipForm.vue';
@@ -219,13 +157,13 @@
 
   
   <style>
-  #app{
+  #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
   }
-
+  
   #components-layout-demo-fixed .logo {
     width: 120px;
     height: 31px;
@@ -233,6 +171,7 @@
     margin: 16px 24px 16px 0;
     float: left;
   }
+  
   .site-layout .site-layout-background {
     background: #fff;
   }
