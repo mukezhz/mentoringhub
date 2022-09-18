@@ -5,28 +5,21 @@ from .types import MeetingType
 from ..models import Meeting
 
 
-class MeetingAllQuery(ObjectType):
+class MeetingQuery(ObjectType):
     """
     query all the meetings
     """
 
-    meetings = List(MeetingType)
+    fetch_all_meetings = List(MeetingType)
+    fetch_meeting_by_id = Field(MeetingType, id=String(required=True))
 
-    def resolve_meetings(root, info, **kwargs):
+    def resolve_fetch_all_meetings(root, info, **kwargs):
         user = info.context.user
         if not user.id:
             raise GraphQLError("unauthenticated user!!!")
         return Meeting.objects.all()
 
-
-class MeetingOneQuery(ObjectType):
-    """
-    meeting one query by meeting id
-    """
-
-    meeting = Field(MeetingType, id=String(required=True))
-
-    def resolve_meeting(root, info, **kwargs):
+    def resolve_fetch_meeting_by_id(root, info, **kwargs):
         id = kwargs.get("id")
         try:
             return Meeting.objects.get(id=id)

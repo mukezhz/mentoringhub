@@ -2,7 +2,7 @@ from dataclasses import Field
 from graphene import ObjectType, List, Field, String
 from graphql_jwt.decorators import login_required
 from .types import UserProfileType, UserInterestType, UserSkillType
-from ..models import UserProfile, UserInterest, UserSkill
+from ..models import CustomUser, UserProfile, UserInterest, UserSkill
 
 
 class UserProfileQuery(ObjectType):
@@ -10,15 +10,19 @@ class UserProfileQuery(ObjectType):
     user profile query for all
     """
 
-    user_profiles = List(UserProfileType)
-    profiles = List(UserProfileType, role=String(required=True))
+    fetch_profiles = List(UserProfileType)
+    fetch_profile_according_to_role = List(UserProfileType, role=String(required=True))
+    fetch_profile_according_to_email = Field(
+        UserProfileType, email=String(required=True)
+    )
+    fetch_your_profile = Field(UserProfileType)
 
     @login_required
-    def resolve_user_profiles(root, info, **kwargs):
+    def resolve_fetch_profiles(root, info, **kwargs):
         return UserProfile.objects.all()
 
-    @login_required
-    def resolve_profiles(root, info, **kwargs):
+    # @login_required
+    def resolve_fetch_profile_according_to_role(root, info, **kwargs):
         role = kwargs.get("role") or ""
         try:
             profiles = UserProfile.objects.filter(role=role.upper())
@@ -26,16 +30,19 @@ class UserProfileQuery(ObjectType):
         except UserProfile.DoesNotExist:
             return None
 
-
-class UserProfileOneQuery(ObjectType):
-    """
-    quer user profile for a single user
-    """
-
-    user_profile = Field(UserProfile)
+    # @login_required
+    def resolve_fetch_profile_according_to_email(root, info, **kwargs):
+        email = kwargs.get("email") or ""
+        try:
+            user = CustomUser.objects.get(email=email)
+            profile = UserProfile.objects.get(user=user)
+            print(profile)
+            return profile
+        except UserProfile.DoesNotExist:
+            return None
 
     @login_required
-    def resolve_user_profile(root, info, **kwargs):
+    def resolve_fetch_your_profile(root, info, **kwargs):
         user = info.context.user
         try:
             profile = UserProfile.objects.get(user=user)
@@ -49,27 +56,24 @@ class UserInterestQuery(ObjectType):
     user interest query
     """
 
-    user_interests = List(UserInterestType)
+    fetch_all_user_interests = List(UserInterestType)
+    fetch_your_interests = List(
+        UserInterestType,
+    )
 
-    def resolve_user_interests(root, info, **kwargs):
+    def resolve_fetch_all_user_interests(root, info, **kwargs):
         return UserInterest.objects.all()
 
-
-class UserInterestOneQuery(ObjectType):
-    """
-    quer user profile for a single user
-    """
-
-    user_interest = Field(UserProfile)
-
     @login_required
-    def resolve_user_interest(root, info, **kwargs):
+    def resolve_fetch_your_interests(root, info, **kwargs):
         user = info.context.user
         try:
             profile = UserProfile.objects.get(user=user)
             interest = UserInterest.objects.get(userprofile=profile)
             return interest
-        except UserProfile.DoesNotExist:
+        except UserProfile.DoesNotExist or UserInterest.DoesNotExist:
+            return None
+        except:
             return None
 
 
@@ -78,25 +82,22 @@ class UserSkillQuery(ObjectType):
     user skill query
     """
 
-    user_skills = List(UserSkillType)
+    fetch_all_user_skills = List(UserSkillType)
+    fetch_your_skills = List(
+        UserSkillType,
+    )
 
-    def resolve_user_skills(root, info, **kwargs):
+    def resolve_fetch_all_user_skills(root, info, **kwargs):
         return UserSkill.objects.all()
 
-
-class UserSkillOneQuery(ObjectType):
-    """
-    query user skill for a single user
-    """
-
-    user_skill = Field(UserProfile)
-
     @login_required
-    def resolve_user_skill(root, info, **kwargs):
+    def resolve_fetch_your_skills(root, info, **kwargs):
         user = info.context.user
         try:
             profile = UserProfile.objects.get(user=user)
-            skill = UserSkill.objects.get(userprofile=profile)
-            return skill
-        except UserProfile.DoesNotExist:
+            interest = UserSkill.objects.get(userprofile=profile)
+            return interest
+        except UserProfile.DoesNotExist or UserSkill.DoesNotExist:
+            return None
+        except:
             return None
