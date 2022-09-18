@@ -1,10 +1,6 @@
 <template>
-  <a-layout 
-    has-slider 
-    style="min-height: 100vh">
-    <a-layout-sider
-      :style="{overflow: 'auto'}" 
-      collapsible >
+  <a-layout has-slider style="min-height: 100vh">
+    <a-layout-sider :style="{ overflow: 'auto' }" collapsible>
       <div class="logo" />
       <a-menu theme="dark" mode="inline">
         <router-link to="dashboard">
@@ -38,73 +34,64 @@
     </a-layout-sider>
 
     <a-layout>
-      <a-layout-header style="padding: 0 ">
+      <a-layout-header style="padding: 0">
         <a-menu theme="dark">
           <a-row justify="end">
-
             <!-- Notification Icon -->
             <a-col span="1">
-            
-            <a-dropdown :trigger="['click']">
-						<a-badge count="1">
-							<a class="ant-dropdown-link">
-                  <NotificationOutlined style="font-size: 150%" />
-							</a>
-						</a-badge>
-						<template #overlay>
-						<a-list item-layout="horizontal" :data-source="notificationsData">
-							<a-list-item>
-								<a-list-item-meta>
-						{{}}
-								</a-list-item-meta>
-							</a-list-item>
-						</a-list>
-          </template>
-					</a-dropdown>  
-          </a-col>
-          
-          <!-- User Icon -->
-        <a-col span="1">
-            <a-dropdown 
-              placement="bottomRight"
-              trigger="click"
-              size="large">
-              <a href="#">
-                    <a-avatar 
-                      shape="circle"
-                      size="large">
-                      
-                        <template #icon><UserOutlined /></template>
+              <a-dropdown :trigger="['click']">
+                <a-badge count="1">
+                  <a class="ant-dropdown-link">
+                    <NotificationOutlined style="font-size: 150%" />
+                  </a>
+                </a-badge>
+                <template #overlay>
+                  <a-list
+                    item-layout="horizontal"
+                    :data-source="notificationsData"
+                  >
+                    <a-list-item>
+                      <a-list-item-meta> {{}} </a-list-item-meta>
+                    </a-list-item>
+                  </a-list>
+                </template>
+              </a-dropdown>
+            </a-col>
 
-                    </a-avatar></a>
-                    <template #overlay>
-                    <a-menu>
-                        <a-menu-item>
-                          <router-link to="userprofile">
-                            <user-outlined /> Profile
-                        </router-link>
-                        </a-menu-item>
-                        <a-menu-item>
-                          <router-link to="settings">
-                            <setting-outlined /> Settings
-                        </router-link>
-                        </a-menu-item>
-                        <a-menu-item>
-                        <a rel="noopener noreferrer" href="#">
-                            <logout-outlined /> Log Out
-                        </a>
-                        </a-menu-item>
-                    </a-menu>
-                    </template>
-                </a-dropdown>
-                </a-col>
+            <!-- User Icon -->
+            <a-col span="1">
+              <a-dropdown placement="bottomRight" trigger="click" size="large">
+                <a href="#">
+                  <a-avatar shape="circle" size="large">
+                    <template #icon><UserOutlined /></template> </a-avatar
+                ></a>
+                <template #overlay>
+                  <a-menu>
+                    <a-menu-item>
+                      <router-link to="userprofile">
+                        <user-outlined /> Profile
+                      </router-link>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <router-link to="settings">
+                        <setting-outlined /> Settings
+                      </router-link>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <a-button @click="logout">
+                        <logout-outlined />
+                        Log Out
+                      </a-button>
+                    </a-menu-item>
+                  </a-menu>
+                </template>
+              </a-dropdown>
+            </a-col>
           </a-row>
         </a-menu>
-
       </a-layout-header>
 
       <a-layout-content style="margin: 10px 16px">
-
         <RouterView />
       </a-layout-content>
       <a-layout-footer style="text-align: center">
@@ -124,10 +111,10 @@ import {
   NotificationOutlined,
   SettingOutlined,
   LogoutOutlined,
-} from '@ant-design/icons-vue';
-import { Col, Row } from 'ant-design-vue'
-import { defineComponent, ref } from 'vue';
-import { RouterView, RouterLink } from 'vue-router';
+} from "@ant-design/icons-vue";
+import { Col, Row } from "ant-design-vue";
+import { defineComponent, ref } from "vue";
+import { message } from "ant-design-vue";
 export default defineComponent({
   components: {
     PieChartOutlined,
@@ -143,8 +130,15 @@ export default defineComponent({
   data() {
     return {
       collapsed: ref<boolean>(false),
-      selectedKeys: ref<string[]>(['1']),
+      selectedKeys: ref<string[]>(["1"]),
     };
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push("/");
+      message.success("Logout Successful!");
+    },
   },
 });
 </script>
@@ -159,11 +153,9 @@ export default defineComponent({
   background: #fff;
 }
 
-[data-theme='dark'] .site-layout .site-layout-background {
+[data-theme="dark"] .site-layout .site-layout-background {
   background: #141414;
 }
 </style>
 
-<style scoped>
-
-</style>
+<style scoped></style>

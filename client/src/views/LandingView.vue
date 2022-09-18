@@ -3,45 +3,34 @@
     <a-layout-header>
       <div class="logo" />
 
-<!-- Menu Start -->
-      <a-menu 
-      theme="dark" 
-      mode="horizontal" 
-      :style="{ lineHeight: '64px' }">
-
+      <!-- Menu Start -->
+      <a-menu theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }">
         <router-link :to="{ name: 'home' }">
-          <a-menu-item key="1">Home
-          </a-menu-item>
+          <a-menu-item key="1">Home </a-menu-item>
         </router-link>
 
-        <a href=#faq>
-          <a-menu-item key="2">Mentors
-          </a-menu-item>
+        <a href="#faq">
+          <a-menu-item key="2">Mentors </a-menu-item>
         </a>
 
         <a href="#faq">
-          <a-menu-item key="3">F.A.Q.
-          </a-menu-item>
+          <a-menu-item key="3">F.A.Q. </a-menu-item>
         </a>
 
-        <router-link :to="{ name: 'about' }"> 
-          <a-menu-item key="4">About 
-          </a-menu-item>
+        <router-link :to="{ name: 'about' }">
+          <a-menu-item key="4">About </a-menu-item>
         </router-link>
 
         <router-link :to="{ name: 'premeet' }">
-          <a-menu-item key="5">Pre Meet
-          </a-menu-item>
+          <a-menu-item key="5">Pre Meet </a-menu-item>
         </router-link>
 
         <router-link :to="{ name: 'login' }">
-          <a-menu-item key="6">Login
-          </a-menu-item>
+          <a-menu-item key="6">Login </a-menu-item>
         </router-link>
-
       </a-menu>
     </a-layout-header>
-<!-- Menu End -->
+    <!-- Menu End -->
     <a-layout-content style="padding: 0 50px">
       <div
         :style="{
@@ -54,13 +43,10 @@
       >
         <a-typography-title>Join the Mentoring Hub!</a-typography-title>
         <br />
-        <img 
-        src="" alt="" />
+        <img src="" alt="" />
 
-        <router-link :to="{name: 'signup'}">
-        <a-button 
-        size="large"
-        type="primary">Connect Now</a-button>
+        <router-link :to="{ name: 'signup' }">
+          <a-button size="large" type="primary">Connect Now</a-button>
         </router-link>
       </div>
     </a-layout-content>
@@ -74,27 +60,27 @@
           minHeight: '280px',
         }"
       >
-      <a-row justify="center">
-        <a-typography-title :level="2">About Us</a-typography-title>
         <a-row justify="center">
-
-        <a-col span="20">
-        <p>
-          Mentoring Hub is a web-based platform which helps to connect mentees
-          with their ideal mentor. This application will try to enhance
-          learner’s knowledge about real world problems and also help them to
-          acquire skills sets provided by the professionals. By using the
-          platform, mentees can interact with their ideal mentor online. mentees
-          all around the globe can interact with mentors ie. Now they are free
-          from any barrier. Mentees from any place, urban or remote area can
-          communicate with mentors. As we know, guidance from the professionals
-          are important for the mentees to develop careers in their respective
-          fields. Using this platform, mentees can get help from professionals
-          in different domains to solve their problems.
-        </p>
-      </a-col>
-    </a-row>
-      </a-row>
+          <a-typography-title :level="2">About Us</a-typography-title>
+          <a-row justify="center">
+            <a-col span="20">
+              <p>
+                Mentoring Hub is a web-based platform which helps to connect
+                mentees with their ideal mentor. This application will try to
+                enhance learner’s knowledge about real world problems and also
+                help them to acquire skills sets provided by the professionals.
+                By using the platform, mentees can interact with their ideal
+                mentor online. mentees all around the globe can interact with
+                mentors ie. Now they are free from any barrier. Mentees from any
+                place, urban or remote area can communicate with mentors. As we
+                know, guidance from the professionals are important for the
+                mentees to develop careers in their respective fields. Using
+                this platform, mentees can get help from professionals in
+                different domains to solve their problems.
+              </p>
+            </a-col>
+          </a-row>
+        </a-row>
         <div class="logo" />
       </div>
     </a-layout-content>
@@ -104,12 +90,15 @@
         <a-row justify="center">
           <a-typography-title :level="2">Our Mentors</a-typography-title>
         </a-row>
-        
 
         <div>
           <a-row>
             <a-col
-              :xs="20" :sm="16" :md="16" :lg="12" :xl="8" 
+              :xs="20"
+              :sm="16"
+              :md="16"
+              :lg="12"
+              :xl="8"
               v-for="mentor in mentors"
               :key="mentor.id"
               style="margin: 0 auto"
@@ -139,29 +128,49 @@
 
     <a-layout-content style="padding: 0 50px">
       <div
-      :style="{ 
-        background: '#fff',
-        padding: '24px',
-        margin: '20px',
-        minHeight: '280px',
+        :style="{
+          background: '#fff',
+          padding: '24px',
+          margin: '20px',
+          minHeight: '280px',
         }"
       >
-        <a-typography-title id="faq"
-        :level="2">Frequently Asked Questions</a-typography-title>
-          <a-collapse v-model:activeKey="activeKey" accordion>
-            <a-collapse-panel key="1" header="General">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id recusandae repudiandae earum temporibus quod omnis dignissimos mollitia voluptate quam cum quae nisi ea corrupti iure nesciunt facilis odio, voluptas ratione.</p>
-            </a-collapse-panel>
-            <a-collapse-panel key="2" header="What is Mentoring Hub?">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore amet inventore numquam provident ad. Maiores, quis harum explicabo, earum ullam fugit inventore, quasi amet odit aperiam iure! Id, odit nemo.</p>
-            </a-collapse-panel>
-            <a-collapse-panel key="3" header="Why Mentoring Hub">
-              <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus recusandae, sunt nulla veritatis a deleniti aliquam non sint accusamus aspernatur optio </p>
-            </a-collapse-panel>
-            <a-collapse-panel key="4" header="Privacy Policy">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos sed porro aperiam voluptate expedita rerum dicta excepturi deleniti! Eaque architecto dolor neque nam, qui vitae dolorum dignissimos vel unde explicabo!</p>
-            </a-collapse-panel>
-          </a-collapse>
+        <a-typography-title id="faq" :level="2"
+          >Frequently Asked Questions</a-typography-title
+        >
+        <a-collapse v-model:activeKey="activeKey" accordion>
+          <a-collapse-panel key="1" header="General">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
+              recusandae repudiandae earum temporibus quod omnis dignissimos
+              mollitia voluptate quam cum quae nisi ea corrupti iure nesciunt
+              facilis odio, voluptas ratione.
+            </p>
+          </a-collapse-panel>
+          <a-collapse-panel key="2" header="What is Mentoring Hub?">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+              amet inventore numquam provident ad. Maiores, quis harum
+              explicabo, earum ullam fugit inventore, quasi amet odit aperiam
+              iure! Id, odit nemo.
+            </p>
+          </a-collapse-panel>
+          <a-collapse-panel key="3" header="Why Mentoring Hub">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+              recusandae, sunt nulla veritatis a deleniti aliquam non sint
+              accusamus aspernatur optio
+            </p>
+          </a-collapse-panel>
+          <a-collapse-panel key="4" header="Privacy Policy">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos sed
+              porro aperiam voluptate expedita rerum dicta excepturi deleniti!
+              Eaque architecto dolor neque nam, qui vitae dolorum dignissimos
+              vel unde explicabo!
+            </p>
+          </a-collapse-panel>
+        </a-collapse>
       </div>
     </a-layout-content>
 
