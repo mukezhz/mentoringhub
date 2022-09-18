@@ -1,3 +1,5 @@
+import { checkVerified } from "@/utils/account/checkVerified";
+import { account } from "@/utils/account";
 import { createRouter, createWebHistory, routerKey } from "vue-router";
 import PageNotFound from "@/views/404.vue";
 import LandingView from "@/views/LandingView.vue";
@@ -17,6 +19,11 @@ export const router = createRouter({
       meta: {
         requiresAuth: false,
       },
+    },
+    {
+      path: "/activate/:token",
+      name: "Activate Account",
+      component: () => import("../views/ActivateAccount.vue"),
     },
     {
       path: "/",
@@ -113,11 +120,17 @@ export const router = createRouter({
 });
 
 // export default router
-router.beforeEach((to, from, next) => {
-  const authToken = localStorage.getItem("authtoken");
-  // token needs to be verified by the server
-  if ((!authToken || !authToken.length) && to.meta.requiresAuth) next("/login");
-  if (authToken?.length && to.name === "login") next("/dashboard");
-  else if (authToken?.length && to.name === "home") next("/dashboard");
+router.beforeEach(async (to, from, next) => {
+  const token = localStorage.getItem("authtoken");
+  if (token?.length) {
+    const isVerified = await checkVerified(token);
+    if (!isVerified) next("/login");
+    localStorage.setItem("isverified", isVerified ? "1" : "");
+  }
+
+  if (!token && to.meta.requiresAuth) next("/login");
+  if (token?.length && to.name === "login") next("/dashboard");
+  else if (token?.length && to.name === "home") next("/dashboard");
+  else if (token?.length && to.name === "signup") next("/dashboard");
   else next();
 });

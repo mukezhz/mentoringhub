@@ -119,9 +119,7 @@ export default defineComponent({
           localStorage.setItem("email", email);
           localStorage.setItem("authtoken", token);
           message.success("Login Successful!");
-          router.push({
-            name: "dashboard",
-          });
+          router.push("/dashboard");
         }
       } catch (e) {
         console.log(e);

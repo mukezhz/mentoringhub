@@ -1,4 +1,13 @@
 <template>
+  <div v-if="isVerified">
+    <a-alert
+      message="Please check your email to verify your account!!!"
+      banner
+    />
+    <a-button type="ghost" @click="resendEmail"
+      >Resend verification link</a-button
+    >
+  </div>
   <div>
     <!-- Mentors -->
     <a-breadcrumb style="margin: 16px 0">
@@ -89,7 +98,8 @@ import {
   TeamOutlined,
   FileOutlined,
 } from "@ant-design/icons-vue";
-
+import { account } from "@/utils/account";
+import { message } from "ant-design-vue";
 export default defineComponent({
   components: {
     PieChartOutlined,
@@ -102,7 +112,53 @@ export default defineComponent({
     return {
       collapsed: ref<boolean>(false),
       selectedKeys: ref<string[]>(["1"]),
+      isVerified: ref<boolean>(false || !localStorage.getItem("isverified")),
     };
+  },
+  mounted() {
+    const token = localStorage.getItem("authtoken");
+    if (token?.length) {
+      // const { data } = await(await account.isVerfied(token)).json();
+      // const { me } = data;
+      account
+        .isVerfied(token)
+        .then((res: any) => res.json())
+        .then((data: any) => {
+          const {
+            data: { me },
+          } = data;
+          if (!me) {
+            localStorage.clear();
+            this.$router.push("/login");
+          }
+          this.isVerified = !me?.verified;
+        });
+    }
+  },
+  methods: {
+    async resendEmail() {
+      const email = localStorage.getItem("email");
+      const token = localStorage.getItem("authtoken");
+      if (email?.length && token?.length) {
+        const res = await account.resendActivationEmail(email, token);
+        const { data } = await res.json();
+        const { resendActivationEmail } = data;
+        const { errors, success } = resendActivationEmail;
+        for (const i in errors) {
+          for (const j of errors[i]) {
+            message.error(j.message);
+          }
+        }
+        if (success) {
+          localStorage.setItem("email", email);
+          localStorage.setItem("authtoken", token);
+          message.success("Login Successful!");
+          this.$router.push({
+            name: "dashboard",
+          });
+        }
+      }
+    },
   },
 });
 </script>
