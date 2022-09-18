@@ -99,17 +99,17 @@ export const router = createRouter({
           name: "application",
           component: ApplicationView,
         },
+        {
+          path: "/profile",
+          name: "User Profile",
+          component: () => import("../views/UserProfile.vue"),
+        },
       ],
     },
     {
       path: "/premeet",
       name: "premeet",
       component: () => import("../views/PreMeetView.vue"),
-    },
-    {
-      path: "/userprofile",
-      name: "userprofile",
-      component: () => import("../views/UserProfile.vue"),
     },
     {
       path: "/meet",

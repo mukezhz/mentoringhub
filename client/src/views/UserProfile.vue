@@ -1,43 +1,6 @@
 <template>
   <a-layout>
-    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
-      <div class="logo" />
-
-      <a-row justify="end">
-        <a-col :span="1">
-          <!-- User Avatar   -->
-          <a-dropdown placement="bottomRight" size="large">
-            <a-avatar size="large">
-              <template #icon><UserOutlined /></template>
-            </a-avatar>
-            <template #overlay>
-              <a-menu>
-                <a-menu-item>
-                  <a rel="noopener noreferrer" href="#">
-                    <user-outlined /> Profile
-                  </a>
-                </a-menu-item>
-                <a-menu-item>
-                  <a rel="noopener noreferrer" href="#">
-                    <setting-outlined /> Settings
-                  </a>
-                </a-menu-item>
-                <a-menu-item>
-                  <a rel="noopener noreferrer" href="#">
-                    <logout-outlined /> Log Out
-                  </a>
-                </a-menu-item>
-              </a-menu>
-            </template>
-          </a-dropdown>
-          <!-- User Avatar -->
-        </a-col>
-      </a-row>
-    </a-layout-header>
-    <!-- header end -->
-
     <!-- content start -->
-
     <a-layout-content :style="{ padding: '20px 70px', marginTop: '64px' }">
       <div :style="{ padding: '24px', minHeight: '380px' }">
         <a-row justify="center">
@@ -128,7 +91,6 @@
                   size="large"
                   style="width: 100%"
                   placeholder="Select Country of Residence"
-                  :options="countryOptions"
                 ></a-select>
               </a-form-item>
 
@@ -143,7 +105,6 @@
                   size="large"
                   style="width: 100%"
                   placeholder="Select your Skills"
-                  :options="skillsOption"
                 ></a-select>
               </a-form-item>
 
@@ -158,7 +119,6 @@
                   size="large"
                   style="width: 100%"
                   placeholder="Select your Interests"
-                  :options="interestsOption"
                 ></a-select>
               </a-form-item>
 
@@ -173,7 +133,6 @@
                   size="large"
                   style="width: 100%"
                   placeholder="Select Languages you can speak"
-                  :options="languageOptions"
                 ></a-select>
               </a-form-item>
 
@@ -197,10 +156,6 @@
         </a-row>
       </div>
     </a-layout-content>
-
-    <a-layout-footer :style="{ textAlign: 'center' }">
-      Mentoring Hub © 2022
-    </a-layout-footer>
   </a-layout>
 </template>
 <script lang="ts">

@@ -152,10 +152,10 @@ export default defineComponent({
         if (success) {
           localStorage.setItem("email", email);
           localStorage.setItem("authtoken", token);
-          message.success("Login Successful!");
           this.$router.push({
             name: "dashboard",
           });
+          message.success("Login Successful!");
         }
       }
     },
