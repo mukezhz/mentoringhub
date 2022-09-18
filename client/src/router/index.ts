@@ -69,7 +69,7 @@ export const router = createRouter({
       name: "dashboard",
       component: () => import("../layouts/Default.vue"),
       meta: {
-        requiresAuth: true,
+        requiresAuth: false,
       },
       children: [
         {

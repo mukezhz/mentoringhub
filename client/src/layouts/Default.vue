@@ -1,6 +1,10 @@
 <template>
-  <a-layout has-slider style="min-height: 100vh">
-    <a-layout-sider collapsible >
+  <a-layout 
+    has-slider 
+    style="min-height: 100vh">
+    <a-layout-sider
+      :style="{overflow: 'auto'}" 
+      collapsible >
       <div class="logo" />
       <a-menu theme="dark" mode="inline">
         <router-link to="dashboard">
@@ -36,17 +40,64 @@
     <a-layout>
       <a-layout-header style="padding: 0 ">
         <a-menu theme="dark">
-          <a-row justify="space-between">
-            <a-col flex="100px">Icon</a-col>
-            <!-- <a-col flex="auto">auto</a-col> -->
-            <a-sub-menu key="sub1">
-              <template #icon>
-                <NotificationOutlined />
-              </template>
-              <template #title flex="auto">Notifications  </template>
-              <a-menu-item key="5">This is notification 1.</a-menu-item>
-              <a-menu-item key="6">This is notification 2.</a-menu-item>
-            </a-sub-menu>
+          <a-row justify="end">
+
+            <!-- Notification Icon -->
+            <a-col span="1">
+            
+            <a-dropdown :trigger="['click']">
+						<a-badge count="1">
+							<a class="ant-dropdown-link">
+                  <NotificationOutlined style="font-size: 150%" />
+							</a>
+						</a-badge>
+						<template #overlay>
+						<a-list item-layout="horizontal" :data-source="notificationsData">
+							<a-list-item>
+								<a-list-item-meta>
+						{{}}
+								</a-list-item-meta>
+							</a-list-item>
+						</a-list>
+          </template>
+					</a-dropdown>  
+          </a-col>
+          
+          <!-- User Icon -->
+        <a-col span="1">
+            <a-dropdown 
+              placement="bottomRight"
+              trigger="click"
+              size="large">
+              <a href="#">
+                    <a-avatar 
+                      shape="circle"
+                      size="large">
+                      
+                        <template #icon><UserOutlined /></template>
+
+                    </a-avatar></a>
+                    <template #overlay>
+                    <a-menu>
+                        <a-menu-item>
+                          <router-link to="userprofile">
+                            <user-outlined /> Profile
+                        </router-link>
+                        </a-menu-item>
+                        <a-menu-item>
+                          <router-link to="settings">
+                            <setting-outlined /> Settings
+                        </router-link>
+                        </a-menu-item>
+                        <a-menu-item>
+                        <a rel="noopener noreferrer" href="#">
+                            <logout-outlined /> Log Out
+                        </a>
+                        </a-menu-item>
+                    </a-menu>
+                    </template>
+                </a-dropdown>
+                </a-col>
           </a-row>
         </a-menu>
 
@@ -70,7 +121,9 @@ import {
   SmileOutlined,
   TeamOutlined,
   FileOutlined,
-  NotificationOutlined
+  NotificationOutlined,
+  SettingOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons-vue';
 import { Col, Row } from 'ant-design-vue'
 import { defineComponent, ref } from 'vue';
@@ -83,7 +136,9 @@ export default defineComponent({
     UserOutlined,
     TeamOutlined,
     FileOutlined,
-    NotificationOutlined
+    NotificationOutlined,
+    SettingOutlined,
+    LogoutOutlined,
   },
   data() {
     return {
