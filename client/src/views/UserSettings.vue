@@ -2,14 +2,15 @@
   <a-layout>
     <!-- content start -->
     <a-layout-content :style="{ padding: '20px 70px', marginTop: '64px' }">
-      <div :style="{ padding: '24px', minHeight: '380px' }">
-        <a-divider>Edit User Details</a-divider>
+      <div :style="{ minHeight: '380px' }">
+        <a-row justify="center">
+          <a-typography-title :level="2">
+            Update User Details
+          </a-typography-title></a-row
+        >
         <a-row justify="center">
           <a-col :span="8">
-            <a-typography-paragraph>
-              Edit your details here.
-            </a-typography-paragraph>
-            <a-divider />
+            <a-divider>Update your details below and click Save Details</a-divider>
             <a-form
               :model="formState"
               layout="vertical"
@@ -148,7 +149,7 @@
 
               <a-divider
                 >Please recheck the provided information before proceeding to
-                Submit.</a-divider
+                Save.</a-divider
               >
 
               <a-form-item>
@@ -158,7 +159,7 @@
                   size="large"
                   block
                   html-type="submit"
-                  >Submit</a-button
+                  >Save Details</a-button
                 >
               </a-form-item>
             </a-form>
