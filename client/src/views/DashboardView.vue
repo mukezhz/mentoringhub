@@ -143,7 +143,6 @@ export default defineComponent({
         .fetchYourProfile(authToken)
         .then((res: any) => res.json())
         .then((data: any) => {
-          console.log("datatata", data);
           const {
             data: { me },
           } = data;
