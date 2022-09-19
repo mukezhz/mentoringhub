@@ -27,7 +27,9 @@
                 <a-descriptions-item label="Email">{{
                   formState.user.email
                 }}</a-descriptions-item>
-                <a-descriptions-item label="Role">{{formState.user.role}}</a-descriptions-item>
+                <a-descriptions-item label="Role">{{
+                  formState.user.role
+                }}</a-descriptions-item>
               </a-descriptions>
             </a-card>
           </a-col>
@@ -42,8 +44,6 @@
             </a-col>
           </a-row>
         </template>
-
-        
       </div>
     </a-layout-content>
   </a-layout>
@@ -51,9 +51,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import MentorshipForm from "../components/MentorshipForm.vue";
-import {
-  UserOutlined,
-} from "@ant-design/icons-vue";
+import { UserOutlined } from "@ant-design/icons-vue";
 
 export default defineComponent({
   components: {
@@ -62,17 +60,6 @@ export default defineComponent({
   },
 
   setup() {
-    const validateMessages = {
-      required: "${label} is required!",
-      types: {
-        email: "${label} is not a valid email!",
-        number: "${label} is not a valid number!",
-      },
-      number: {
-        range: "${label} must be between ${min} and ${max}",
-      },
-    };
-
     const formState = reactive({
       user: {
         fname: "",
@@ -86,13 +73,9 @@ export default defineComponent({
         bio: "",
       },
     });
-    const onFinish = (values: any) => {
-      console.log("Success:", values);
-    };
+
     return {
       formState,
-      onFinish,
-      validateMessages,
     };
   },
 });
