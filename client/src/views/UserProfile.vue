@@ -117,8 +117,6 @@
         MentorshipForm,
     },
 
-    setup() {
-
   setup() {
     const validateMessages = {
       required: "${label} is required!",
@@ -135,7 +133,7 @@
       user: {
         fname: "",
         email: "",
-        role: "",
+        role: "mentor",
         skills: undefined,
         interests: undefined,
         country: undefined,
