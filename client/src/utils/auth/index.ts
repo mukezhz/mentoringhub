@@ -16,6 +16,14 @@ class Auth {
       body: JSON.stringify(gql({ email, password1, password2 }).register),
     });
   }
+
+  public async regenerateToken(refreshToken: string) {
+    return await fetch(this.url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(gql({ refreshToken }).regenerateToken),
+    });
+  }
 }
 
 export const auth = new Auth();

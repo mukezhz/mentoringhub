@@ -143,7 +143,7 @@ export default defineComponent({
       try {
         const res = await auth.login(email, password);
         const { data } = await res.json();
-        const { errors, success, token } = data.tokenAuth;
+        const { errors, success, token, refreshToken } = data.tokenAuth;
         for (const i in errors) {
           for (const j of errors[i]) {
             message.error(j.message);
@@ -152,6 +152,7 @@ export default defineComponent({
         if (success) {
           localStorage.setItem("email", email);
           localStorage.setItem("authtoken", token);
+          localStorage.setItem("refreshtoken", refreshToken);
           message.success("Login Successful!");
           router.push("/dashboard");
         }
