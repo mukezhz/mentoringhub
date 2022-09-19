@@ -1,3 +1,4 @@
+from datetime import timedelta
 import os, warnings
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
@@ -9,7 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.getenv("DEBUG")
 DOMAIN = os.getenv("DOMAIN")
 EMAIL = os.getenv("EMAIL")
-SECRET_KEY = os.getenv("SECRET_KEY")
 # database credentials
 DB_NAME = os.getenv("DB_NAME")
 DB_USERNAME = os.getenv("DB_USERNAME", default="postgres")
@@ -169,6 +169,8 @@ GRAPHQL_JWT = {
         "graphql_auth.mutations.VerifySecondaryEmail",
     ],
 }
+
+GRAPHQL_AUTH = {"EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(days=1)}
 
 # EMAIL_HOST = os.getenv("EMAIL_HOST")
 # EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
