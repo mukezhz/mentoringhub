@@ -9,6 +9,18 @@ export const gql = (q: any) => {
               }
                 `,
     },
+    hasProfile: {
+      query: `query {
+                me {
+                  id
+                  verified
+                  userprofile {
+                    fullName
+                   }
+                }
+              }
+                `,
+    },
     resendEmail: {
       query: `mutation resendActivationEmail($email: String!){
                 resendActivationEmail(email: $email){
