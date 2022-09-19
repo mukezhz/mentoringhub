@@ -1,71 +1,79 @@
 <template>
-<div class="signup-view">
-    <div align="center">
-        <a-typography-title :level="2">Sign Up</a-typography-title>
-        <a-typography-text>Create a new account for free.</a-typography-text>
-    </div>
-  <a-divider></a-divider>
-<a-row justify="center">
-  <a-col :span="10">
-    <a-form
-      name="registration"
-      layout="vertical"
-      :model="formState"
-      :rules="rules"
-      autocomplete="off"
-      @finish="onFinish"
-      @finishFailed="onFinishFailed"
-    >
-      <a-form-item
-        label="Email"
-        name="email"
-        has-feedback
-        :rules="[{trigger:'blur', required: true, message: 'Please enter your email!'},{ trigger: 'change', type:'email', message:'Please enter a valid email!' }]"
-      >
-        <a-input v-model:value="formState.email" placeholder="eg. name@example.com"/>
-      </a-form-item>
+  <a-layout>
+    <a-layout-content>
+      <a-divider></a-divider>
+      <a-row justify="center">
+        <a-col>
+          <a-row>
+            <a-typography-title :level="1">Registration</a-typography-title>
+          </a-row>
+          <a-row>
+            <a-typography-text>Create a new account for free.</a-typography-text>
+          </a-row>
+        </a-col>
+      </a-row>
+      <a-divider></a-divider>
+      <a-row justify="center">
+        <a-col :span="8">
+          <a-form name="registration" layout="vertical" :model="formState" :rules="rules" autocomplete="off"
+            @finish="onFinish" @finishFailed="onFinishFailed">
 
-      <a-form-item
-        label="Password"
-        name="password"
-        has-feedback  
-      >
-        <a-input-password v-model:value="formState.password" placeholder="Enter a strong password" />
-      </a-form-item>
+            <a-form-item label="Email" name="email" has-feedback
+              :rules="[{trigger:'blur', required: true, message: 'Please enter your email!'},{trigger: 'blur', type:'email', message:'Please enter a valid email!' }]">
+              <a-input size="large" v-model:value="formState.email" placeholder="eg. name@example.com" />
+            </a-form-item>
 
-      <a-form-item
-        label="Confirm Password"
-        name="confirmPassword"
-        has-feedback
-      >
-        <a-input-password v-model:value="formState.confirmPassword" placeholder="Retype your password" />
-      </a-form-item>
+            <a-form-item label="Password" name="password" has-feedback>
+              <a-input-password size="large" v-model:value="formState.password" placeholder="Enter a strong password" />
+            </a-form-item>
 
-      <a-form-item name="agreement">
-        <a-checkbox v-model:checked="formState.agreement">
-        I agree to the <router-link to=/terms&conditions>Terms & Conditions</router-link> and <router-link to=/privacypolicy>Privacy Policy</router-link>
-        </a-checkbox>
-      </a-form-item>
+            <a-form-item label="Confirm Password" name="confirmPassword" has-feedback>
+              <a-input-password size="large" v-model:value="formState.confirmPassword"
+                placeholder="Retype your password" />
+            </a-form-item>
 
-      <a-form-item>
-        <a-button :disabled="disabled" block shape="round" type="primary" html-type="submit" class="login-form-button">SIGN UP</a-button>
-      </a-form-item>
-      
-    <a-form-item>
-      <div align="center">
-      <a-typography-text>Already have an account? </a-typography-text>
-      </div>
-    <router-link to="/login" >
-    <a-button type="default" block shape="round" class="login-form-button">
-      Sign In
-    </a-button>
-    </router-link>
-    </a-form-item>
-    </a-form>
-  </a-col>
-</a-row>
-  
-</div>
+            <a-form-item label="Role" name="role" :rules="[{ required: true }]">
+              <a-select size="large" v-model:value="formState.role" placeholder="Please select account type">
+                <a-select-option value="mentor">Mentor</a-select-option>
+                <a-select-option value="mentee">Mentee</a-select-option>
+              </a-select>
+            </a-form-item>
+
+            <a-form-item name="agreement">
+              <a-checkbox v-model:checked="formState.agreement">
+                I agree to the <router-link to=/terms&conditions>Terms & Conditions</router-link> and <router-link
+                  to=/privacypolicy>Privacy Policy</router-link>
+              </a-checkbox>
+            </a-form-item>
+
+            <a-row justify="center">
+              <a-col :span="16">
+                <a-form-item>
+                  <a-button :disabled="disabled" block size="large" shape="round" type="primary" html-type="submit"
+                    class="login-form-button">Register</a-button>
+                </a-form-item>
+              </a-col>
+            </a-row>
+
+            <a-divider>Already have an account?</a-divider>
+
+            <a-row justify="center">
+              <a-col :span="10">
+
+                <a-form-item>
+                  <router-link to="/login">
+                    <a-button type="default" block shape="round" size="large" class="login-form-button">Sign In
+                    </a-button>
+                  </router-link>
+                </a-form-item>
+
+              </a-col>
+            </a-row>
+          </a-form>
+        </a-col>
+      </a-row>
+    </a-layout-content>
+  </a-layout>
 </template>
 
 
@@ -80,6 +88,7 @@ interface FormState {
   email: string;
   password: string;
   confirmPassword: string;
+  role: string;
   agreement: boolean;
 }
 export default defineComponent({
@@ -89,6 +98,7 @@ export default defineComponent({
       email: '',
       password: '',
       confirmPassword: '',
+      role:'Choose your account type',
       agreement: false,
     });
     
@@ -108,7 +118,7 @@ export default defineComponent({
     };
 
     const disabled = computed(() => {
-      return !(formState.email && formState.password !== '' && formState.password === formState.confirmPassword && formState.agreement);
+      return !(formState.email && formState.password !== '' && formState.password === formState.confirmPassword && formState.agreement && (formState.role=='mentor' || formState.role=='mentee'));
     });
 
     const onFinish = async (values: { email: string, password: string, confirmPassword: string}) => {
@@ -147,13 +157,12 @@ export default defineComponent({
 <style scoped>
 .ant-input,
 .ant-input-password,
-.ant-select
-{
+.ant-select {
   border-radius: 5px;
 }
 
-.ant-col label, span{
+.ant-col label,
+span {
   font-size: 1.1rem;
 }
-
 </style>
