@@ -105,6 +105,11 @@ export const router = createRouter({
           component: () => import("../views/UserProfile.vue"),
         },
         {
+          path: "/settings",
+          name: "User Settings",
+          component: () => import("../views/UserSettings.vue"),
+        },
+        {
           path: "/premeet",
           name: "premeet",
           component: () => import("../views/PreMeetView.vue"),
