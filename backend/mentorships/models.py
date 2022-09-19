@@ -10,6 +10,7 @@ class Mentorship(models.Model):
         (ACCEPTED, ("ACCEPTED")),
         (REJECTED, ("REJECTED")),
     )
+    title = models.CharField(max_length=50)
     qna = models.JSONField()
     mentor_id = models.CharField(max_length=100)
     mentee_id = models.CharField(max_length=100)
