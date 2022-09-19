@@ -6,6 +6,7 @@ export const gql = (q: any) => {
                    token
                    success
                    errors
+                   refreshToken
                  }
                }
               `,
@@ -24,6 +25,21 @@ export const gql = (q: any) => {
         email: q?.email,
         password1: q?.password1,
         password2: q?.password2,
+      },
+    },
+    regenerateToken: {
+      query: `
+        mutation regenerateToken($refreshToken: String!) {
+          refreshToken(refreshToken: $refreshToken) {
+            token
+            payload
+            success
+            errors
+          }
+        }
+      `,
+      variables: {
+        refreshToken: q?.refreshToken,
       },
     },
   };

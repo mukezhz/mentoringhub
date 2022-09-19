@@ -7,6 +7,7 @@ import DashboardView from "../views/DashboardView.vue";
 import MentorView from "@/views/MentorView.vue";
 import RoomView from "@/views/RoomView.vue";
 import ApplicationView from "@/views/ApplicationView.vue";
+import { regenerateTokenFromRefreshToken } from "@/utils/auth/refreshToken";
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -122,9 +123,13 @@ export const router = createRouter({
 // export default router
 router.beforeEach(async (to, from, next) => {
   const token = localStorage.getItem("authtoken");
+  const refreshToken = localStorage.getItem("refreshtoken");
   if (token?.length) {
     const isVerified = await checkVerified(token);
-    if (!isVerified) next("/login");
+    if (!isVerified) {
+      if (await regenerateTokenFromRefreshToken(refreshToken || "")) next();
+      next("/login");
+    }
     localStorage.setItem("isverified", isVerified ? "1" : "");
   }
 
