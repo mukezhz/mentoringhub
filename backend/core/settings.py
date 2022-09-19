@@ -42,7 +42,7 @@ LIBRARY_APPS = [
 USER_APPS = [
     "users.apps.UsersConfig",
     "meetings.apps.MeetingsConfig",
-    # "mentorships.apps.MentorshipsConfig",
+    "mentorships.apps.MentorshipsConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + LIBRARY_APPS + USER_APPS
 
