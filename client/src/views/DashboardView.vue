@@ -112,7 +112,7 @@ export default defineComponent({
         });
     }
     const authToken = localStorage.getItem("authtoken");
-    if (token?.length) {
+    if (authToken?.length) {
       account
         .fetchYourProfile(authToken)
         .then((res: any) => res.json())
