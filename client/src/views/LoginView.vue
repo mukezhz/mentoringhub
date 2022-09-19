@@ -16,6 +16,7 @@
           <a-form-item
             label="Email"
             name="email"
+            has-feedback
             :rules="[
               {
                 required: true,
