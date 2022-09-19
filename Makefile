@@ -1,10 +1,13 @@
 IP := 192.168.1.118
 SHELL := /bin/bash
 
-.PHONY: client backend serve livekit
+.PHONY: client format backend serve livekit
 
 client:
 	npm run dev --prefix ${PWD}/client/
+
+format:
+	npm run format --prefix ${PWD}/client/
 
 backend:
 	cd backend && source export.sh && poetry run python manage.py runserver 0.0.0.0:8000

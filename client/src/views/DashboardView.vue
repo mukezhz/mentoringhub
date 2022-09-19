@@ -1,7 +1,12 @@
 <template>
   <div v-if="!isVerified">
-    <a-alert message="Please check your email to verify your account!!!" banner />
-    <a-button type="ghost" @click="resendEmail">Resend verification link</a-button>
+    <a-alert
+      message="Please check your email to verify your account!!!"
+      banner
+    />
+    <a-button type="ghost" @click="resendEmail"
+      >Resend verification link</a-button
+    >
   </div>
   <div v-if="!hasProfile">
     <a-alert message="Please create your profile!!!" banner />
@@ -15,7 +20,14 @@
     <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
       Here are your mentors.
       <a-row>
-        <a-col :xs="20" :sm="16" :md="16" :lg="12" :xl="6" style="margin: 0 auto">
+        <a-col
+          :xs="20"
+          :sm="16"
+          :md="16"
+          :lg="12"
+          :xl="6"
+          style="margin: 0 auto"
+        >
           <a-card hoverable style="padding: 1rem; margin: 1rem">
             <template #cover>
               <img
@@ -39,7 +51,14 @@
     <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
       Here's your room.
       <a-row>
-        <a-col :xs="20" :sm="16" :md="16" :lg="12" :xl="6" style="margin: 0 auto">
+        <a-col
+          :xs="20"
+          :sm="16"
+          :md="16"
+          :lg="12"
+          :xl="6"
+          style="margin: 0 auto"
+        >
           <a-card hoverable style="padding: 1rem; margin: 1rem">
             <a-card title="room" :bordered="false"></a-card>
             <!-- <a-tag color="purple" v-for="(skill, index) in mentor.skills" :key="index"> {{ skill }} -->
@@ -56,7 +75,14 @@
     <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
       Here's your Application.
       <a-row>
-        <a-col :xs="20" :sm="16" :md="16" :lg="12" :xl="6" style="margin: 0 auto">
+        <a-col
+          :xs="20"
+          :sm="16"
+          :md="16"
+          :lg="12"
+          :xl="6"
+          style="margin: 0 auto"
+        >
           <a-card hoverable style="padding: 1rem; margin: 1rem">
             <a-card title="application" :bordered="false"></a-card>
             <!-- <a-tag color="purple" v-for="(skill, index) in mentor.skills" :key="index"> {{ skill }} -->
