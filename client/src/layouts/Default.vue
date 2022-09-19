@@ -5,28 +5,28 @@
       <a-menu theme="dark" mode="inline">
         <router-link to="dashboard">
           <a-menu-item key="1">
-            <pie-chart-outlined />
+            <home-outlined />
             <span>Home</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="mentor">
           <a-menu-item key="2">
-            <smile-outlined />
+            <usergroup-add-outlined />
             <span>Mentors</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="room">
           <a-menu-item key="3">
-            <file-outlined />
-            <span>Room</span>
+            <apartment-outlined />
+            <span>Rooms</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="application">
           <a-menu-item key="4">
-            <desktop-outlined />
+            <file-add-outlined />
             <span>Applications</span>
           </a-menu-item>
         </router-link>
@@ -102,10 +102,11 @@
 </template>
 <script lang="ts">
 import {
-  PieChartOutlined,
-  DesktopOutlined,
+  FileAddOutlined,
+  ApartmentOutlined,
+  UsergroupAddOutlined,
+  HomeOutlined,
   UserOutlined,
-  SmileOutlined,
   TeamOutlined,
   FileOutlined,
   NotificationOutlined,
@@ -117,9 +118,10 @@ import { defineComponent, ref } from "vue";
 import { message } from "ant-design-vue";
 export default defineComponent({
   components: {
-    PieChartOutlined,
-    DesktopOutlined,
-    SmileOutlined,
+    FileAddOutlined,
+    ApartmentOutlined,
+    UsergroupAddOutlined,
+    HomeOutlined,
     UserOutlined,
     TeamOutlined,
     FileOutlined,
@@ -157,5 +159,3 @@ export default defineComponent({
   background: #141414;
 }
 </style>
-
-<style scoped></style>
