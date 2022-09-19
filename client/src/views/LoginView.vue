@@ -1,8 +1,10 @@
 <template>
   <div class="login-view">
     <a-typography-title class="text-center"
-      >Welcome to Mentoring Hub</a-typography-title
+      >Login to Mentoring Hub</a-typography-title
     >
+    <a-row justify="center">
+      <a-col :span="16">
     <a-form
       layout="vertical"
       :model="formState"
@@ -18,11 +20,15 @@
           {
             required: true,
             message: 'Please enter your email!',
-            type: 'email',
+            trigger: 'blur',
           },
+          {trigger:'blur',type:'email', 
+          message: 'Please enter a valid email.'},
         ]"
       >
-        <a-input v-model:value="formState.email">
+        <a-input 
+          size="large"
+          v-model:value="formState.email">
           <template #prefix>
             <UserOutlined class="site-form-item-icon" />
           </template>
@@ -33,10 +39,11 @@
         label="Password"
         name="password"
         :rules="[
-          { required: true, message: 'Please enter your password!', min: 6 },
+          { required: true, message: 'Please enter your password!', trigger:'blur',},
+          {min:6, message: 'Not enough characters!!', trigger:'blur',},
         ]"
       >
-        <a-input-password v-model:value="formState.password">
+        <a-input-password size="large" v-model:value="formState.password">
           <template #prefix>
             <LockOutlined class="site-form-item-icon" />
           </template>
@@ -54,22 +61,37 @@
         >
       </div>
 
+      <a-row justify="center"><a-col :span="12">
+
       <a-form-item>
         <a-button
           type="primary"
+          block
+          size="large"
+          shape="round"
           html-type="submit"
           class="login-form-button"
           :disabled="disabled"
         >
           Log in
         </a-button>
-      </a-form-item>
+      </a-form-item></a-col>
+    </a-row>
+
+      <a-divider>New to the Mentoring Hub?</a-divider>
+      <a-row justify="center">
       <a-form-item>
-        <a-button type="primary" block class="login-form-button" ghost>
-          <a href="/signup">Register now!</a>
+        <router-link to="/signup">
+        <a-button 
+          shape="round"
+          size="large" type="primary" class="login-form-button" ghost>
+          Register now!
         </a-button>
-      </a-form-item>
+      </router-link>
+      </a-form-item></a-row>
     </a-form>
+  </a-col>
+  </a-row>
   </div>
 </template>
 
@@ -79,6 +101,7 @@ import { message } from "ant-design-vue";
 import { defineComponent, reactive, computed } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { RouterLink, useRouter } from "vue-router";
+import { trigger } from "@vue/reactivity";
 // import { Toast } from 'vuex-toast'
 interface FormState {
   email: string;
