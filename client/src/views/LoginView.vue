@@ -5,93 +5,104 @@
     >
     <a-row justify="center">
       <a-col :span="16">
-    <a-form
-      layout="vertical"
-      :model="formState"
-      name="normal_login"
-      class="login-form"
-      @finish="onFinish"
-      @finishFailed="onFinishFailed"
-    >
-      <a-form-item
-        label="Email"
-        name="email"
-        :rules="[
-          {
-            required: true,
-            message: 'Please enter your email!',
-            trigger: 'blur',
-          },
-          {trigger:'blur',type:'email', 
-          message: 'Please enter a valid email.'},
-        ]"
-      >
-        <a-input 
-          size="large"
-          v-model:value="formState.email">
-          <template #prefix>
-            <UserOutlined class="site-form-item-icon" />
-          </template>
-        </a-input>
-      </a-form-item>
-
-      <a-form-item
-        label="Password"
-        name="password"
-        :rules="[
-          { required: true, message: 'Please enter your password!', trigger:'blur',},
-          {min:6, message: 'Not enough characters!!', trigger:'blur',},
-        ]"
-      >
-        <a-input-password size="large" v-model:value="formState.password">
-          <template #prefix>
-            <LockOutlined class="site-form-item-icon" />
-          </template>
-        </a-input-password>
-      </a-form-item>
-
-      <div class="login-form-wrap">
-        <a-form-item name="remember" no-style>
-          <a-checkbox v-model:checked="formState.remember"
-            >Remember me</a-checkbox
+        <a-form
+          layout="vertical"
+          :model="formState"
+          name="normal_login"
+          class="login-form"
+          @finish="onFinish"
+          @finishFailed="onFinishFailed"
+        >
+          <a-form-item
+            label="Email"
+            name="email"
+            :rules="[
+              {
+                required: true,
+                message: 'Please enter your email!',
+                trigger: 'blur',
+              },
+              {
+                trigger: 'blur',
+                type: 'email',
+                message: 'Please enter a valid email.',
+              },
+            ]"
           >
-        </a-form-item>
-        <router-link to="/resetpassword" class="login-form-forgot"
-          >Forgot Password?</router-link
-        >
-      </div>
+            <a-input size="large" v-model:value="formState.email">
+              <template #prefix>
+                <UserOutlined class="site-form-item-icon" />
+              </template>
+            </a-input>
+          </a-form-item>
 
-      <a-row justify="center"><a-col :span="12">
+          <a-form-item
+            label="Password"
+            name="password"
+            :rules="[
+              {
+                required: true,
+                message: 'Please enter your password!',
+                trigger: 'blur',
+              },
+              { min: 6, message: 'Not enough characters!!', trigger: 'blur' },
+            ]"
+          >
+            <a-input-password size="large" v-model:value="formState.password">
+              <template #prefix>
+                <LockOutlined class="site-form-item-icon" />
+              </template>
+            </a-input-password>
+          </a-form-item>
 
-      <a-form-item>
-        <a-button
-          type="primary"
-          block
-          size="large"
-          shape="round"
-          html-type="submit"
-          class="login-form-button"
-          :disabled="disabled"
-        >
-          Log in
-        </a-button>
-      </a-form-item></a-col>
+          <div class="login-form-wrap">
+            <a-form-item name="remember" no-style>
+              <a-checkbox v-model:checked="formState.remember"
+                >Remember me</a-checkbox
+              >
+            </a-form-item>
+            <router-link to="/resetpassword" class="login-form-forgot"
+              >Forgot Password?</router-link
+            >
+          </div>
+
+          <a-row justify="center"
+            ><a-col :span="12">
+              <a-form-item>
+                <a-button
+                  type="primary"
+                  block
+                  size="large"
+                  shape="round"
+                  html-type="submit"
+                  class="login-form-button"
+                  :disabled="disabled"
+                >
+                  Log in
+                </a-button>
+              </a-form-item></a-col
+            >
+          </a-row>
+
+          <a-divider>New to the Mentoring Hub?</a-divider>
+          <a-row justify="center">
+            <a-form-item>
+              <router-link to="/signup">
+                <a-button
+                  shape="round"
+                  size="large"
+                  type="primary"
+                  class="login-form-button"
+                  ghost
+                >
+                  Register now!
+                </a-button>
+              </router-link>
+            </a-form-item></a-row
+          >
+        </a-form>
+      </a-col>
     </a-row>
-
-      <a-divider>New to the Mentoring Hub?</a-divider>
-      <a-row justify="center">
-      <a-form-item>
-        <router-link to="/signup">
-        <a-button 
-          shape="round"
-          size="large" type="primary" class="login-form-button" ghost>
-          Register now!
-        </a-button>
-      </router-link>
-      </a-form-item></a-row>
-    </a-form>
-  </a-col>
-  </a-row>
   </div>
 </template>
 
