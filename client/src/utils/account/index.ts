@@ -13,6 +13,17 @@ class Account {
     });
   }
 
+  public async fetchYourProfile(token: string) {
+    return await fetch(this.url, {
+      method: "POST",
+      headers: {
+        Authorization: `Jwt ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(gql(null).hasProfile),
+    });
+  }
+
   public async resendActivationEmail(email: string) {
     return await fetch(this.url, {
       method: "POST",
