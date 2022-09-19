@@ -12,7 +12,9 @@
                 :description="formState.user.role"
               >
                 <template #avatar>
-                  <a-avatar :size="{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }">
+                  <a-avatar
+                    :size="{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }"
+                  >
                     <template #icon>
                       <UserOutlined />
                     </template>
@@ -46,8 +48,8 @@
         <a-row justify="center">
           <a-col :span="8">
             <a-typography-paragraph>
-              Please fill in the additional details to complete your profile & get the
-              best experience and recommendations.
+              Please fill in the additional details to complete your profile &
+              get the best experience and recommendations.
             </a-typography-paragraph>
             <a-divider />
             <a-form
@@ -178,7 +180,11 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
 import MentorshipForm from "../components/MentorshipForm.vue";
-import { UserOutlined, SettingOutlined, LogoutOutlined } from "@ant-design/icons-vue";
+import {
+  UserOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons-vue";
 
 export default defineComponent({
   components: {
