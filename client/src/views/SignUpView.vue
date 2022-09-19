@@ -33,10 +33,7 @@
               },
             ]"
           >
-            <a-input
-              v-model:value="formState.email"
-              placeholder="eg. name@example.com"
-            />
+            <a-input v-model:value="formState.email" placeholder="eg. name@example.com" />
           </a-form-item>
 
           <a-form-item label="Password" name="password" has-feedback>
@@ -46,11 +43,7 @@
             />
           </a-form-item>
 
-          <a-form-item
-            label="Confirm Password"
-            name="confirmPassword"
-            has-feedback
-          >
+          <a-form-item label="Confirm Password" name="confirmPassword" has-feedback>
             <a-input-password
               v-model:value="formState.confirmPassword"
               placeholder="Retype your password"
@@ -60,9 +53,7 @@
           <a-form-item name="agreement">
             <a-checkbox v-model:checked="formState.agreement">
               I agree to the
-              <router-link to="/terms&conditions"
-                >Terms & Conditions</router-link
-              >
+              <router-link to="/terms&conditions">Terms & Conditions</router-link>
               and <router-link to="/privacypolicy">Privacy Policy</router-link>
             </a-checkbox>
           </a-form-item>
@@ -84,12 +75,7 @@
               <a-typography-text>Already have an account? </a-typography-text>
             </div>
             <router-link to="/login">
-              <a-button
-                type="default"
-                block
-                shape="round"
-                class="login-form-button"
-              >
+              <a-button type="default" block shape="round" class="login-form-button">
                 Sign In
               </a-button>
             </router-link>
@@ -143,9 +129,7 @@ export default defineComponent({
         },
         { min: 6, message: "Minimum 6 characters" },
       ],
-      confirmPassword: [
-        { required: true, validator: validatePass, trigger: "blur" },
-      ],
+      confirmPassword: [{ required: true, validator: validatePass, trigger: "blur" }],
     };
 
     const disabled = computed(() => {
@@ -171,9 +155,13 @@ export default defineComponent({
           localStorage.setItem("authtoken", token);
           localStorage.setItem("refreshToken", refreshToken);
           message.success("Account Created!");
-          router.push({ name: "setting" });
+          router.push("/dashboard");
         }
-        console.log(errors);
+        for (const error in errors) {
+          for (const msg of errors[error]) {
+            message.error(msg["message"]);
+          }
+        }
       } catch (e) {
         console.log(e);
       }
