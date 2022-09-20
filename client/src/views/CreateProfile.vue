@@ -2,125 +2,164 @@
   <a-layout>
     <a-layout-header style="background: #fff; padding: 0" />
     <a-layout-content>
-      <a-row justify="center" :style="{ margin: '5vh auto' }">
-        <a-col :span="12">
-          <a-row justify="center">
-            <a-typogaphy-title :level="2"
-              >Please complete your profile</a-typogaphy-title
-            ></a-row
+      <a-row justify="center">
+        <a-typography-title>Create Profile</a-typography-title>
+        <a-divider />
+        <a-col :span="8">
+          <a-typography-paragraph>
+            Please fill in the additional details to complete your profile & get
+            the best experience and recommendations.
+          </a-typography-paragraph>
+          <a-divider />
+          <a-form
+            :model="formState"
+            layout="vertical"
+            name="nest-messages"
+            :validate-messages="validateMessages"
+            @finish="onFinish"
           >
-
-          <div>
-            <a-steps type="navigation" v-model:current="current">
-              <a-step
-                v-for="item in steps"
-                :key="item.title"
-                :title="item.title"
+            <a-form-item
+              :name="['user', 'fname']"
+              label="Full Name"
+              :rules="[{ required: true }]"
+            >
+              <a-input
+                placeholder="eg: John Doe"
+                size="large"
+                v-model:value="formState.user.fname"
               />
-            </a-steps>
+            </a-form-item>
 
-            <div class="steps-content">
-              <component :is="steps[current].content" />
-            </div>
-            <a-row justify="end">
-              <a-space>
-                <div class="steps-action">
-                  <a-button
-                    v-if="current > 0"
-                    style="margin-right: 10px"
-                    size="large"
-                    shape="round"
-                    @click="prev"
-                    ><left-outlined /> Previous Step</a-button
-                  >
-                  <a-button
-                    v-if="current < steps.length - 1"
-                    type="primary"
-                    size="large"
-                    shape="round"
-                    @click="next"
-                    >Next Step <right-outlined
-                  /></a-button>
-                  <a-button
-                    v-if="current == steps.length - 1"
-                    type="primary"
-                    shape="round"
-                    size="large"
-                    @click="message.success('Processing complete!')"
-                  >
-                    Submit <send-outlined />
-                  </a-button>
-                </div> </a-space
-            ></a-row>
-          </div>
+            <a-form-item
+              :name="['user', 'dob']"
+              :rules="[{ required: true }]"
+              label="Date of Birth"
+            >
+              <a-date-picker
+                style="width: 100%"
+                size="large"
+                v-model:value="formState.user.dob"
+                placeholder="Select your Date of Birth"
+                value-format="YYYY-MM-DD"
+              />
+            </a-form-item>
+
+            <a-form-item
+              :name="['user', 'country']"
+              :rules="[{ required: true }]"
+              label="Country"
+            >
+              <a-select
+                v-model:value="formState.user.country"
+                size="large"
+                style="width: 100%"
+                placeholder="Select Country of Residence"
+                :options="countryOptions"
+              ></a-select>
+            </a-form-item>
+
+            <a-form-item
+              :name="['user', 'skills']"
+              :rules="[{ required: true }]"
+              label="Skills"
+            >
+              <a-select
+                v-model:value="formState.user.skills"
+                mode="tags"
+                size="large"
+                style="width: 100%"
+                placeholder="Select your Skills"
+                :options="skillsOption"
+              ></a-select>
+            </a-form-item>
+
+            <a-form-item
+              :name="['user', 'interests']"
+              :rules="[{ required: true }]"
+              label="Interests"
+            >
+              <a-select
+                v-model:value="formState.user.interests"
+                mode="tags"
+                size="large"
+                style="width: 100%"
+                placeholder="Select your Interests"
+                :options="interestsOption"
+              ></a-select>
+            </a-form-item>
+
+            <a-form-item
+              :name="['user', 'languages']"
+              :rules="[{ required: true }]"
+              label="Languages"
+            >
+              <a-select
+                v-model:value="formState.user.country"
+                mode="multiple"
+                size="large"
+                style="width: 100%"
+                placeholder="Select Languages you can speak"
+                :options="languageOptions"
+              ></a-select>
+            </a-form-item>
+
+            <a-divider
+              >Please recheck the provided information before proceeding to
+              Submit.</a-divider
+            >
+
+            <a-form-item>
+              <a-button
+                type="primary"
+                shape="round"
+                size="large"
+                block
+                html-type="submit"
+                >Submit</a-button
+              >
+            </a-form-item>
+          </a-form>
         </a-col>
       </a-row>
     </a-layout-content>
   </a-layout>
 </template>
-<script lang="ts">
-import { defineComponent, ref } from "vue";
-import { message } from "ant-design-vue";
-import BasicDetails from '../components/CreateProfile/BasicDetails.vue';
-import Interests from '../components/CreateProfile/Interests.vue';
-import {
-  SendOutlined,
-  RightOutlined,
-  LeftOutlined,
-} from "@ant-design/icons-vue";
 
+<script lang="ts">
+import { defineComponent, ref, reactive } from "vue";
 export default defineComponent({
-  components: {
-    SendOutlined,
-    RightOutlined,
-    LeftOutlined,
-    BasicDetails,
-    Interests,
-  },
+  components: {},
+
   setup() {
-    const current = ref<number>(0);
-    const next = () => {
-      current.value++;
+    const validateMessages = {
+      required: "${label} is required!",
+      types: {
+        email: "${label} is not a valid email!",
+        number: "${label} is not a valid number!",
+      },
+      number: {
+        range: "${label} must be between ${min} and ${max}",
+      },
     };
-    const prev = () => {
-      current.value--;
+
+    const formState = reactive({
+      user: {
+        fname: "",
+        skills: undefined,
+        interests: undefined,
+        country: undefined,
+        languages: undefined,
+        dob: undefined,
+      },
+    });
+    const onFinish = (values: any) => {
+      console.log("Success:", values);
     };
     return {
-      message,
-      current,
-      steps: [
-        {
-          title: "Basic Details",
-          content: BasicDetails,
-        },
-        {
-          title: "Skills & Interests",
-          content: Interests,
-        },
-      ],
-      next,
-      prev,
+      formState,
+      onFinish,
+      validateMessages,
     };
   },
 });
 </script>
-<style scoped>
-.steps-content {
-  margin-top: 16px;
-  border: 1px dashed #e9e9e9;
-  border-radius: 6px;
-  background-color: #fafafa;
-  min-height: 60vh;
-  text-align: center;
-  padding-top: 80px;
-}
-
-.steps-action {
-  margin-top: 24px;
-}
-
-[data-theme="dark"] .steps-content {
-  background-color: #2f2f2f;
-  border: 1px dashed #404040;
-}
-</style>
