@@ -1,5 +1,4 @@
 import { checkVerified } from "@/utils/account/checkVerified";
-import { account } from "@/graphql/account/";
 import { createRouter, createWebHistory, routerKey } from "vue-router";
 import PageNotFound from "@/views/404.vue";
 import LandingView from "@/views/LandingView.vue";
