@@ -10,7 +10,9 @@
         >
         <a-row justify="center">
           <a-col :span="8">
-            <a-divider>Update your details below and click Save Details</a-divider>
+            <a-divider
+              >Update your details below and click Save Details</a-divider
+            >
             <a-form
               :model="formState"
               layout="vertical"
