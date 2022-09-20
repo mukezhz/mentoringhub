@@ -5,7 +5,7 @@ export const gql = (q: any) => {
                 applyMentorship(menteeId: $menteeId, mentorId: $mentorId, qna: $qna, title: $title) {
                     success
                     msg
-                    data
+                    id
                 }
             }
         `,
@@ -16,10 +16,12 @@ export const gql = (q: any) => {
         title: q?.title,
       },
     },
+
     replyOfMentorship: {
       query: `mutation replyOfMentorship($id: String!, $status: String!, $availableHour: DateTime!, $availableTime: DateTime!) {
                 replyMentorship(id: $id, status: $status, availableHour: $availableHour, availableTime: $availableTime) {
                     success
+                    status
                     msg
                 }
             }
@@ -31,19 +33,39 @@ export const gql = (q: any) => {
         availableTime: q?.availableTime,
       },
     },
-    regenerateToken: {
-      query: `
-          mutation regenerateToken($refreshToken: String!) {
-            refreshToken(refreshToken: $refreshToken) {
-              token
-              payload
-              success
-              errors
-            }
-          }
+
+    fetchMentorship: {
+      query: `query fetchMentorshipForMentee {
+                fetchMentorships {
+                  id
+                  title
+                  qna
+                  mentorId
+                  menteeId
+                  status
+                  available
+                  availableHour
+                }
+              }
+        `,
+    },
+
+    fetchMentorshipById: {
+      query: `query fetchMentorshipById($id: String!) {
+                fetchMentorshipById(id: $id) {
+                  id
+                  title
+                  qna
+                  mentorId
+                  menteeId
+                  status
+                  available
+                  availableHour
+                }
+              }
         `,
       variables: {
-        refreshToken: q?.refreshToken,
+        id: q?.id,
       },
     },
   };

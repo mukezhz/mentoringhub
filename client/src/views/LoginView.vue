@@ -1,6 +1,8 @@
 <template>
   <div class="login-view">
-    <a-typography-title class="text-center">Login to Mentoring Hub</a-typography-title>
+    <a-typography-title class="text-center"
+      >Login to Mentoring Hub</a-typography-title
+    >
     <a-row justify="center">
       <a-col :span="16">
         <a-form
@@ -56,7 +58,9 @@
 
           <div class="login-form-wrap">
             <a-form-item name="remember" no-style>
-              <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
+              <a-checkbox v-model:checked="formState.remember"
+                >Remember me</a-checkbox
+              >
             </a-form-item>
             <router-link to="/resetpassword" class="login-form-forgot"
               >Forgot Password?</router-link
@@ -104,7 +108,7 @@
 </template>
 
 <script lang="ts">
-import { auth } from "../utils/auth";
+import { auth } from "@/graphql/auth";
 import { message } from "ant-design-vue";
 import { defineComponent, reactive, computed } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";

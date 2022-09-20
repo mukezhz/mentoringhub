@@ -1,4 +1,4 @@
-import { auth } from ".";
+import { auth } from "@/graphql/auth";
 
 export async function regenerateTokenFromRefreshToken(token: string) {
   if (token?.length) {

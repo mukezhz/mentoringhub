@@ -9,6 +9,7 @@ export const gql = (q: any) => {
               }
                 `,
     },
+
     hasProfile: {
       query: `query {
                 me {
@@ -21,6 +22,7 @@ export const gql = (q: any) => {
               }
                 `,
     },
+
     resendEmail: {
       query: `mutation resendActivationEmail($email: String!){
                 resendActivationEmail(email: $email){
@@ -32,6 +34,7 @@ export const gql = (q: any) => {
         email: q?.email,
       },
     },
+
     activateAccount: {
       query: `mutation verifyAccount($token: String!){
                 verifyAccount(token: $token){

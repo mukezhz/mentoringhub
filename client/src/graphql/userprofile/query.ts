@@ -47,5 +47,34 @@ export const gql = (q: any) => {
             }
         `,
     },
+    fetchYourProfileByUsername: {
+      query: `query fetchProfileAccordingToUsername($username: String!) {
+                fetchProfileAccordingToUsername(username: $username) {
+                  fullName
+                  dateOfBirth
+                  address
+                  city
+                  country
+                  gender
+                  mobilePhone
+                  role
+                  profession
+                  userinterest{
+                    id
+                    interest
+                    domain
+                  }
+                  userskill {
+                    id
+                    skill
+                    domain
+                  }
+                }
+              }
+        `,
+      variables: {
+        username: q?.username,
+      },
+    },
   };
 };
