@@ -24,11 +24,32 @@
                 <a-typography>User Details</a-typography>
               </a-divider>
               <a-descriptions bordered :column="1">
-                <a-descriptions-item label="Email">{{
-                  formState.user.email
+                <a-descriptions-item label="Full Name">{{
+                  formState.user.fname
                 }}</a-descriptions-item>
                 <a-descriptions-item label="Role">{{
                   formState.user.role
+                }}</a-descriptions-item>
+                <a-descriptions-item label="Date of Birth">{{
+                  formState.user.dob
+                }}</a-descriptions-item>
+                <a-descriptions-item label="Email">{{
+                  formState.user.email
+                }}</a-descriptions-item>
+                <a-descriptions-item label="Country">{{
+                  formState.user.country
+                }}</a-descriptions-item>
+                <a-descriptions-item label="Interests">{{
+                  formState.user.interests
+                }}</a-descriptions-item>
+                <a-descriptions-item label="Skills">{{
+                  formState.user.skills
+                }}</a-descriptions-item>
+                <a-descriptions-item label="Languages">{{
+                  formState.user.languages
+                }}</a-descriptions-item>
+                <a-descriptions-item label="Bio">{{
+                  formState.user.bio
                 }}</a-descriptions-item>
               </a-descriptions>
             </a-card>
@@ -62,14 +83,14 @@ export default defineComponent({
   setup() {
     const formState = reactive({
       user: {
-        fname: "",
-        email: "",
+        fname: "Test  ",
+        email: "test@gmail.com",
         role: "mentor",
-        skills: undefined,
-        interests: undefined,
-        country: undefined,
-        languages: undefined,
-        dob: undefined,
+        skills: "This is skill",
+        interests: "This is interest",
+        country: "Nepal",
+        languages: "",
+        dob: "2022/10/14",
         bio: "",
       },
     });
