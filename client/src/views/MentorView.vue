@@ -11,8 +11,6 @@
       />
     </a-col>
   </a-row>
-
-  
 </template>
 
 <script lang="ts">

@@ -12,7 +12,6 @@
     </a-col>
   </a-row>
   <a-table :dataSource="roomData" :columns="columns" />
-  
 </template>
 
 <script lang="ts">
@@ -29,39 +28,39 @@ export default defineComponent({
     return {
       value,
       onSearch,
-        roomData: [
-          {
-            key: '1',
-            name: 'Python Study Room',
-            owner: 'Hari',
-            description: '10 Downing Street',
-          },
-          {
-            key: '2',
-            name: 'C++ Study Room',
-            owner: 'Basantey',
-            description: '10 Downing Street',
-          },
-        ],
+      roomData: [
+        {
+          key: "1",
+          name: "Python Study Room",
+          owner: "Hari",
+          description: "10 Downing Street",
+        },
+        {
+          key: "2",
+          name: "C++ Study Room",
+          owner: "Basantey",
+          description: "10 Downing Street",
+        },
+      ],
 
-        columns: [
-          {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-          },
-          {
-            title: 'Owner',
-            dataIndex: 'owner',
-            key: 'owner',
-          },
-          {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-          },
-        ],
-      };
+      columns: [
+        {
+          title: "Name",
+          dataIndex: "name",
+          key: "name",
+        },
+        {
+          title: "Owner",
+          dataIndex: "owner",
+          key: "owner",
+        },
+        {
+          title: "Address",
+          dataIndex: "address",
+          key: "address",
+        },
+      ],
+    };
   },
 });
 </script>

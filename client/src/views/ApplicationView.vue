@@ -15,9 +15,7 @@
   <a-table :columns="columns" :data-source="data">
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
-        <span>
-         Mentor's Name
-        </span>
+        <span> Mentor's Name </span>
       </template>
     </template>
 
@@ -32,7 +30,13 @@
           <a-tag
             v-for="tag in record.skills"
             :key="tag"
-            :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+            :color="
+              tag === 'loser'
+                ? 'volcano'
+                : tag.length > 5
+                ? 'geekblue'
+                : 'green'
+            "
           >
             {{ tag.toUpperCase() }}
           </a-tag>
@@ -58,44 +62,44 @@
 import { defineComponent, ref } from "vue";
 const columns = [
   {
-    name: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    name: "Name",
+    dataIndex: "name",
+    key: "name",
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: "Address",
+    dataIndex: "address",
+    key: "address",
   },
   {
-    title: 'Skills',
-    key: 'skills',
-    dataIndex: 'skills',
+    title: "Skills",
+    key: "skills",
+    dataIndex: "skills",
   },
   {
-    title: 'Action',
-    key: 'action',
+    title: "Action",
+    key: "action",
   },
 ];
 
 const data = [
   {
-    key: '1',
-    name: 'John Brown',
-    address: 'New York No. 1 Lake Park',
-    skills: ['nice', 'developer'],
+    key: "1",
+    name: "John Brown",
+    address: "New York No. 1 Lake Park",
+    skills: ["nice", "developer"],
   },
   {
-    key: '2',
-    name: 'Jim Green',
-    address: 'London No. 1 Lake Park',
-    skills: ['loser'],
+    key: "2",
+    name: "Jim Green",
+    address: "London No. 1 Lake Park",
+    skills: ["loser"],
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    address: 'Sidney No. 1 Lake Park',
-    skills: ['cool', 'teacher'],
+    key: "3",
+    name: "Joe Black",
+    address: "Sidney No. 1 Lake Park",
+    skills: ["cool", "teacher"],
   },
 ];
 export default defineComponent({
