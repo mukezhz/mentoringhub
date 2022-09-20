@@ -102,7 +102,7 @@ import {
   TeamOutlined,
   FileOutlined,
 } from "@ant-design/icons-vue";
-import { account } from "@/utils/account";
+import { account } from "@/graphql/account";
 import { message } from "ant-design-vue";
 export default defineComponent({
   components: {
