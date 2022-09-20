@@ -1,4 +1,5 @@
 import { gql } from "./query";
+
 class Auth {
   private url = import.meta.env.VITE_API_URL;
 

@@ -33,7 +33,7 @@
 
         <router-link to="premeet">
           <a-menu-item key="5">
-            <ClusterOutlined/>
+            <ClusterOutlined />
             <span class="nav-text">PreMeet</span>
           </a-menu-item>
         </router-link>

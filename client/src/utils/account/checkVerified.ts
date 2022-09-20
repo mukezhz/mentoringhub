@@ -1,4 +1,4 @@
-import { account } from ".";
+import { account } from "@/graphql/account";
 
 export async function checkVerified(token: string) {
   if (token?.length) {
