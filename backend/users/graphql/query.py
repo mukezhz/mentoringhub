@@ -12,8 +12,8 @@ class UserProfileQuery(ObjectType):
 
     fetch_profiles = List(UserProfileType)
     fetch_profile_according_to_role = List(UserProfileType, role=String(required=True))
-    fetch_profile_according_to_email = Field(
-        UserProfileType, email=String(required=True)
+    fetch_profile_according_to_username = Field(
+        UserProfileType, username=String(required=True)
     )
     fetch_your_profile = Field(UserProfileType)
 
@@ -31,12 +31,11 @@ class UserProfileQuery(ObjectType):
             return None
 
     # @login_required
-    def resolve_fetch_profile_according_to_email(root, info, **kwargs):
-        email = kwargs.get("email") or ""
+    def resolve_fetch_profile_according_to_username(root, info, **kwargs):
+        username = kwargs.get("username") or ""
         try:
-            user = CustomUser.objects.get(email=email)
+            user = CustomUser.objects.get(username=username)
             profile = UserProfile.objects.get(user=user)
-            print(profile)
             return profile
         except UserProfile.DoesNotExist:
             return None
