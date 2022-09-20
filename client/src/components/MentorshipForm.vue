@@ -19,7 +19,7 @@
         <a-form-item
           name="description"
           label="Q1. Why?"
-          :rules="[{ required: true }]"
+          :rules="[{ trigger: 'blur', required: true }]"
         >
           <a-textarea
             v-model:value="formState.description"
@@ -31,7 +31,7 @@
         <a-form-item
           name="preferences"
           label="Q2. Preferences?"
-          :rules="[{ required: true }]"
+          :rules="[{ trigger: 'blur', required: true }]"
         >
           <a-textarea
             v-model:value="formState.preferences"
@@ -40,7 +40,11 @@
           />
         </a-form-item>
 
-        <a-form-item name="" label="Q3. ......?" :rules="[{ required: true }]">
+        <a-form-item
+          name="Custom Question 3"
+          label="Q3. ......?"
+          :rules="[{ trigger: 'blur', required: true }]"
+        >
           <a-textarea
             v-model:value="formState.question3"
             placeholder="Please answer this questions carefully. "

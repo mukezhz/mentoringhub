@@ -6,28 +6,28 @@
         <router-link to="dashboard">
           <a-menu-item key="1">
             <pie-chart-outlined />
-            <span>Home</span>
+            <span class="nav-text">Home</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="mentor">
           <a-menu-item key="2">
             <smile-outlined />
-            <span>Mentors</span>
+            <span class="nav-text">Mentors</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="room">
           <a-menu-item key="3">
             <file-outlined />
-            <span>Room</span>
+            <span class="nav-text">Room</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="application">
           <a-menu-item key="4">
             <desktop-outlined />
-            <span>Applications</span>
+            <span class="nav-text">Applications</span>
           </a-menu-item>
         </router-link>
       </a-menu>
@@ -67,16 +67,14 @@
                 ></a>
                 <template #overlay>
                   <a-menu>
-                    <a-menu-item>
-                      <router-link to="profile">
-                        <user-outlined /> Profile
-                      </router-link>
-                    </a-menu-item>
-                    <a-menu-item>
-                      <router-link to="settings">
+                    <router-link to="profile">
+                      <a-menu-item> <user-outlined /> Profile </a-menu-item>
+                    </router-link>
+                    <router-link to="settings">
+                      <a-menu-item>
                         <setting-outlined /> Settings
-                      </router-link>
-                    </a-menu-item>
+                      </a-menu-item></router-link
+                    >
                     <a-menu-item>
                       <a-button @click="logout">
                         <logout-outlined />
@@ -95,6 +93,7 @@
         <RouterView />
       </a-layout-content>
       <a-layout-footer style="text-align: center">
+        <a-divider />
         Mentoring Hub &copy; 2022
       </a-layout-footer>
     </a-layout>
