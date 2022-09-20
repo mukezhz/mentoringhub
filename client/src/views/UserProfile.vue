@@ -4,7 +4,7 @@
     <a-layout-content :style="{ padding: '20px 70px', marginTop: '64px' }">
       <div :style="{ padding: '24px', minHeight: '380px' }">
         <a-row justify="center">
-          <a-col :span="8">
+          <a-col :span="10">
             <a-card>
               <a-card-meta
                 :title="formState.user.email"
