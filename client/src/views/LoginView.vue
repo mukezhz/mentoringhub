@@ -1,8 +1,6 @@
 <template>
   <div class="login-view">
-    <a-typography-title class="text-center"
-      >Login to Mentoring Hub</a-typography-title
-    >
+    <a-typography-title class="text-center">Login to Mentoring Hub</a-typography-title>
     <a-row justify="center">
       <a-col :span="16">
         <a-form
@@ -58,9 +56,7 @@
 
           <div class="login-form-wrap">
             <a-form-item name="remember" no-style>
-              <a-checkbox v-model:checked="formState.remember"
-                >Remember me</a-checkbox
-              >
+              <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
             </a-form-item>
             <router-link to="/resetpassword" class="login-form-forgot"
               >Forgot Password?</router-link
@@ -144,18 +140,22 @@ export default defineComponent({
       try {
         const res = await auth.login(email, password);
         const { data } = await res.json();
-        const { errors, success, token, refreshToken } = data.tokenAuth;
-        for (const i in errors) {
-          for (const j of errors[i]) {
-            message.error(j.message);
+        if (!data.tokenAuth) message.error("Unable to Login!!!");
+        else {
+          const { errors, success, token, refreshToken } = data.tokenAuth;
+          console.log(errors);
+          for (const i in errors) {
+            for (const j of errors[i]) {
+              message.error(j.message);
+            }
           }
-        }
-        if (success) {
-          localStorage.setItem("email", email);
-          localStorage.setItem("authtoken", token);
-          localStorage.setItem("refreshtoken", refreshToken);
-          message.success("Login Successful!");
-          router.push("/dashboard");
+          if (success) {
+            localStorage.setItem("email", email);
+            localStorage.setItem("authtoken", token);
+            localStorage.setItem("refreshtoken", refreshToken);
+            message.success("Login Successful!");
+            router.push("/dashboard");
+          }
         }
       } catch (e) {
         console.log(e);
