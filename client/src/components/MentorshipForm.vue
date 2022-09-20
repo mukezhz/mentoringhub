@@ -6,6 +6,7 @@
     <a-modal
       v-model:visible="visible"
       title="Mentorship Form"
+      centered
       ok-text="Apply"
       cancel-text="Cancel"
       @ok="onOk"

@@ -108,10 +108,11 @@
 </template>
 <script lang="ts">
 import {
-  PieChartOutlined,
-  DesktopOutlined,
+  FileAddOutlined,
+  ApartmentOutlined,
+  UsergroupAddOutlined,
+  HomeOutlined,
   UserOutlined,
-  SmileOutlined,
   TeamOutlined,
   FileOutlined,
   NotificationOutlined,
@@ -123,9 +124,10 @@ import { defineComponent, ref } from "vue";
 import { message } from "ant-design-vue";
 export default defineComponent({
   components: {
-    PieChartOutlined,
-    DesktopOutlined,
-    SmileOutlined,
+    FileAddOutlined,
+    ApartmentOutlined,
+    UsergroupAddOutlined,
+    HomeOutlined,
     UserOutlined,
     TeamOutlined,
     FileOutlined,
@@ -164,5 +166,3 @@ export default defineComponent({
   background: #141414;
 }
 </style>
-
-<style scoped></style>
