@@ -18,30 +18,34 @@
         name="form_in_modal"
       >
         <a-form-item
-          name="description"
+          name="question1"
           label="Q1. Why?"
-          :rules="[{ required: true }]"
+          :rules="[{ trigger: 'blur', required: true }]"
         >
           <a-textarea
-            v-model:value="formState.description"
+            v-model:value="formState.question1"
             placeholder="Please answer this questions carefully. "
             :auto-size="{ minRows: 3, maxRows: 6 }"
           />
         </a-form-item>
 
         <a-form-item
-          name="preferences"
-          label="Q2. Preferences?"
-          :rules="[{ required: true }]"
+          name="question2"
+          label="Q2. question2?"
+          :rules="[{ trigger: 'blur', required: true }]"
         >
           <a-textarea
-            v-model:value="formState.preferences"
+            v-model:value="formState.question2"
             placeholder="Please answer this questions carefully. "
             :auto-size="{ minRows: 3, maxRows: 6 }"
           />
         </a-form-item>
 
-        <a-form-item name="" label="Q3. ......?" :rules="[{ required: true }]">
+        <a-form-item
+          name="question3"
+          label="Q3. ......?"
+          :rules="[{ trigger: 'blur', required: true }]"
+        >
           <a-textarea
             v-model:value="formState.question3"
             placeholder="Please answer this questions carefully. "
@@ -57,18 +61,18 @@ import { defineComponent, reactive, ref, toRaw } from "vue";
 import type { FormInstance } from "ant-design-vue";
 
 interface Values {
-  preferences: string;
-  description: string;
+  question2: string;
+  question1: string;
   question3: string;
 }
 
 export default defineComponent({
   setup() {
-    const formRef = ref<FormInstance>();
+    const formRef = ref<FormInstance>({});
     const visible = ref(false);
     const formState = reactive<Values>({
-      description: "",
-      preferences: "",
+      question1: "",
+      question2: "",
       question3: "",
     });
 
@@ -76,11 +80,10 @@ export default defineComponent({
       formRef.value
         .validateFields()
         .then((values) => {
-          console.log("Received values of form: ", values);
-          console.log("formState: ", toRaw(formState));
+          const { question1, question2, question3 } = values;
+          // TODO: send call apply for mentorship
           visible.value = false;
           formRef.value.resetFields();
-          console.log("reset formState: ", toRaw(formState));
         })
         .catch((info) => {
           console.log("Validate Failed:", info);

@@ -5,29 +5,36 @@
       <a-menu theme="dark" mode="inline">
         <router-link to="dashboard">
           <a-menu-item key="1">
-            <home-outlined />
-            <span>Home</span>
+            <pie-chart-outlined />
+            <span class="nav-text">Home</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="mentor">
           <a-menu-item key="2">
-            <usergroup-add-outlined />
-            <span>Mentors</span>
+            <smile-outlined />
+            <span class="nav-text">Mentors</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="room">
           <a-menu-item key="3">
-            <apartment-outlined />
-            <span>Rooms</span>
+            <file-outlined />
+            <span class="nav-text">Room</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="application">
           <a-menu-item key="4">
-            <file-add-outlined />
-            <span>Applications</span>
+            <desktop-outlined />
+            <span class="nav-text">Applications</span>
+          </a-menu-item>
+        </router-link>
+
+        <router-link to="premeet">
+          <a-menu-item key="5">
+            <ClusterOutlined />
+            <span class="nav-text">PreMeet</span>
           </a-menu-item>
         </router-link>
       </a-menu>
@@ -67,16 +74,14 @@
                 ></a>
                 <template #overlay>
                   <a-menu>
-                    <a-menu-item>
-                      <router-link to="profile">
-                        <user-outlined /> Profile
-                      </router-link>
-                    </a-menu-item>
-                    <a-menu-item>
-                      <router-link to="settings">
+                    <router-link to="profile">
+                      <a-menu-item> <user-outlined /> Profile </a-menu-item>
+                    </router-link>
+                    <router-link to="settings">
+                      <a-menu-item>
                         <setting-outlined /> Settings
-                      </router-link>
-                    </a-menu-item>
+                      </a-menu-item></router-link
+                    >
                     <a-menu-item>
                       <a-button @click="logout">
                         <logout-outlined />
@@ -95,6 +100,7 @@
         <RouterView />
       </a-layout-content>
       <a-layout-footer style="text-align: center">
+        <a-divider />
         Mentoring Hub &copy; 2022
       </a-layout-footer>
     </a-layout>
@@ -112,8 +118,8 @@ import {
   NotificationOutlined,
   SettingOutlined,
   LogoutOutlined,
+  ClusterOutlined,
 } from "@ant-design/icons-vue";
-import { Col, Row } from "ant-design-vue";
 import { defineComponent, ref } from "vue";
 import { message } from "ant-design-vue";
 export default defineComponent({
@@ -128,6 +134,7 @@ export default defineComponent({
     NotificationOutlined,
     SettingOutlined,
     LogoutOutlined,
+    ClusterOutlined,
   },
   data() {
     return {

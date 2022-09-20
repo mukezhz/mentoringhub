@@ -23,7 +23,7 @@ class RequestMentorship(Mutation):
 
     success = Boolean()
     msg = String()
-    data = JSONString()
+    id = String()
 
     @login_required
     def mutate(root, info, **kwargs):
@@ -46,7 +46,7 @@ class RequestMentorship(Mutation):
             return RequestMentorship(
                 success=True,
                 msg="Applied for mentorship",
-                data=json.dumps(kwargs),
+                data=m.id,
             )
         except Exception as e:
             return RequestMentorship(success=False, msg=e)
@@ -58,30 +58,24 @@ class ReplyMentorship(Mutation):
     """
 
     class Arguments:
-        title = String(required=True)
         status = String(required=True)
         available_time = DateTime(required=True)
         available_hour = DateTime(required=True)
-        mentor_id = String(required=True)
-        mentee_id = String(required=True)
+        id = String(required=True)
 
     success = Boolean()
     msg = String()
-    data = JSONString()
+    status = String()
 
     @login_required
     def mutate(root, info, **kwargs):
         user = info.context.user
         try:
-            mentor_id = kwargs.get("mentor_id")
-            mentee_id = kwargs.get("mentee_id")
-            title = kwargs.get("title")
+            id = kwargs.get("id")
             status = kwargs.get("status")
             available_time = kwargs.get("available_time")
             available_hour = kwargs.get("available_hour")
-            m = Mentorship.objects.filter(
-                mentor_id=mentor_id, mentee_id=mentee_id, title=title
-            ).first()
+            m = Mentorship.objects.get(id=id)
             m.available = available_time
             m.available_hour = available_hour
             m.status = status
@@ -91,7 +85,7 @@ class ReplyMentorship(Mutation):
             return ReplyMentorship(
                 success=True,
                 msg="Response for Mentorship",
-                data=json.dumps(kwargs),
+                status=m.status,
             )
         except Exception as e:
             return ReplyMentorship(success=False, msg=e)

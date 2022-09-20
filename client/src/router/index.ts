@@ -62,6 +62,14 @@ export const router = createRouter({
       },
     },
     {
+      path: "/create-profile",
+      name: "Create Profile",
+      component: () => import("../views/CreateProfile.vue"),
+      meta: {
+        requiresAuth: false,
+      },
+    },
+    {
       path: "/landing",
       name: "landing",
       // route level code-splitting
@@ -104,6 +112,11 @@ export const router = createRouter({
           path: "/profile",
           name: "User Profile",
           component: () => import("../views/UserProfile.vue"),
+        },
+        {
+          path: "/settings",
+          name: "User Settings",
+          component: () => import("../views/UserSettings.vue"),
         },
         {
           path: "/premeet",

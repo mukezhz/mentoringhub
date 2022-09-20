@@ -64,7 +64,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -170,7 +170,14 @@ GRAPHQL_JWT = {
     ],
 }
 
-GRAPHQL_AUTH = {"EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(days=1)}
+GRAPHQL_AUTH = {
+    "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(days=1),
+    "LOGIN_ALLOWED_FIELDS": ["email", "username"],
+    "EMAIL_TEMPLATE_VARIABLES": {
+        "frontend_domain": os.environ.get("FRONTEND_SITE") or "localhost:3000",
+        "protocol": "http",
+    },
+}
 
 # EMAIL_HOST = os.getenv("EMAIL_HOST")
 # EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")

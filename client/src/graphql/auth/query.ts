@@ -12,6 +12,7 @@ export const gql = (q: any) => {
               `,
       variables: { email: q?.email, password: q?.password },
     },
+
     register: {
       query: `mutation registerMe($email: String!, $password1:String!, $password2:String!){
               register(email: $email, password1:$password1, password2: $password2, username: $email){
@@ -27,6 +28,7 @@ export const gql = (q: any) => {
         password2: q?.password2,
       },
     },
+
     regenerateToken: {
       query: `
         mutation regenerateToken($refreshToken: String!) {

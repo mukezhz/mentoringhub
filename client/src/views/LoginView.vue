@@ -16,6 +16,7 @@
           <a-form-item
             label="Email"
             name="email"
+            has-feedback
             :rules="[
               {
                 required: true,
@@ -107,7 +108,7 @@
 </template>
 
 <script lang="ts">
-import { auth } from "../utils/auth";
+import { auth } from "@/graphql/auth";
 import { message } from "ant-design-vue";
 import { defineComponent, reactive, computed } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
@@ -143,18 +144,22 @@ export default defineComponent({
       try {
         const res = await auth.login(email, password);
         const { data } = await res.json();
-        const { errors, success, token, refreshToken } = data.tokenAuth;
-        for (const i in errors) {
-          for (const j of errors[i]) {
-            message.error(j.message);
+        if (!data.tokenAuth) message.error("Unable to Login!!!");
+        else {
+          const { errors, success, token, refreshToken } = data.tokenAuth;
+          console.log(errors);
+          for (const i in errors) {
+            for (const j of errors[i]) {
+              message.error(j.message);
+            }
           }
-        }
-        if (success) {
-          localStorage.setItem("email", email);
-          localStorage.setItem("authtoken", token);
-          localStorage.setItem("refreshtoken", refreshToken);
-          message.success("Login Successful!");
-          router.push("/dashboard");
+          if (success) {
+            localStorage.setItem("email", email);
+            localStorage.setItem("authtoken", token);
+            localStorage.setItem("refreshtoken", refreshToken);
+            message.success("Login Successful!");
+            router.push("/dashboard");
+          }
         }
       } catch (e) {
         console.log(e);
