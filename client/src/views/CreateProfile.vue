@@ -1,6 +1,5 @@
 <template>
   <a-layout>
-    <a-layout-header style="background: #fff; padding: 0" />
     <a-layout-content>
       <a-row justify="center">
         <a-typography-title>Create Profile</a-typography-title>
@@ -126,7 +125,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, reactive, onMounted } from "vue";
 import { COUNTRIES } from "@/constants/countries";
 export default defineComponent({
   components: {},
@@ -143,6 +142,9 @@ export default defineComponent({
         range: "${label} must be between ${min} and ${max}",
       },
     };
+    onMounted(async () => {
+      console.log("Fetch the user profile and fill the value!!!");
+    });
 
     const formState = reactive({
       user: {

@@ -173,12 +173,14 @@
 </template>
 <script lang="ts">
 import { message } from "ant-design-vue";
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, reactive, onMounted } from "vue";
+import { COUNTRIES } from "@/constants/countries";
 
 export default defineComponent({
   components: {},
 
   setup() {
+    const countryOptions = ref(COUNTRIES);
     const validateMessages = {
       required: "${label} is required!",
       types: {
@@ -189,6 +191,9 @@ export default defineComponent({
         range: "${label} must be between ${min} and ${max}",
       },
     };
+    onMounted(async () => {
+      console.log("Fetch the user profile and fill the value!!!");
+    });
 
     const formState = reactive({
       user: {
@@ -210,6 +215,7 @@ export default defineComponent({
       formState,
       onFinish,
       validateMessages,
+      countryOptions,
     };
   },
 });
