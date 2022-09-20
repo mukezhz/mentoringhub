@@ -61,6 +61,8 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { message } from "ant-design-vue";
+import BasicDetails from '../components/CreateProfile/BasicDetails.vue';
+import Interests from '../components/CreateProfile/Interests.vue';
 import {
   SendOutlined,
   RightOutlined,
@@ -72,6 +74,8 @@ export default defineComponent({
     SendOutlined,
     RightOutlined,
     LeftOutlined,
+    BasicDetails,
+    Interests,
   },
   setup() {
     const current = ref<number>(0);
@@ -87,15 +91,11 @@ export default defineComponent({
       steps: [
         {
           title: "Basic Details",
-          content: "First-content",
+          content: BasicDetails,
         },
         {
-          title: "Interests",
-          content: "Second-content",
-        },
-        {
-          title: "Last",
-          content: "Last-content",
+          title: "Skills & Interests",
+          content: Interests,
         },
       ],
       next,
