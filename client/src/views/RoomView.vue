@@ -32,20 +32,20 @@ export default defineComponent({
         {
           key: "1",
           name: "Python Study Room",
-          owner: "Hari",
-          description: "10 Downing Street",
+          owner: "Sagar",
+          address: "Dang",
         },
         {
           key: "2",
           name: "C++ Study Room",
           owner: "Basantey",
-          description: "10 Downing Street",
+          address: "Myagdi",
         },
       ],
 
       columns: [
         {
-          title: "Name",
+          title: "Room Name",
           dataIndex: "name",
           key: "name",
         },

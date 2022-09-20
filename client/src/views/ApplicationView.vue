@@ -44,14 +44,7 @@
       </template>
       <template v-else-if="column.key === 'action'">
         <span>
-          <a>Invite 一 {{ record.name }}</a>
-          <a-divider type="vertical" />
           <a>Delete</a>
-          <a-divider type="vertical" />
-          <a class="ant-dropdown-link">
-            More actions
-            <down-outlined />
-          </a>
         </span>
       </template>
     </template>
@@ -79,27 +72,27 @@ const columns = [
   {
     title: "Action",
     key: "action",
-  },
+  }
 ];
 
 const data = [
   {
     key: "1",
-    name: "John Brown",
-    address: "New York No. 1 Lake Park",
-    skills: ["nice", "developer"],
+    name: "Harke Haldar",
+    address: "Sundhara",
+    skills: ["python", "architect"],
   },
   {
     key: "2",
-    name: "Jim Green",
-    address: "London No. 1 Lake Park",
-    skills: ["loser"],
+    name: "Dhurmus",
+    address: "Butwal",
+    skills: ["mysql"],
   },
   {
     key: "3",
-    name: "Joe Black",
-    address: "Sidney No. 1 Lake Park",
-    skills: ["cool", "teacher"],
+    name: "Suntali",
+    address: "Bharatpur",
+    skills: ["javaScript", "teacher"],
   },
 ];
 export default defineComponent({
