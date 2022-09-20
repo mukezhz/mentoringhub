@@ -6,7 +6,7 @@
 import { message } from "ant-design-vue";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import { account } from "@/utils/account";
+import { account } from "@/graphql/account";
 
 const isVerified = ref<boolean>(false);
 const route = useRoute();
