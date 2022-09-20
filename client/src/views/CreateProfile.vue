@@ -127,10 +127,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
+import { COUNTRIES } from "@/constants/countries";
 export default defineComponent({
   components: {},
 
   setup() {
+    const countryOptions = ref(COUNTRIES);
     const validateMessages = {
       required: "${label} is required!",
       types: {
@@ -159,6 +161,7 @@ export default defineComponent({
       formState,
       onFinish,
       validateMessages,
+      countryOptions,
     };
   },
 });
