@@ -62,8 +62,8 @@ export const router = createRouter({
       },
     },
     {
-      path: "/create",
-      name: "Profile Create",
+      path: "/create-profile",
+      name: "Create Profile",
       component: () => import("../views/CreateProfile.vue"),
       meta: {
         requiresAuth: false,
