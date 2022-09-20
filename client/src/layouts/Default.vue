@@ -30,6 +30,13 @@
             <span class="nav-text">Applications</span>
           </a-menu-item>
         </router-link>
+
+        <router-link to="premeet">
+          <a-menu-item key="5">
+            <ClusterOutlined/>
+            <span class="nav-text">PreMeet</span>
+          </a-menu-item>
+        </router-link>
       </a-menu>
     </a-layout-sider>
 
@@ -110,8 +117,8 @@ import {
   NotificationOutlined,
   SettingOutlined,
   LogoutOutlined,
+  ClusterOutlined,
 } from "@ant-design/icons-vue";
-import { Col, Row } from "ant-design-vue";
 import { defineComponent, ref } from "vue";
 import { message } from "ant-design-vue";
 export default defineComponent({
@@ -125,6 +132,7 @@ export default defineComponent({
     NotificationOutlined,
     SettingOutlined,
     LogoutOutlined,
+    ClusterOutlined,
   },
   data() {
     return {
