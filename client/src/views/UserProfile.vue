@@ -70,7 +70,7 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, onMounted } from "vue";
 import MentorshipForm from "../components/MentorshipForm.vue";
 import { UserOutlined } from "@ant-design/icons-vue";
 
@@ -94,7 +94,9 @@ export default defineComponent({
         bio: "",
       },
     });
-
+    onMounted(async () => {
+      console.log("Fetch the user profile and fill the value!!!");
+    });
     return {
       formState,
     };
