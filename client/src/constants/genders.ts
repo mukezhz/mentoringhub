@@ -1,4 +1,5 @@
-export const GENDERS =[{
+export const GENDERS = [
+  {
     value: "male",
     label: "Male",
   },

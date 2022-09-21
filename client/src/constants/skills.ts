@@ -1,4 +1,5 @@
-export const SKILLS =[{
+export const SKILLS = [
+  {
     value: "python",
     label: "Python",
   },

@@ -1,4 +1,5 @@
-export const LANGUAGES =[{
+export const LANGUAGES = [
+  {
     value: "nepali",
     label: "Nepali",
   },

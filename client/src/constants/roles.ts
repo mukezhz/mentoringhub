@@ -1,4 +1,5 @@
-export const ROLES =[{
+export const ROLES = [
+  {
     value: "mentor",
     label: "Mentor",
   },
