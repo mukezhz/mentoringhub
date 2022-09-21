@@ -33,6 +33,7 @@ class UserProfileType(DjangoObjectType):
     class Meta:
         model = UserProfile
         fields = (
+            "user",
             "date_of_birth",
             "address",
             "city",
@@ -42,7 +43,6 @@ class UserProfileType(DjangoObjectType):
             "role",
             "profession",
             "full_name",
-            "user",
             "userinterest",
             "userskill",
         )

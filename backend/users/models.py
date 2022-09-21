@@ -25,10 +25,6 @@ class UserProfile(models.Model):
     All other features of user are added here.
     """
 
-    GENDER_MALE = "male"
-    GENDER_FEMALE = "female"
-    GENDER_OTHER = "other"
-
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=256, blank=False, null=False)
     date_of_birth = models.DateField(
@@ -46,9 +42,9 @@ class UserProfile(models.Model):
     country = CountryField(blank=True, null=True)
 
     GENDER_CHOICES = (
-        (GENDER_MALE, ("Male")),
-        (GENDER_FEMALE, ("Female")),
-        (GENDER_OTHER, ("Other")),
+        ("male", ("Male")),
+        ("female", ("Female")),
+        ("other", ("Other")),
     )
     gender = models.CharField(
         verbose_name="Enter your gender",
@@ -84,11 +80,11 @@ class UserProfile(models.Model):
     )
 
     USER_CHOICES = (
-        ("MENTOR", "person who share their experiences"),
-        ("MENTEE", "person who need mentor"),
+        ("mentor", ("Mentor")),
+        ("mentee", ("Mentee")),
     )
     role = models.CharField(
-        verbose_name="Role of user", choices=USER_CHOICES, max_length=100
+        verbose_name="Role of user", choices=USER_CHOICES, max_length=10
     )
     profession = models.CharField(verbose_name="User's Profession", max_length=50)
 
