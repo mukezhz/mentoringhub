@@ -17,6 +17,20 @@
             :validate-messages="validateMessages"
             @finish="onFinish"
           >
+          <a-form-item
+              :name="['user', 'role']"
+              :rules="[{ required: true }]"
+              label="Role"
+            >
+              <a-select
+                v-model:value="formState.user.role"
+                size="large"
+                style="width: 100%"
+                placeholder="Select you role"
+                :options="roleOptions"
+              ></a-select>
+            </a-form-item>
+
             <a-form-item
               :name="['user', 'fname']"
               label="Full Name"
@@ -44,6 +58,56 @@
             </a-form-item>
 
             <a-form-item
+              :name="['user', 'gender']"
+              :rules="[{ required: true }]"
+              label="Gender"
+            >
+              <a-select
+                v-model:value="formState.user.gender"
+                size="large"
+                style="width: 100%"
+                placeholder="Select your Gender"
+                :options="genderOptions"
+              ></a-select>
+            </a-form-item>
+
+            <a-form-item
+              :name="['user', 'profession']"
+              label="Profession"
+              :rules="[{ required: true }]"
+            >
+              <a-input
+                placeholder="eg: Engineer"
+                size="large"
+                v-model:value="formState.user.profession"
+              />
+            </a-form-item>
+
+            <a-form-item
+              :name="['user', 'address']"
+              label="Address"
+              :rules="[{ required: true }]"
+            >
+              <a-input
+                placeholder="eg: Kathmandu"
+                size="large"
+                v-model:value="formState.user.address"
+              />
+            </a-form-item>
+
+            <a-form-item
+              :name="['user', 'city']"
+              label="City"
+              :rules="[{ required: true }]"
+            >
+              <a-input
+                placeholder="eg: Kathmandu"
+                size="large"
+                v-model:value="formState.user.city"
+              />
+            </a-form-item>
+
+            <a-form-item
               :name="['user', 'country']"
               :rules="[{ required: true }]"
               label="Country"
@@ -51,6 +115,7 @@
               <a-select
                 v-model:value="formState.user.country"
                 size="large"
+                show-search
                 style="width: 100%"
                 placeholder="Select Country of Residence"
                 :options="countryOptions"
@@ -93,7 +158,7 @@
               label="Languages"
             >
               <a-select
-                v-model:value="formState.user.country"
+                v-model:value="formState.user.languages"
                 mode="multiple"
                 size="large"
                 style="width: 100%"
@@ -127,11 +192,22 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { COUNTRIES } from "@/constants/countries";
+import { GENDERS } from "@/constants/genders"; 
+import {ROLES} from "@/constants/roles";
+import { SKILLS } from "@/constants/skills"
+import { LANGUAGES } from "@/constants/languages"
+
 export default defineComponent({
   components: {},
 
   setup() {
     const countryOptions = ref(COUNTRIES);
+    const genderOptions = ref(GENDERS);
+    const roleOptions = ref(ROLES);
+    const skillsOption = ref(SKILLS);
+    const interestsOption = ref(SKILLS);
+    const languageOptions = ref(LANGUAGES);
+
     const validateMessages = {
       required: "${label} is required!",
       types: {
@@ -149,6 +225,11 @@ export default defineComponent({
     const formState = reactive({
       user: {
         fname: "",
+        city: "",
+        role: "Please select your role",
+        gender: "Please select your gender",
+        profession: "",
+        address: "",
         skills: undefined,
         interests: undefined,
         country: undefined,
@@ -164,6 +245,11 @@ export default defineComponent({
       onFinish,
       validateMessages,
       countryOptions,
+      genderOptions,
+      roleOptions,
+      languageOptions,
+      skillsOption,
+      interestsOption,
     };
   },
 });
