@@ -69,8 +69,8 @@ class CreateUserProfile(Mutation):
             mobile_phone = kwargs.get("mobile_phone")
             role = kwargs.get("role")
             profession = kwargs.get("profession")
-            u, _ = UserProfile.objects.get_or_create(user=user)
-            print("hello world", datetime.fromtimestamp(int(date_of_birth) / 1000))
+            u, created = UserProfile.objects.get_or_create(user=user)
+            if not created: return CreateUserProfile(success=False, msg="Profile Already Created")
             u.date_of_birth = datetime.fromtimestamp(int(date_of_birth) / 1000)
             u.address = address
             u.city = city
