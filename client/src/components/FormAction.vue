@@ -5,8 +5,8 @@
       centered
         v-model:visible="visible"
         title="Select your Available Date and Time"
-        ok-text="Accept"
-        cancel-text="Cancel"
+        ok-text="Approve"
+        cancel-text="Reject"
         @ok="onOk"
       >
       <a-row justify="center">
