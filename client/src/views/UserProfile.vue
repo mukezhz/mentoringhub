@@ -20,38 +20,45 @@
                   </a-avatar>
                 </template>
               </a-card-meta>
-              <a-divider>
-                <a-typography>User Details</a-typography>
-              </a-divider>
-              <a-descriptions bordered :column="1">
-                <a-descriptions-item label="Full Name">{{
-                  formState.user.fname
-                }}</a-descriptions-item>
-                <a-descriptions-item label="Role">{{
-                  formState.user.role
-                }}</a-descriptions-item>
-                <a-descriptions-item label="Date of Birth">{{
-                  formState.user.dob
-                }}</a-descriptions-item>
-                <a-descriptions-item label="Email">{{
-                  formState.user.email
-                }}</a-descriptions-item>
-                <a-descriptions-item label="Country">{{
-                  formState.user.country
-                }}</a-descriptions-item>
-                <a-descriptions-item label="Interests">{{
-                  formState.user.interests
-                }}</a-descriptions-item>
-                <a-descriptions-item label="Skills">{{
-                  formState.user.skills
-                }}</a-descriptions-item>
-                <a-descriptions-item label="Languages">{{
-                  formState.user.languages
-                }}</a-descriptions-item>
-                <a-descriptions-item label="Bio">{{
-                  formState.user.bio
-                }}</a-descriptions-item>
-              </a-descriptions>
+              <div v-if="hasProfile">
+                <a-divider>
+                  <a-typography>User Details</a-typography>
+                </a-divider>
+                <a-descriptions bordered :column="1">
+                  <a-descriptions-item label="Full Name">{{
+                    formState.user.fullName
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Role">{{
+                    formState.user.role
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Date of Birth">{{
+                    formState.user.dateOfBirth
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Email">{{
+                    formState.user.email
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Country">{{
+                    formState.user.country
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Interests">{{
+                    formState.user.interests
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Skills">{{
+                    formState.user.skills
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Languages">{{
+                    formState.user.languages
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Bio">{{
+                    formState.user.bio
+                  }}</a-descriptions-item>
+                </a-descriptions>
+              </div>
+              <div v-else>
+                <a-button type="dashed" @click="createProfile">
+                  Create Your Profile
+                </a-button>
+              </div>
             </a-card>
           </a-col>
         </a-row>
@@ -70,9 +77,12 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, onMounted } from "vue";
+import { defineComponent, reactive, onMounted, ref } from "vue";
 import MentorshipForm from "../components/MentorshipForm.vue";
 import { UserOutlined } from "@ant-design/icons-vue";
+import { useRoute, useRouter } from "vue-router";
+import { profile } from "@/graphql/userprofile";
+import { message } from "ant-design-vue";
 
 export default defineComponent({
   components: {
@@ -81,24 +91,67 @@ export default defineComponent({
   },
 
   setup() {
+    const route = useRoute();
+    const router = useRouter();
+    onMounted(async () => {
+      if (route.path === "/profile") {
+        const res = await (await profile.fetchYourProfile()).json();
+        const {
+          data: { fetchYourProfile },
+        } = res;
+        if (!fetchYourProfile) hasProfile.value = false;
+        else {
+          hasProfile.value = true;
+          for (const k in fetchYourProfile) {
+            formState.user[k] = fetchYourProfile[k];
+          }
+          formState.user.email = fetchYourProfile.user.email;
+        }
+      } else {
+        const { username } = route.params;
+        console.log("username", username);
+        const res = await (
+          await profile.fetchYourProfileByUsername(username)
+        ).json();
+        const { errors, data } = res;
+        console.log(errors, data);
+        if (errors.length) {
+          for (const error of errors) {
+            message.error(error.message);
+          }
+        }
+      }
+      console.log(route.params, route.path);
+    });
+    const hasProfile = ref<boolean>(false);
     const formState = reactive({
       user: {
-        fname: "Test  ",
+        address: "Kathmandu",
+        city: "Kathmandu",
+        fullName: "Test  ",
         email: "test@gmail.com",
         role: "mentor",
         skills: "This is skill",
         interests: "This is interest",
         country: "Nepal",
         languages: "",
-        dob: "2022/10/14",
+        dateOfBirth: "2022/10/14",
         bio: "",
+        gender: "Male",
+        mobilePhone: "",
+        profession: "",
       },
     });
     onMounted(async () => {
       console.log("Fetch the user profile and fill the value!!!");
     });
+    function createProfile() {
+      router.push("/create-profile");
+    }
     return {
       formState,
+      hasProfile,
+      createProfile,
     };
   },
 });

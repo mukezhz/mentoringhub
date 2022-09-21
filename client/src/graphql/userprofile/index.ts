@@ -13,18 +13,6 @@ class Profile {
     role: string,
     profession: string
   ) {
-    console.log(
-      gql({
-        address,
-        city,
-        country,
-        dateOfBirth,
-        fullName,
-        gender,
-        role,
-        profession,
-      }).createProfile
-    );
     return await fetch(this.url, {
       method: "POST",
       headers: {
@@ -57,7 +45,7 @@ class Profile {
     });
   }
 
-  public async fetchYourProfileByUsername(username: string) {
+  public async fetchYourProfileByUsername(username: string | string[]) {
     return await fetch(this.url, {
       method: "POST",
       headers: {

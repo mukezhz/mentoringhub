@@ -140,6 +140,7 @@ export default defineComponent({
     return {
       collapsed: ref<boolean>(false),
       selectedKeys: ref<string[]>(["1"]),
+      notified: ref<number>(0),
     };
   },
   methods: {
@@ -149,6 +150,15 @@ export default defineComponent({
       message.success("Logout Successful!");
     },
   },
+  // onMounted(() => {
+  //     setInterval(() => {
+  //       this.notified = this.notified + 1;
+  //     }, 5000);
+  // })
+  // watch: {
+  //   notified: function (val) {
+  //     console.log(val);
+  // },
 });
 </script>
 <style>
