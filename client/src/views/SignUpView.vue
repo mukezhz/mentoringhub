@@ -131,7 +131,7 @@
 </template>
 
 <script lang="ts">
-import { auth } from "../utils/auth";
+import { auth } from "@/graphql/auth";
 import { defineComponent, reactive, computed } from "vue";
 import type { Rule } from "ant-design-vue/es/form";
 import { message } from "ant-design-vue";
