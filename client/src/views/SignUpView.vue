@@ -71,17 +71,6 @@
               />
             </a-form-item>
 
-            <a-form-item label="Role" name="role" :rules="[{ required: true }]">
-              <a-select
-                size="large"
-                v-model:value="formState.role"
-                placeholder="Please select account type"
-              >
-                <a-select-option value="mentor">Mentor</a-select-option>
-                <a-select-option value="mentee">Mentee</a-select-option>
-              </a-select>
-            </a-form-item>
-
             <a-form-item name="agreement">
               <a-checkbox v-model:checked="formState.agreement">
                 I agree to the Terms & Conditions and Privacy Policy
@@ -141,7 +130,6 @@ interface FormState {
   email: string;
   password: string;
   confirmPassword: string;
-  role: string;
   agreement: boolean;
 }
 export default defineComponent({
@@ -151,7 +139,6 @@ export default defineComponent({
       email: "",
       password: "",
       confirmPassword: "",
-      role: "Choose your account type",
       agreement: false,
     });
 
