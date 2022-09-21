@@ -93,7 +93,7 @@
               label="Languages"
             >
               <a-select
-                v-model:value="formState.user.country"
+                v-model:value="formState.user.languages"
                 mode="multiple"
                 size="large"
                 style="width: 100%"
@@ -127,11 +127,16 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { COUNTRIES } from "@/constants/countries";
+import { LANGUAGES } from "@/constants/languages";
+import { profile } from "@/graphql/userprofile";
 export default defineComponent({
   components: {},
 
   setup() {
     const countryOptions = ref(COUNTRIES);
+    const skillsOption = ref([]);
+    const interestsOption = ref([]);
+    const languageOptions = ref(LANGUAGES);
     const validateMessages = {
       required: "${label} is required!",
       types: {
@@ -151,19 +156,50 @@ export default defineComponent({
         fname: "",
         skills: undefined,
         interests: undefined,
-        country: undefined,
+        country: "",
         languages: undefined,
         dob: undefined,
       },
     });
-    const onFinish = (values: any) => {
-      console.log("Success:", values);
+    const onFinish = async (values: any) => {
+      const { user } = values;
+      const {
+        country,
+        dob,
+        fname,
+        interests,
+        languages,
+        skills,
+        role,
+        city,
+        address,
+        profession,
+        gender,
+      } = await user;
+      const res = await profile.createProfile(
+        address,
+        city,
+        country,
+        new Date(dob).getTime().toString(),
+        fname,
+        gender,
+        role,
+        profession
+      );
+      console.log(await res);
+      const obtainedLanguages = languages.map((lang: string) => lang);
+      const obtainedInterests = interests.map((interest: string) => interest);
+      const obtainedSkills = skills.map((skill: string) => skill);
+      // TODO: send data to backend
     };
     return {
       formState,
       onFinish,
       validateMessages,
       countryOptions,
+      languageOptions,
+      skillsOption,
+      interestsOption,
     };
   },
 });
