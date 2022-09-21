@@ -96,6 +96,7 @@
                   v-model:value="formState.user.country"
                   size="large"
                   style="width: 100%"
+                  show-search
                   placeholder="Select Country of Residence"
                   :options="countryOptions"
                 ></a-select>
@@ -140,7 +141,7 @@
                 has-feedback
               >
                 <a-select
-                  v-model:value="formState.user.country"
+                  v-model:value="formState.user.languages"
                   mode="multiple"
                   size="large"
                   style="width: 100%"
@@ -174,13 +175,18 @@
 <script lang="ts">
 import { message } from "ant-design-vue";
 import { defineComponent, ref, reactive, onMounted } from "vue";
-import { COUNTRIES } from "@/constants/countries";
+import { COUNTRIES, GENDERS, LANGUAGES, SKILLS } from "@/constants";
 
 export default defineComponent({
   components: {},
 
   setup() {
     const countryOptions = ref(COUNTRIES);
+    const genderOptions = ref(GENDERS);
+    const skillsOption = ref(SKILLS);
+    const interestsOption = ref(SKILLS);
+    const languageOptions = ref(LANGUAGES);
+
     const validateMessages = {
       required: "${label} is required!",
       types: {
@@ -216,6 +222,9 @@ export default defineComponent({
       onFinish,
       validateMessages,
       countryOptions,
+      skillsOption,
+      interestsOption,
+      languageOptions,
     };
   },
 });
