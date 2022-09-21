@@ -14,8 +14,8 @@ export const gql = (q: any) => {
     },
 
     register: {
-      query: `mutation registerMe($email: String!, $password1:String!, $password2:String!){
-              register(email: $email, password1:$password1, password2: $password2, username: $email){
+      query: `mutation registerMe($email: String!, $password1:String!, $password2:String!, $username: String!){
+              register(email: $email, password1:$password1, password2: $password2, username: $username){
                 errors
                 success
                 refreshToken
@@ -24,6 +24,7 @@ export const gql = (q: any) => {
           }`,
       variables: {
         email: q?.email,
+        username: q?.username,
         password1: q?.password1,
         password2: q?.password2,
       },

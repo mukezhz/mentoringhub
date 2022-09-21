@@ -11,10 +11,13 @@ class Auth {
     });
   }
   public async register(email: string, password1: string, password2: string) {
+    const username = email.split("@")[0].trim();
     return await fetch(this.url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(gql({ email, password1, password2 }).register),
+      body: JSON.stringify(
+        gql({ email, password1, password2, username }).register
+      ),
     });
   }
 

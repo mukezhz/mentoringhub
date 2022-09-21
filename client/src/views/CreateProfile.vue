@@ -228,13 +228,41 @@ export default defineComponent({
         address: "",
         skills: undefined,
         interests: undefined,
-        country: undefined,
+        country: "",
         languages: undefined,
         dob: undefined,
       },
     });
-    const onFinish = (values: any) => {
-      console.log("Success:", values);
+    const onFinish = async (values: any) => {
+      const { user } = values;
+      const {
+        country,
+        dob,
+        fname,
+        interests,
+        languages,
+        skills,
+        role,
+        city,
+        address,
+        profession,
+        gender,
+      } = await user;
+      const res = await profile.createProfile(
+        address,
+        city,
+        country,
+        new Date(dob).getTime().toString(),
+        fname,
+        gender,
+        role,
+        profession
+      );
+      console.log(await res);
+      const obtainedLanguages = languages.map((lang: string) => lang);
+      const obtainedInterests = interests.map((interest: string) => interest);
+      const obtainedSkills = skills.map((skill: string) => skill);
+      // TODO: send data to backend
     };
     return {
       formState,
