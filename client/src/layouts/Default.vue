@@ -19,14 +19,14 @@
 
         <router-link to="room">
           <a-menu-item key="3">
-            <apartment-outlined/>
-            <span class="nav-text">Room</span>
+            <apartment-outlined />
+            <span class="nav-text">Rooms</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="application">
           <a-menu-item key="4">
-            <file-add-outlined/>
+            <file-add-outlined />
             <span class="nav-text">Applications</span>
           </a-menu-item>
         </router-link>
