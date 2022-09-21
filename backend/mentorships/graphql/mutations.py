@@ -37,7 +37,7 @@ class RequestMentorship(Mutation):
                 mentor_id=mentor_id, mentee_id=mentee_id
             )
             m.title = title
-            m.qna = qna
+            m.qna = json.loads(qna)
             m.mentor_id = mentor_id
             m.mentee_id = mentee_id
 
@@ -46,7 +46,7 @@ class RequestMentorship(Mutation):
             return RequestMentorship(
                 success=True,
                 msg="Applied for mentorship",
-                data=m.id,
+                id=m.id,
             )
         except Exception as e:
             return RequestMentorship(success=False, msg=e)

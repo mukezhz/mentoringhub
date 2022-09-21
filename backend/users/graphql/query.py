@@ -12,10 +12,10 @@ class UserProfileQuery(ObjectType):
 
     fetch_profiles = List(UserProfileType)
     fetch_profile_according_to_role = List(UserProfileType, role=String(required=True))
+    fetch_your_profile = Field(UserProfileType)
     fetch_profile_according_to_username = Field(
         UserProfileType, username=String(required=True)
     )
-    fetch_your_profile = Field(UserProfileType)
 
     @login_required
     def resolve_fetch_profiles(root, info, **kwargs):
