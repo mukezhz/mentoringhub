@@ -80,6 +80,11 @@ export const router = createRouter({
       },
       children: [
         {
+          path: "/u/:username",
+          name: "dynamic profile",
+          component: () => import("../views/UserProfile.vue"),
+        },
+        {
           path: "/dashboard",
           name: "dashboard",
           component: DashboardView,

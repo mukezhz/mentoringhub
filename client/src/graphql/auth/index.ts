@@ -11,7 +11,7 @@ class Auth {
     });
   }
   public async register(email: string, password1: string, password2: string) {
-    const username = email.split("@")[0].trim();
+    const username = email.split(".")[0];
     return await fetch(this.url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

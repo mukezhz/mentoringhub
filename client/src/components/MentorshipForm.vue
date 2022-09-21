@@ -81,7 +81,8 @@ export default defineComponent({
         .validateFields()
         .then((values) => {
           const { question1, question2, question3 } = values;
-          // TODO: send call apply for mentorship
+          console.log(question1, question2, question3);
+          // TODO: send call apply for mentorship for applying mentorship
           visible.value = false;
           formRef.value.resetFields();
         })

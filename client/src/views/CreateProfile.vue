@@ -192,11 +192,15 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { COUNTRIES, GENDERS, LANGUAGES, SKILLS, ROLES } from "@/constants";
+import { profile } from "@/graphql/userprofile";
+import { message } from "ant-design-vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: {},
 
   setup() {
+    const router = useRouter();
     const countryOptions = ref(COUNTRIES);
     const genderOptions = ref(GENDERS);
     const roleOptions = ref(ROLES);
@@ -216,6 +220,12 @@ export default defineComponent({
     };
     onMounted(async () => {
       console.log("Fetch the user profile and fill the value!!!");
+      const { data } = await (await profile.fetchYourProfile()).json();
+      console.log(data);
+      const { fetchYourProfile } = data;
+      if (fetchYourProfile?.fullName.length) {
+        router.push("/profile");
+      }
     });
 
     const formState = reactive({
@@ -247,7 +257,7 @@ export default defineComponent({
         address,
         profession,
         gender,
-      } = await user;
+      } = user;
       const res = await profile.createProfile(
         address,
         city,
@@ -258,7 +268,14 @@ export default defineComponent({
         role,
         profession
       );
-      console.log(await res);
+      const { data } = await res.json();
+      const { createUserProfile } = data;
+      const { success, msg } = createUserProfile;
+      if (!success) message.error(msg);
+      else {
+        message.success(msg);
+        router.push("/profile");
+      }
       const obtainedLanguages = languages.map((lang: string) => lang);
       const obtainedInterests = interests.map((interest: string) => interest);
       const obtainedSkills = skills.map((skill: string) => skill);
