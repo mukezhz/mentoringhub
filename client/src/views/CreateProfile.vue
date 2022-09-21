@@ -17,7 +17,7 @@
             :validate-messages="validateMessages"
             @finish="onFinish"
           >
-          <a-form-item
+            <a-form-item
               :name="['user', 'role']"
               :rules="[{ required: true }]"
               label="Role"
@@ -191,11 +191,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from "vue";
-import { COUNTRIES } from "@/constants/countries";
-import { GENDERS } from "@/constants/genders"; 
-import {ROLES} from "@/constants/roles";
-import { SKILLS } from "@/constants/skills"
-import { LANGUAGES } from "@/constants/languages"
+import { COUNTRIES, GENDERS, LANGUAGES, SKILLS, ROLES } from "@/constants";
 
 export default defineComponent({
   components: {},
