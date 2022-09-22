@@ -72,6 +72,19 @@
             </a-form-item>
 
             <a-form-item
+              :name="['user', 'contact']"
+              label="Contact Number"
+              :rules="[{ required: true }]"
+            >
+              <a-input-number
+                placeholder="Enter phone number"
+                size="large"
+                style="width:100%"
+                v-model:value="formState.user.contact"
+              />
+            </a-form-item>
+
+            <a-form-item
               :name="['user', 'profession']"
               label="Profession"
               :rules="[{ required: true }]"
@@ -89,7 +102,7 @@
               :rules="[{ required: true }]"
             >
               <a-input
-                placeholder="eg: Kathmandu"
+                placeholder="eg: Kalimati"
                 size="large"
                 v-model:value="formState.user.address"
               />
@@ -238,9 +251,10 @@ export default defineComponent({
         address: "",
         skills: undefined,
         interests: undefined,
-        country: "",
+        country: "Select country of Residence",
         languages: undefined,
         dob: undefined,
+        contact:'',
       },
     });
     const onFinish = async (values: any) => {
