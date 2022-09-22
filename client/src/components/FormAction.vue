@@ -68,7 +68,7 @@ interface Values {
 
 export default defineComponent({
   setup() {
-    const formRef = ref<FormInstance>();
+    const formRef = ref<any>();
     const visible = ref(false);
     const formState = reactive<Values>({
       availDate: "",
@@ -78,14 +78,14 @@ export default defineComponent({
     const onOk = () => {
       formRef.value
         .validateFields()
-        .then((values) => {
+        .then((values: any) => {
           console.log("Received values of form: ", values);
           console.log("formState: ", toRaw(formState));
           visible.value = false;
           formRef.value.resetFields();
           console.log("reset formState: ", toRaw(formState));
         })
-        .catch((info) => {
+        .catch((info: any) => {
           console.log("Validate Failed:", info);
         });
     };
