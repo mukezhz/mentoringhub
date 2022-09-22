@@ -25,7 +25,7 @@ class UserProfileQuery(ObjectType):
     def resolve_fetch_profile_according_to_role(root, info, **kwargs):
         role = kwargs.get("role") or ""
         try:
-            profiles = UserProfile.objects.filter(role=role.upper())
+            profiles = UserProfile.objects.filter(role=role.lower())
             return profiles
         except UserProfile.DoesNotExist:
             return None
