@@ -31,24 +31,69 @@
                   <a-descriptions-item label="Role">{{
                     formState.user.role
                   }}</a-descriptions-item>
+                  <a-descriptions-item label="Email">{{
+                    formState.user.email
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Interests">
+                    <a-tag
+                      v-for="tag in formState.user.interests"
+                      :key="tag"
+                      :color="
+                        tag.length > 7
+                          ? 'green'
+                          : tag.length > 5
+                          ? 'geekblue'
+                          : 'purple'
+                      "
+                    >
+                      {{ tag.toUpperCase() }}
+                    </a-tag>
+                  </a-descriptions-item>
+                  <a-descriptions-item label="Skills">
+                    <a-tag
+                      v-for="tag in formState.user.skills"
+                      :key="tag"
+                      :color="
+                        tag.length > 7
+                          ? 'purple'
+                          : tag.length > 5
+                          ? 'green'
+                          : 'geekblue'
+                      "
+                    >
+                      {{ tag.toUpperCase() }}
+                    </a-tag>
+                  </a-descriptions-item>
                   <a-descriptions-item label="Date of Birth">{{
                     formState.user.dateOfBirth
                   }}</a-descriptions-item>
-                  <a-descriptions-item label="Email">{{
-                    formState.user.email
+                  <a-descriptions-item label="Gender">{{
+                    formState.user.gender
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Profession">{{
+                    formState.user.profession
+                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Address">{{
+                    formState.user.address
                   }}</a-descriptions-item>
                   <a-descriptions-item label="Country">{{
                     formState.user.country
                   }}</a-descriptions-item>
-                  <a-descriptions-item label="Interests">{{
-                    formState.user.interests
-                  }}</a-descriptions-item>
-                  <a-descriptions-item label="Skills">{{
-                    formState.user.skills
-                  }}</a-descriptions-item>
-                  <a-descriptions-item label="Languages">{{
-                    formState.user.languages
-                  }}</a-descriptions-item>
+                  <a-descriptions-item label="Languages">
+                    <a-tag
+                      v-for="tag in formState.user.languages"
+                      :key="tag"
+                      :color="
+                        tag.length > 7
+                          ? 'geekblue'
+                          : tag.length > 5
+                          ? 'green'
+                          : 'purple'
+                      "
+                    >
+                      {{ tag.toUpperCase() }}
+                    </a-tag>
+                  </a-descriptions-item>
                   <a-descriptions-item label="aboutUser">{{
                     formState.user.aboutUser
                   }}</a-descriptions-item>

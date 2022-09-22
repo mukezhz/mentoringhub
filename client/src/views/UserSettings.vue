@@ -57,7 +57,7 @@
                 has-feedback
               >
                 <a-input
-                  placeholder="eg: John Doe"
+                  placeholder="eg: Harke Haldar"
                   size="large"
                   v-model:value="formState.user.fullName"
                   allow-clear
@@ -88,6 +88,69 @@
                   v-model:value="formState.user.dateOfBirth"
                   placeholder="Select your Date of Birth"
                   value-format="YYYY-MM-DD"
+                />
+              </a-form-item>
+
+              <a-form-item
+                :name="['user', 'gender']"
+                :rules="[{ required: true }]"
+                label="Gender"
+              >
+                <a-select
+                  v-model:value="formState.user.gender"
+                  size="large"
+                  style="width: 100%"
+                  placeholder="Select your Gender"
+                  :options="genderOptions"
+                ></a-select>
+              </a-form-item>
+
+              <a-form-item
+                :name="['user', 'mobilePhone']"
+                label="Contact Number"
+                :rules="[{ required: true }]"
+              >
+                <a-input-number
+                  placeholder="Enter phone number"
+                  size="large"
+                  style="width: 100%"
+                  v-model:value="formState.user.mobilePhone"
+                />
+              </a-form-item>
+
+              <a-form-item
+                :name="['user', 'profession']"
+                label="Profession"
+                :rules="[{ required: true }]"
+              >
+                <a-input
+                  placeholder="eg: Engineer"
+                  size="large"
+                  v-model:value="formState.user.profession"
+                />
+              </a-form-item>
+
+              <a-form-item
+                :name="['user', 'address']"
+                label="Address"
+                :rules="[{ required: true }]"
+              >
+                <a-input
+                  placeholder="eg: Kalimati"
+                  size="large"
+                  v-model:value="formState.user.address"
+                />
+              </a-form-item>
+
+              <a-form-item
+                :name="['user', 'city']"
+                label="City"
+                :rules="[{ required: true }]"
+              >
+                <a-input
+                  placeholder="eg: Kathmandu"
+                  size="large"
+                  v-model:value="formState.user.city"
                 />
               </a-form-item>
 
