@@ -49,8 +49,8 @@
                   <a-descriptions-item label="Languages">{{
                     formState.user.languages
                   }}</a-descriptions-item>
-                  <a-descriptions-item label="Bio">{{
-                    formState.user.bio
+                  <a-descriptions-item label="aboutUser">{{
+                    formState.user.aboutUser
                   }}</a-descriptions-item>
                 </a-descriptions>
               </div>
@@ -108,13 +108,25 @@ export default defineComponent({
         }
       } else {
         const { username } = route.params;
-        console.log("username", username);
         const res = await (
           await profile.fetchYourProfileByUsername(username)
         ).json();
         const { errors, data } = res;
         console.log(errors, data);
-        if (errors.length) {
+        const { fetchProfileAccordingToUsername } = data;
+        if (!errors?.length) {
+          hasProfile.value = true;
+          for (const k in fetchProfileAccordingToUsername) {
+            console.log(k, fetchProfileAccordingToUsername[k]);
+            if (k === "skills" || k === "interests" || k === "languages") {
+              formState.user[k] = JSON.parse(
+                fetchProfileAccordingToUsername[k]
+              );
+            }
+            formState.user[k] = fetchProfileAccordingToUsername[k];
+          }
+          formState.user.email = fetchProfileAccordingToUsername.user.email;
+        } else {
           for (const error of errors) {
             message.error(error.message);
           }
@@ -135,7 +147,7 @@ export default defineComponent({
         country: "",
         languages: "",
         dateOfBirth: "",
-        bio: "",
+        aboutUser: "",
         gender: "",
         mobilePhone: "",
         profession: "",

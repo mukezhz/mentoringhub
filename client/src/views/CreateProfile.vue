@@ -258,6 +258,9 @@ export default defineComponent({
         profession,
         gender,
       } = user;
+      const obtainedLanguages = languages.map((lang: string) => lang);
+      const obtainedInterests = interests.map((interest: string) => interest);
+      const obtainedSkills = skills.map((skill: string) => skill);
       const res = await profile.createProfile(
         address,
         city,
@@ -266,9 +269,22 @@ export default defineComponent({
         fname,
         gender,
         role,
-        profession
+        profession,
+        "",
+        "about user",
+        // mobilePhone,
+        // aboutUser,
+        JSON.stringify(obtainedLanguages),
+        JSON.stringify(obtainedInterests),
+        JSON.stringify(obtainedSkills)
       );
-      const { data } = await res.json();
+      const { data, errors } = await res.json();
+      console.log(data, errors);
+      if (errors?.length){
+        for (const error of errors) {
+          message.error(error?.message);
+        }
+      }
       const { createUserProfile } = data;
       const { success, msg } = createUserProfile;
       if (!success) message.error(msg);
@@ -276,10 +292,6 @@ export default defineComponent({
         message.success(msg);
         router.push("/profile");
       }
-      const obtainedLanguages = languages.map((lang: string) => lang);
-      const obtainedInterests = interests.map((interest: string) => interest);
-      const obtainedSkills = skills.map((skill: string) => skill);
-      // TODO: send data to backend
     };
     return {
       formState,

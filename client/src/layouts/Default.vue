@@ -3,35 +3,35 @@
     <a-layout-sider :style="{ overflow: 'auto' }" collapsible>
       <div class="logo" />
       <a-menu theme="dark" mode="inline">
-        <router-link to="dashboard">
+        <router-link to="/dashboard">
           <a-menu-item key="1">
             <home-outlined />
             <span class="nav-text">Home</span>
           </a-menu-item>
         </router-link>
 
-        <router-link to="mentor">
+        <router-link to="/mentor">
           <a-menu-item key="2">
             <team-outlined />
             <span class="nav-text">Mentors</span>
           </a-menu-item>
         </router-link>
 
-        <router-link to="room">
+        <router-link to="/room">
           <a-menu-item key="3">
             <apartment-outlined />
             <span class="nav-text">Rooms</span>
           </a-menu-item>
         </router-link>
 
-        <router-link to="application">
+        <router-link to="/application">
           <a-menu-item key="4">
             <file-add-outlined />
             <span class="nav-text">Applications</span>
           </a-menu-item>
         </router-link>
 
-        <router-link to="premeet">
+        <router-link to="/premeet">
           <a-menu-item key="5">
             <ClusterOutlined />
             <span class="nav-text">PreMeet</span>
@@ -74,10 +74,10 @@
                 ></a>
                 <template #overlay>
                   <a-menu>
-                    <router-link to="profile">
+                    <router-link to="/profile">
                       <a-menu-item> <user-outlined /> Profile </a-menu-item>
                     </router-link>
-                    <router-link to="settings">
+                    <router-link to="/settings">
                       <a-menu-item>
                         <setting-outlined /> Settings
                       </a-menu-item></router-link
