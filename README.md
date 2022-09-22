@@ -73,3 +73,22 @@ $ npm install
 $ cd ..
 $ make client
 ```
+
+## Run the project in [Modern Way]
+- Be in root directory [FINALPROJECT]
+- Install docker and docker-compose in your system
+```
+$ docker-compose up
+```
+- To run in demonize mode
+```
+$ docker-compose up -d
+```
+- To stop container
+```
+$ docker-compose down
+```
+
+**Note**: You are free to run the docker individually instead of running it via docker-compose
+
+**Thank you!!!**
