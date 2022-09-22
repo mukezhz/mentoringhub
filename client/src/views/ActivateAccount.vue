@@ -24,7 +24,7 @@
       title="Your account has not been verified."
     >
     <template #extra>
-      <a-button size="large" type="primary">Send Verification</a-button>
+      <a-button size="large" type="primary" @click="resendEmail">Send Verification</a-button>
     </template>
   </a-result>
 
