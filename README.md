@@ -91,4 +91,34 @@ $ docker-compose down
 
 **Note**: You are free to run the docker individually instead of running it via docker-compose
 
+### For ease I am using Makefile
+- run client locally
+```
+$ make client
+```
+- to format vue files
+```
+$ make format
+```
+- run backend locally
+```
+$ make bakend
+```
+- run webrtc locally
+```
+$ make serve
+```
+- to start docker-compose
+```
+$ make up
+```
+- to start docker-compose in daemonize mode
+```
+$ make updaemon
+```
+- to stop docker-compose
+```
+$ make down
+```
+
 **Thank you!!!**

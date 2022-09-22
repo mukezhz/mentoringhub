@@ -1,7 +1,7 @@
 IP := 192.168.1.118
 SHELL := /bin/bash
 
-.PHONY: client format backend serve livekit
+.PHONY: client format backend serve livekit up updaemon
 
 client:
 	npm run dev --prefix ${PWD}/client/
@@ -23,3 +23,12 @@ livekit:
           livekit/livekit-server \
           --config /livekit.yaml \
           --node-ip=${IP}
+  
+up:
+	docker-compose up
+
+updaemon:
+	docker-compose up -d
+
+down:
+	docker-compose down
