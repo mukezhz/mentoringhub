@@ -43,10 +43,9 @@ class UserProfileQuery(ObjectType):
     @login_required
     def resolve_fetch_your_profile(root, info, **kwargs):
         user = info.context.user
-        print("user", user)
         try:
-            profile = UserProfile.objects.get(user=user)
-            return profile
+            # profile = UserProfile.objects.get(user=user)
+            return user.userprofile
         except UserProfile.DoesNotExist:
             return None
 
