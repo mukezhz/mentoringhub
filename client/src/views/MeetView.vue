@@ -12,19 +12,15 @@
   </a-row>
 
   <!-- Local div -->
-  <a-row justify="center">
-    <a-col :span="24">
-      <a-row>
-        <video
-          autoplay="true"
-          ref="videoRef"
-          :style="{ width: '50%', height: '50%', margin: '0 auto' }"
-        />
-
-        <audio autoplay="true" ref="audioRef" />
-      </a-row>
-
-      <a-row justify="center">
+  <a-row type="flex" justify="center" align="center">
+    <a-col :span="12">
+      <video
+        autoplay="true"
+        ref="videoRef"
+        :style="{ width: '85%', height: '85%', margin: '0 auto' }"
+      />
+      <audio autoplay="true" ref="audioRef" />
+      <a-row justify="start">
         <a-space style="margin-top: 1vh">
           <a-button type="primary" @click="toggleVideo"
             >Camera {{ !video?.isMuted ? "enable" : "disable" }}</a-button
@@ -34,11 +30,11 @@
           >
         </a-space>
       </a-row>
-    </a-col>
-  </a-row>
-  <a-row type="flex" justify="space-between" align="bottom">
+    </a-col>   
+
     <!-- remote div -->
-    <a-col :span="6"
+    <a-col
+      :span="12"
       v-for="(participant, i) in remoteParticipants"
       :key="participant.sid"
     >
@@ -48,7 +44,7 @@
       <video
         v-show="participant.videoSid?.length"
         :ref="functionVideoRef(i, getTrack(participant.videoSid))"
-        :style="{ width: '25%', height: '25%', margin: '0 auto' }"
+        :style="{ width: '50%', height: '50%', margin: '0 auto' }"
       ></video>
       <audio
         v-show="participant.audioSid?.length"
