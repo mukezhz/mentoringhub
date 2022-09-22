@@ -75,6 +75,9 @@ export const gql = (q: any) => {
     fetchYourProfileByUsername: {
       query: `query fetchProfileAccordingToUsername($username: String!) {
                 fetchProfileAccordingToUsername(username: $username) {
+                  user {
+                    email
+                  }
                   fullName
                   dateOfBirth
                   address
