@@ -46,7 +46,7 @@
               </a-form-item>
 
               <a-form-item
-                :name="['user', 'fname']"
+                :name="['user', 'fullName']"
                 label="Full Name"
                 :rules="[{ required: true }]"
                 has-feedback
@@ -54,25 +54,25 @@
                 <a-input
                   placeholder="eg: John Doe"
                   size="large"
-                  v-model:value="formState.user.fname"
+                  v-model:value="formState.user.fullName"
                   allow-clear
                 />
               </a-form-item>
 
               <a-form-item
-                :name="['user', 'bio']"
+                :name="['user', 'aboutUser']"
                 label="Bio"
                 :rules="[{ required: true }]"
                 has-feedback
               >
                 <a-textarea
                   placeholder="A few words to introduce yourself."
-                  v-model:value="formState.user.bio"
+                  v-model:value="formState.user.aboutUser"
                 />
               </a-form-item>
 
               <a-form-item
-                :name="['user', 'dob']"
+                :name="['user', 'dateOfBirth']"
                 :rules="[{ required: true }]"
                 label="Date of Birth"
                 has-feedback
@@ -80,7 +80,7 @@
                 <a-date-picker
                   style="width: 100%"
                   size="large"
-                  v-model:value="formState.user.dob"
+                  v-model:value="formState.user.dateOfBirth"
                   placeholder="Select your Date of Birth"
                   value-format="YYYY-MM-DD"
                 />
@@ -174,6 +174,7 @@
 </template>
 <script lang="ts">
 import { message } from "ant-design-vue";
+import { profile } from "@/graphql/userprofile";
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { COUNTRIES, GENDERS, ROLES, SKILLS, LANGUAGES } from "@/constants";
 
@@ -181,6 +182,8 @@ export default defineComponent({
   components: {},
 
   setup() {
+    const hasProfile = ref<boolean>(false);
+
     const countryOptions = ref(COUNTRIES);
     const genderOptions = ref(GENDERS);
     const roleOptions = ref(ROLES);
@@ -199,19 +202,38 @@ export default defineComponent({
     };
     onMounted(async () => {
       console.log("Fetch the user profile and fill the value!!!");
+      const res = await (await profile.fetchYourProfile()).json();
+      const { data } = res;
+      const { fetchYourProfile } = data;
+      if (!fetchYourProfile) hasProfile.value = false;
+      else {
+        hasProfile.value = true;
+        for (const k in fetchYourProfile) {
+          if (k === "skills" || k === "interests" || k === "languages")
+            formState.user[k] = JSON.parse(fetchYourProfile[k]);
+          else formState.user[k] = fetchYourProfile[k];
+        }
+        formState.user.email = fetchYourProfile.user.email;
+        console.log(formState.user);
+      }
     });
 
-    const formState = reactive({
+    const formState = reactive<any>({
       user: {
-        fname: "",
+        address: "",
+        city: "",
+        fullName: "",
         email: "",
-        role: "mentor",
-        skills: undefined,
-        interests: undefined,
-        country: undefined,
-        languages: undefined,
-        dob: undefined,
-        bio: "",
+        role: "",
+        skills: [],
+        interests: [],
+        country: "",
+        languages: [],
+        dateOfBirth: "",
+        aboutUser: "",
+        gender: "",
+        mobilePhone: "",
+        profession: "",
       },
     });
     const onFinish = (values: any) => {
