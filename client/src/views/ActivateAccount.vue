@@ -1,5 +1,37 @@
 <template>
-  <div>is verified :- {{ isVerified }}</div>
+  <a-layout>
+    <a-layout-header/>
+    <a-layout-content>
+ 
+  <template v-if=isVerified >
+    <a-result
+    status="success"
+    title="Congratulations! Your account is verified. "
+    sub-title="Proceed to Dashboard by clicking the button below:"
+  >
+    <template #extra>
+      <router-link to="/dashboard">
+        <a-button  type="primary" size="large">Dashboard</a-button>
+      </router-link>
+      
+    </template>
+  </a-result>
+  </template>
+  <template v-else>
+    <a-result 
+      status="warning"
+      sub-title="Please Verify your account to get the best experience."
+      title="Your account has not been verified."
+    >
+    <template #extra>
+      <a-button size="large" type="primary">Send Verification</a-button>
+    </template>
+  </a-result>
+
+  </template>
+</a-layout-content>
+</a-layout>
+  
 </template>
 
 <script setup lang="ts">
