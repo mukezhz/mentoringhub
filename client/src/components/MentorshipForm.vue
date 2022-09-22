@@ -68,7 +68,7 @@ interface Values {
 
 export default defineComponent({
   setup() {
-    const formRef = ref<FormInstance>({});
+    const formRef = ref<FormInstance | any>({});
     const visible = ref(false);
     const formState = reactive<Values>({
       question1: "",
@@ -79,14 +79,14 @@ export default defineComponent({
     const onOk = () => {
       formRef.value
         .validateFields()
-        .then((values) => {
+        .then((values: any) => {
           const { question1, question2, question3 } = values;
           console.log(question1, question2, question3);
           // TODO: send call apply for mentorship for applying mentorship
           visible.value = false;
           formRef.value.resetFields();
         })
-        .catch((info) => {
+        .catch((info: any) => {
           console.log("Validate Failed:", info);
         });
     };

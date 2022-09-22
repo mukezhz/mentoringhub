@@ -96,9 +96,8 @@ export default defineComponent({
     onMounted(async () => {
       if (route.path === "/profile") {
         const res = await (await profile.fetchYourProfile()).json();
-        const {
-          data: { fetchYourProfile },
-        } = res;
+        const { data } = res;
+        const { fetchYourProfile } = data;
         if (!fetchYourProfile) hasProfile.value = false;
         else {
           hasProfile.value = true;
@@ -124,20 +123,20 @@ export default defineComponent({
       console.log(route.params, route.path);
     });
     const hasProfile = ref<boolean>(false);
-    const formState = reactive({
+    const formState = reactive<any>({
       user: {
-        address: "Kathmandu",
-        city: "Kathmandu",
-        fullName: "Test  ",
-        email: "test@gmail.com",
-        role: "mentor",
-        skills: "This is skill",
-        interests: "This is interest",
-        country: "Nepal",
+        address: "",
+        city: "",
+        fullName: "",
+        email: "",
+        role: "",
+        skills: "",
+        interests: "",
+        country: "",
         languages: "",
-        dateOfBirth: "2022/10/14",
+        dateOfBirth: "",
         bio: "",
-        gender: "Male",
+        gender: "",
         mobilePhone: "",
         profession: "",
       },

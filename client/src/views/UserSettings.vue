@@ -175,7 +175,7 @@
 <script lang="ts">
 import { message } from "ant-design-vue";
 import { defineComponent, ref, reactive, onMounted } from "vue";
-import { COUNTRIES, GENDERS, LANGUAGES, SKILLS } from "@/constants";
+import { COUNTRIES, GENDERS, ROLES, SKILLS, LANGUAGES } from "@/constants";
 
 export default defineComponent({
   components: {},
@@ -183,10 +183,10 @@ export default defineComponent({
   setup() {
     const countryOptions = ref(COUNTRIES);
     const genderOptions = ref(GENDERS);
+    const roleOptions = ref(ROLES);
     const skillsOption = ref(SKILLS);
     const interestsOption = ref(SKILLS);
     const languageOptions = ref(LANGUAGES);
-
     const validateMessages = {
       required: "${label} is required!",
       types: {
@@ -222,6 +222,8 @@ export default defineComponent({
       onFinish,
       validateMessages,
       countryOptions,
+      genderOptions,
+      roleOptions,
       skillsOption,
       interestsOption,
       languageOptions,
