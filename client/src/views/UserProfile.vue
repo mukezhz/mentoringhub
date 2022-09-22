@@ -125,6 +125,7 @@ export default defineComponent({
             }
             formState.user[k] = fetchProfileAccordingToUsername[k];
           }
+          console.log(fetchProfileAccordingToUsername);
           formState.user.email = fetchProfileAccordingToUsername.user.email;
         } else {
           for (const error of errors) {
