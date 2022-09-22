@@ -72,7 +72,7 @@
             </a-form-item>
 
             <a-form-item
-              :name="['user', 'contact']"
+              :name="['user', 'mobilePhone']"
               label="Contact Number"
               :rules="[{ required: true }]"
             >
@@ -80,7 +80,7 @@
                 placeholder="Enter phone number"
                 size="large"
                 style="width:100%"
-                v-model:value="formState.user.contact"
+                v-model:value="formState.user.mobilePhone"
               />
             </a-form-item>
 
@@ -254,7 +254,7 @@ export default defineComponent({
         country: "Select country of Residence",
         languages: undefined,
         dob: undefined,
-        contact:'',
+        mobilePhone:'',
       },
     });
     const onFinish = async (values: any) => {
