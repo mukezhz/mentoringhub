@@ -8,7 +8,12 @@
             Update User Details
           </a-typography-title></a-row
         >
-        <a-row justify="center">
+        <a-row v-if="!hasProfile">
+          <a-button type="dashed" @click="createProfile">
+            Create Your Profile
+          </a-button>
+        </a-row>
+        <a-row v-else justify="center">
           <a-col :span="8">
             <a-divider
               >Update your details below and click Save Details</a-divider
@@ -177,11 +182,13 @@ import { message } from "ant-design-vue";
 import { profile } from "@/graphql/userprofile";
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { COUNTRIES, GENDERS, ROLES, SKILLS, LANGUAGES } from "@/constants";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: {},
 
   setup() {
+    const router = useRouter();
     const hasProfile = ref<boolean>(false);
 
     const countryOptions = ref(COUNTRIES);
@@ -201,9 +208,8 @@ export default defineComponent({
       },
     };
     onMounted(async () => {
-      console.log("Fetch the user profile and fill the value!!!");
-      const res = await (await profile.fetchYourProfile()).json();
-      const { data } = res;
+      const res = await profile.fetchYourProfile();
+      const { data } = await res.json();
       const { fetchYourProfile } = data;
       if (!fetchYourProfile) hasProfile.value = false;
       else {
@@ -236,9 +242,57 @@ export default defineComponent({
         profession: "",
       },
     });
-    const onFinish = (values: any) => {
-      console.log("Success:", values);
+    const onFinish = async (values: any) => {
+      const { user } = values;
+      const {
+        address = formState.user.address,
+        city = formState.user.city,
+        gender = formState.user.gender,
+        role = formState.user.role,
+        profession = formState.user.profession,
+        mobilePhone = formState.user.mobilePhone || "0000000000",
+        aboutUser,
+        country,
+        dateOfBirth,
+        fullName,
+        interests,
+        languages,
+        skills,
+      } = user;
+      const res = await profile.updateProfile(
+        address,
+        city,
+        country,
+        new Date(dateOfBirth).getTime().toString(),
+        fullName,
+        gender,
+        role,
+        profession,
+        mobilePhone,
+        aboutUser,
+        JSON.stringify(languages),
+        JSON.stringify(interests),
+        JSON.stringify(skills)
+      );
+      const { data, errors } = await res.json();
+      console.log(data, errors);
+      if (errors?.length) {
+        for (const error of errors) {
+          message.error(error?.message);
+        }
+      }
+      console.log("data", data);
+      const { updateUserProfile } = data;
+      const { success, msg } = updateUserProfile;
+      if (!success) message.error(msg);
+      else {
+        message.success(msg);
+        router.push("/profile");
+      }
     };
+    function createProfile() {
+      router.push("/create-profile");
+    }
     return {
       formState,
       onFinish,
@@ -249,6 +303,8 @@ export default defineComponent({
       skillsOption,
       interestsOption,
       languageOptions,
+      hasProfile,
+      createProfile,
     };
   },
 });

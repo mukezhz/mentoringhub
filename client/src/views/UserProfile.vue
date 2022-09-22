@@ -95,8 +95,8 @@ export default defineComponent({
     const router = useRouter();
     onMounted(async () => {
       if (route.path === "/profile") {
-        const res = await (await profile.fetchYourProfile()).json();
-        const { data } = res;
+        const res = await profile.fetchYourProfile();
+        const { data } = await res.json();
         const { fetchYourProfile } = data;
         if (!fetchYourProfile) hasProfile.value = false;
         else {
@@ -151,9 +151,6 @@ export default defineComponent({
         mobilePhone: "",
         profession: "",
       },
-    });
-    onMounted(async () => {
-      console.log("Fetch the user profile and fill the value!!!");
     });
     function createProfile() {
       router.push("/create-profile");
