@@ -79,7 +79,7 @@
               <a-input-number
                 placeholder="Enter phone number"
                 size="large"
-                style="width:100%"
+                style="width: 100%"
                 v-model:value="formState.user.mobilePhone"
               />
             </a-form-item>
@@ -254,7 +254,7 @@ export default defineComponent({
         country: "Select country of Residence",
         languages: undefined,
         dob: undefined,
-        mobilePhone:'',
+        mobilePhone: "",
       },
     });
     const onFinish = async (values: any) => {
@@ -294,7 +294,7 @@ export default defineComponent({
       );
       const { data, errors } = await res.json();
       console.log(data, errors);
-      if (errors?.length){
+      if (errors?.length) {
         for (const error of errors) {
           message.error(error?.message);
         }
