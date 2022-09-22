@@ -43,6 +43,8 @@ class UserProfileType(DjangoObjectType):
             "role",
             "profession",
             "full_name",
-            "userinterest",
-            "userskill",
+            "languages",
+            "interests",
+            "skills",
+            "about_user",
         )

@@ -32,3 +32,6 @@ updaemon:
 
 down:
 	docker-compose down
+
+build:
+	sudo docker-compose build

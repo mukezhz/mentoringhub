@@ -91,6 +91,9 @@ class UserProfile(models.Model):
     login_method = models.CharField(
         verbose_name="How user created their account", max_length=50, default="email"
     )
+    languages = models.JSONField(null=True, verbose_name="languages")
+    interests = models.JSONField(verbose_name="User Interests", null=True, blank=True)
+    skills = models.JSONField(verbose_name="User Skills", null=True, blank=True)
 
     def __str__(self):
         """Return username of authenticated user."""
