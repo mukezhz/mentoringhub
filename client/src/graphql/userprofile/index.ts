@@ -11,8 +11,28 @@ class Profile {
     fullName: string,
     gender: string,
     role: string,
-    profession: string
+    profession: string,
+    mobilePhone: string,
+    aboutUser: string,
+    languages: string,
+    interests: string,
+    skills: string
   ) {
+    console.log(
+      address,
+      city,
+      country,
+      dateOfBirth,
+      fullName,
+      gender,
+      role,
+      profession,
+      mobilePhone,
+      aboutUser,
+      languages,
+      interests,
+      skills
+    );
     return await fetch(this.url, {
       method: "POST",
       headers: {
@@ -29,6 +49,11 @@ class Profile {
           gender,
           role,
           profession,
+          mobilePhone,
+          aboutUser,
+          languages,
+          interests,
+          skills,
         }).createProfile
       ),
     });

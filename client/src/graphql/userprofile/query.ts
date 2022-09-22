@@ -1,12 +1,36 @@
 export const gql = (q: any) => {
   return {
     createProfile: {
-      query: `mutation createUserProfile($address: String!, $city: String!, $country: String!, $dateOfBirth: String!, $fullName: String!, $gender: String!, $role: String!, $profession: String!) {
-                    createUserProfile(address: $address, city: $city, country: $country, dateOfBirth: $dateOfBirth, fullName: $fullName, gender: $gender, role: $role, profession: $profession) {
+      query: `mutation createUserProfile($address: String!, 
+                $city: String!, 
+                $country: String!, 
+                $dateOfBirth: String!, 
+                $fullName: String!, 
+                $gender: String!, 
+                $role: String!, 
+                $profession: String!, 
+                $mobilePhone: String!, 
+                $aboutUser: String!, 
+                $languages: JSONString! , 
+                $interests: JSONString!,
+                $skills: JSONString!) {
+                createUserProfile(address: $address, 
+                  city: $city, 
+                  country: $country, 
+                  dateOfBirth: $dateOfBirth, 
+                  fullName: $fullName, 
+                  gender: $gender, 
+                  role: $role, 
+                  profession: $profession,
+                  mobilePhone: $mobilePhone,
+                  aboutUser: $aboutUser,
+                  languages: $languages,
+                  interests: $interests,
+                  skills: $skills) {
                     success
                     msg
-                    }
                 }
+              }
             `,
       variables: {
         address: q?.address,
@@ -17,34 +41,35 @@ export const gql = (q: any) => {
         gender: q?.gender,
         role: q?.role,
         profession: q?.profession,
+        mobilePhone: q?.mobilePhone,
+        aboutUser: q?.aboutUser,
+        languages: q?.languages,
+        interests: q?.interests,
+        skills: q?.skills,
       },
     },
     fetchYourProfile: {
       query: `query fetchYourProfile {
                 fetchYourProfile {
-                    user {
-                        username
-                        email
-                    }
-                    fullName
-                    dateOfBirth
-                    address
-                    city
-                    country
-                    gender
-                    mobilePhone
-                    role
-                    profession
-                    userinterest {
-                        interest
-                        domain
-                    }
-                    userskill {
-                        skill
-                        domain
-                    }
+                  user {
+                    username
+                    email
+                  }
+                  fullName
+                  dateOfBirth
+                  address
+                  city
+                  country
+                  gender
+                  mobilePhone
+                  role
+                  profession
+                  languages
+                  interests
+                  skills
+                  aboutUser
                 }
-            }
+              }
         `,
     },
     fetchYourProfileByUsername: {
@@ -59,16 +84,10 @@ export const gql = (q: any) => {
                   mobilePhone
                   role
                   profession
-                  userinterest{
-                    id
-                    interest
-                    domain
-                  }
-                  userskill {
-                    id
-                    skill
-                    domain
-                  }
+                  languages
+                  interests
+                  skills
+                  aboutUser
                 }
               }
         `,
