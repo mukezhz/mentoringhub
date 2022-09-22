@@ -42,9 +42,9 @@ class UserProfile(models.Model):
     country = CountryField(blank=True, null=True)
 
     GENDER_CHOICES = (
-        ("male", ("Male")),
-        ("female", ("Female")),
-        ("other", ("Other")),
+        ("MALE", ("male")),
+        ("FEMALE", ("female")),
+        ("OTHER", ("other")),
     )
     gender = models.CharField(
         verbose_name="Enter your gender",
@@ -80,8 +80,8 @@ class UserProfile(models.Model):
     )
 
     USER_CHOICES = (
-        ("mentor", ("Mentor")),
-        ("mentee", ("Mentee")),
+        ("MENTOR", ("mentor")),
+        ("MENTEE", ("mentee")),
     )
     role = models.CharField(
         verbose_name="Role of user", choices=USER_CHOICES, max_length=10

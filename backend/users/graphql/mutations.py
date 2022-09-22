@@ -111,6 +111,75 @@ class CreateUserProfile(Mutation):
             return CreateUserProfile(success=False, msg="Other error")
 
 
+class UpdateUserProfile(Mutation):
+    """Update for UserProfile."""
+
+    class Arguments:
+        date_of_birth = String(required=False)
+        address = String(required=False)
+        city = String(required=False)
+        country = String(required=False)
+        gender = String(required=False)
+        mobile_phone = String(required=False)
+        role = String(required=True)
+        profession = String(required=True)
+        full_name = String(required=True)
+        about_user = String(required=True)
+        languages = JSONString(required=True)
+        interests = JSONString(required=True)
+        skills = JSONString(required=True)
+
+    success = Boolean()
+    msg = String()
+    # custom_user = Field(CustomUserType)
+    # @login_required
+    def mutate(root, info, **kwargs):
+        # if info.context.user is not
+        try:
+            if not info.context.user.is_authenticated:
+                raise PermissionDenied
+            user = info.context.user
+            date_of_birth = kwargs.get("date_of_birth")
+            address = kwargs.get("address")
+            full_name = kwargs.get("full_name")
+            city = kwargs.get("city")
+            country = kwargs.get("country")
+            gender = kwargs.get("gender")
+            mobile_phone = kwargs.get("mobile_phone")
+            role = kwargs.get("role")
+            profession = kwargs.get("profession")
+            mobile_phone = kwargs.get("mobile_phone")
+            about_user = kwargs.get("about_user")
+            languages = kwargs.get("languages")
+            interests = kwargs.get("interests")
+            skills = kwargs.get("skills")
+            print(languages, interests, skills)
+            u, _ = UserProfile.objects.get_or_create(user=user)
+            u.date_of_birth = datetime.fromtimestamp(int(date_of_birth) / 1000)
+            u.address = address
+            u.city = city
+            u.country = country
+            u.gender = gender
+            u.mobile_phone = mobile_phone
+            u.role = role
+            u.profession = profession
+            u.full_name = full_name
+            u.mobile_phone = mobile_phone
+            u.about_user = about_user
+            u.languages = languages
+            u.interests = interests
+            u.skills = skills
+            u.save()
+            return CreateUserProfile(success=True, msg="Profile Updated")
+        except ObjectDoesNotExist:
+            return CreateUserProfile(success=False, msg="Object doesn't exist")
+        except PermissionDenied:
+            return CreateUserProfile(success=False, msg="User is not authenticated")
+        except Exception as e:
+            print(e)
+            return CreateUserProfile(success=False, msg="Other error")
+
+
 class UpdateRole(Mutation):
     class Arguments:
         role = String()
@@ -235,6 +304,7 @@ class UpdateLanguage(Mutation):
 
 class UserProfileMutation(ObjectType):
     create_user_profile = CreateUserProfile.Field()
+    update_user_profile = UpdateUserProfile.Field()
     update_user_interest = UpdateInterest.Field()
     update_user_skill = UpdateSkill.Field()
     update_user_language = UpdateLanguage.Field()
