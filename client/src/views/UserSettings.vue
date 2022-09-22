@@ -96,6 +96,7 @@
                   v-model:value="formState.user.country"
                   size="large"
                   style="width: 100%"
+                  show-search
                   placeholder="Select Country of Residence"
                   :options="countryOptions"
                 ></a-select>
@@ -140,7 +141,7 @@
                 has-feedback
               >
                 <a-select
-                  v-model:value="formState.user.country"
+                  v-model:value="formState.user.languages"
                   mode="multiple"
                   size="large"
                   style="width: 100%"

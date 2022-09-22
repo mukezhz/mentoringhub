@@ -5,28 +5,28 @@
       <a-menu theme="dark" mode="inline">
         <router-link to="dashboard">
           <a-menu-item key="1">
-            <pie-chart-outlined />
+            <home-outlined />
             <span class="nav-text">Home</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="mentor">
           <a-menu-item key="2">
-            <smile-outlined />
+            <team-outlined />
             <span class="nav-text">Mentors</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="room">
           <a-menu-item key="3">
-            <file-outlined />
-            <span class="nav-text">Room</span>
+            <apartment-outlined />
+            <span class="nav-text">Rooms</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="application">
           <a-menu-item key="4">
-            <desktop-outlined />
+            <file-add-outlined />
             <span class="nav-text">Applications</span>
           </a-menu-item>
         </router-link>
