@@ -34,7 +34,7 @@ class Account {
     });
   }
 
-  public async verifyAccount(token: string) {
+  public async verifyAccount(token: string | string[]) {
     return await fetch(this.url, {
       method: "POST",
       headers: {

@@ -59,7 +59,7 @@ export function handleLocalTrackUnpublished(
   participant: LocalParticipant
 ) {
   // when local tracks are ended, update UI to remove them from rendering
-  track.detach();
+  // track.detach();
 }
 
 export function handleActiveSpeakerChange(speakers: Participant[]) {

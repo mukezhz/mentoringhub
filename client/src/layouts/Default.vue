@@ -141,6 +141,7 @@ export default defineComponent({
       collapsed: ref<boolean>(false),
       selectedKeys: ref<string[]>(["1"]),
       notified: ref<number>(0),
+      notificationsData: ref<string>(""),
     };
   },
   methods: {
