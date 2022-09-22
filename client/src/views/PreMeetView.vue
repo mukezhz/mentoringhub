@@ -7,7 +7,6 @@
   <a-row justify="center">
     <!-- Form Column -->
     <a-col :span="6">
-      <a-row justify="center"></a-row>
       <a-card>
         <a-typography-title :level="3">Meet Form</a-typography-title>
         <a-form
@@ -27,7 +26,8 @@
               { required: true, message: 'Please input your full name!' },
             ]"
           >
-            <a-input v-model:value="formState.username" />
+            <a-input size="large"
+            v-model:value="formState.username" />
           </a-form-item>
 
           <a-form-item
@@ -49,20 +49,20 @@
           </a-form-item>
         </a-form>
         <a-row justify="center">
-          <audio autoplay="true" ref="audioRef" />
-
-          <a-button type="secondary" shape="round" @click="toggleVideo"
-            ><template #icon>
-              <video-camera-two-tone />
-            </template>
-            {{ !video?.isMuted ? "enabled" : "disabled" }}</a-button
-          >
-          <a-button type="secondary" shape="round" @click="toggleAudio"
-            ><template #icon>
-              <audio-two-tone />
-            </template>
-            {{ !audio?.isMuted ? "enabled" : "disabled" }}</a-button
-          >
+          <a-space>
+            <a-button type="secondary" shape="round" @click="toggleVideo"
+              ><template #icon>
+                <video-camera-two-tone />
+              </template>
+              {{ !video?.isMuted ? "enabled" : "disabled" }}</a-button
+            >
+            <a-button type="secondary" shape="round" @click="toggleAudio"
+              ><template #icon>
+                <audio-two-tone />
+              </template>
+              {{ !audio?.isMuted ? "enabled" : "disabled" }}</a-button
+            >
+          </a-space>
         </a-row>
       </a-card>
     </a-col>
@@ -74,6 +74,7 @@
         ref="videoRef"
         :style="{ width: '80%', height: '80%', margin: '0 auto' }"
       />
+      <audio autoplay="true" ref="audioRef" />
     </a-col>
   </a-row>
 </template>

@@ -6,7 +6,7 @@
   >
     <template #extra>
       <router-link to="/">
-        <a-button type="primary">
+        <a-button type="primary" size="large">
           <home-outlined />
           Back Home
         </a-button>
