@@ -18,21 +18,6 @@ class Profile {
     interests: string,
     skills: string
   ) {
-    console.log(
-      address,
-      city,
-      country,
-      dateOfBirth,
-      fullName,
-      gender,
-      role,
-      profession,
-      mobilePhone,
-      aboutUser,
-      languages,
-      interests,
-      skills
-    );
     return await fetch(this.url, {
       method: "POST",
       headers: {
@@ -55,6 +40,47 @@ class Profile {
           interests,
           skills,
         }).createProfile
+      ),
+    });
+  }
+
+  public async updateProfile(
+    address: string,
+    city: string,
+    country: string,
+    dateOfBirth: string,
+    fullName: string,
+    gender: string,
+    role: string,
+    profession: string,
+    mobilePhone: string,
+    aboutUser: string,
+    languages: string,
+    interests: string,
+    skills: string
+  ) {
+    return await fetch(this.url, {
+      method: "POST",
+      headers: {
+        Authorization: `Jwt ${this.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(
+        gql({
+          address,
+          city,
+          country,
+          dateOfBirth,
+          fullName,
+          gender,
+          role,
+          profession,
+          mobilePhone,
+          aboutUser,
+          languages,
+          interests,
+          skills,
+        }).updateProfile
       ),
     });
   }
