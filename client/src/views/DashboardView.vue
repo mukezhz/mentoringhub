@@ -147,6 +147,7 @@ export default defineComponent({
             data: { me },
           } = data;
           if (!me?.userprofile) this.hasProfile = false;
+          localStorage.setItem("role", me.userprofile.role.toLowerCase());
         });
     }
   },

@@ -106,6 +106,16 @@ class Profile {
       body: JSON.stringify(gql({ username }).fetchYourProfileByUsername),
     });
   }
+  public async fetchYourProfileByRole(role: string | string[]) {
+    return await fetch(this.url, {
+      method: "POST",
+      headers: {
+        Authorization: `Jwt ${this.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(gql({ role }).fetchYourProfileByRole),
+    });
+  }
 }
 
 export const profile = new Profile();

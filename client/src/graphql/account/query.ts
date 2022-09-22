@@ -17,6 +17,7 @@ export const gql = (q: any) => {
                   verified
                   userprofile {
                     fullName
+                    role
                    }
                 }
               }
