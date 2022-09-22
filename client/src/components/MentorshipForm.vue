@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-button type="primary" size="large" @click="visible = true"
-      >Apply for Mentorship</a-button
+      >Request for Mentorship</a-button
     >
     <a-modal
       v-model:visible="visible"
