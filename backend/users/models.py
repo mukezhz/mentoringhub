@@ -41,17 +41,11 @@ class UserProfile(models.Model):
     )
     country = CountryField(blank=True, null=True)
 
-    GENDER_CHOICES = (
-        ("MALE", ("male")),
-        ("FEMALE", ("female")),
-        ("OTHER", ("other")),
-    )
     gender = models.CharField(
         verbose_name="Enter your gender",
         max_length=10,
         blank=True,
         null=True,
-        choices=GENDER_CHOICES,
     )
 
     phone_regex = RegexValidator(
@@ -79,13 +73,7 @@ class UserProfile(models.Model):
         ),
     )
 
-    USER_CHOICES = (
-        ("MENTOR", ("mentor")),
-        ("MENTEE", ("mentee")),
-    )
-    role = models.CharField(
-        verbose_name="Role of user", choices=USER_CHOICES, max_length=10
-    )
+    role = models.CharField(verbose_name="Role of user", max_length=10)
     profession = models.CharField(verbose_name="User's Profession", max_length=50)
 
     login_method = models.CharField(
