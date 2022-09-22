@@ -147,8 +147,8 @@ export default defineComponent({
   methods: {
     logout() {
       localStorage.clear();
-      this.$router.push("/");
       message.success("Logout Successful!");
+      this.$router.push("/");
     },
   },
   // onMounted(() => {

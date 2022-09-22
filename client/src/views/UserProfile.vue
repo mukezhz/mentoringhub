@@ -118,12 +118,11 @@ export default defineComponent({
           hasProfile.value = true;
           for (const k in fetchProfileAccordingToUsername) {
             console.log(k, fetchProfileAccordingToUsername[k]);
-            if (k === "skills" || k === "interests" || k === "languages") {
+            if (k === "skills" || k === "interests" || k === "languages")
               formState.user[k] = JSON.parse(
                 fetchProfileAccordingToUsername[k]
               );
-            }
-            formState.user[k] = fetchProfileAccordingToUsername[k];
+            else formState.user[k] = fetchProfileAccordingToUsername[k];
           }
           console.log(fetchProfileAccordingToUsername);
           formState.user.email = fetchProfileAccordingToUsername.user.email;
@@ -133,7 +132,6 @@ export default defineComponent({
           }
         }
       }
-      console.log(route.params, route.path);
     });
     const hasProfile = ref<boolean>(false);
     const formState = reactive<any>({
