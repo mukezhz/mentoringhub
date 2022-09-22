@@ -7,39 +7,55 @@
       {{ name }}
     </li>
   </ul> -->
-  <a-typography-title>Meet</a-typography-title>
-  <!-- Local div -->
-  <div>
-    <video
-      autoplay="true"
-      ref="videoRef"
-      :style="{ width: '50%', height: '50%', margin: '0 auto' }"
-    />
+  <a-row justify="center">
+    <a-typography-title>Meet</a-typography-title>
+  </a-row>
 
-    <audio autoplay="true" ref="audioRef" />
-  </div>
-  <div>
+  <!-- Local div -->
+  <a-row justify="center">
+    <a-col :span="24">
+      <a-row>
+        <video
+          autoplay="true"
+          ref="videoRef"
+          :style="{ width: '50%', height: '50%', margin: '0 auto' }"
+        />
+
+        <audio autoplay="true" ref="audioRef" />
+      </a-row>
+
+      <a-row justify="center">
+        <a-space style="margin-top: 1vh">
+          <a-button type="primary" @click="toggleVideo"
+            >Camera {{ !video?.isMuted ? "enable" : "disable" }}</a-button
+          >
+          <a-button type="secondary" @click="toggleAudio"
+            >Mic {{ !audio?.isMuted ? "enable" : "disable" }}</a-button
+          >
+        </a-space>
+      </a-row>
+    </a-col>
+  </a-row>
+  <a-row type="flex" justify="space-between" align="bottom">
     <!-- remote div -->
-    <div v-for="(participant, i) in remoteParticipants" :key="participant.sid">
+    <a-col :span="6"
+      v-for="(participant, i) in remoteParticipants"
+      :key="participant.sid"
+    >
       {{ participant.identity }}
       {{ participant.videoSid }}
       {{ participant.audioSid }}
       <video
         v-show="participant.videoSid?.length"
         :ref="functionVideoRef(i, getTrack(participant.videoSid))"
+        :style="{ width: '25%', height: '25%', margin: '0 auto' }"
       ></video>
       <audio
         v-show="participant.audioSid?.length"
         :ref="functionAudioRef(i, getTrack(participant.audioSid))"
       ></audio>
-    </div>
-  </div>
-  <a-button type="primary" @click="toggleVideo"
-    >Camera {{ !video?.isMuted ? "enable" : "disable" }}</a-button
-  >
-  <a-button type="secondary" @click="toggleAudio"
-    >Mic {{ !audio?.isMuted ? "enable" : "disable" }}</a-button
-  >
+    </a-col>
+  </a-row>
 </template>
 
 <script setup lang="ts">
