@@ -36,7 +36,7 @@ docker run -dit \
       -p 5432:5432 postgres
 ```
 ## Run Backend
-- Be in root directory [FINALPROJECT]
+- Be in root directory [MentoringHub]
 - Install the poetry
 ```
 $ cd backend
@@ -47,14 +47,14 @@ $ cd ..
 $ make backend
 ```
 ## Run Livekit Server
-- Be in root directory [FINALPROJECT]
+- Be in root directory [MentoringHub]
 - Pull the livekit server from docker
 ```
 $ docker pull livekit/livekit-serve 
 $ make livekit
 ```
 ## Run Webrtc
-- Be in root directory [FINALPROJECT]
+- Be in root directory [MentoringHub]
 - Install the npm
 ```
 $ cd webrtc
@@ -65,7 +65,7 @@ $ make webrtc
 ```
 
 ## Run Client
-- Be in root directory [FINALPROJECT]
+- Be in root directory [MentoringHub]
 - Install the npm
 ```
 $ cd client
@@ -75,7 +75,7 @@ $ make client
 ```
 
 ## Run the project in [Modern Way]
-- Be in root directory [FINALPROJECT]
+- Be in root directory [MentoringHub]
 - Install docker and docker-compose in your system
 ```
 $ docker-compose up
