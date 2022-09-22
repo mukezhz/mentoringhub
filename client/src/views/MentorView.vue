@@ -1,10 +1,10 @@
 <template>
   <a-row justify="space-between">
-    <a-typography-title :level="2">Your Mentors</a-typography-title>
+    <a-typography-title :level="2">Your {{ type }}</a-typography-title>
     <a-col>
       <a-input-search
         v-model:value="value"
-        placeholder="Search Mentors"
+        :placeholder="searchType"
         enter-button
         size="large"
         @search="onSearch"
@@ -12,7 +12,7 @@
     </a-col>
   </a-row>
 
-  <a-table :columns="columns" :data-source="data">
+  <a-table :columns="columns" :data-source="users">
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
         <span> Mentor's Name </span>
@@ -21,9 +21,9 @@
 
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'name'">
-        <a>
+        <router-link :to="record.key">
           {{ record.name }}
-        </a>
+        </router-link>
       </template>
       <template v-else-if="column.key === 'skills'">
         <span>
@@ -47,7 +47,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
+import { defineComponent, ref, reactive } from "vue";
+import { onMounted } from "vue";
+import { profile } from "@/graphql/userprofile";
+import { titleCase } from "@/utils/string";
 const columns = [
   {
     name: "Name",
@@ -66,28 +70,13 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: "1",
-    name: "Harke Haldar",
-    address: "Sundhara",
-    skills: ["python", "architect"],
-  },
-  {
-    key: "2",
-    name: "Dhurmus",
-    address: "Butwal",
-    skills: ["mysql"],
-  },
-  {
-    key: "3",
-    name: "Suntali",
-    address: "Bharatpur",
-    skills: ["javaScript", "teacher"],
-  },
-];
 export default defineComponent({
   setup() {
+    const users = reactive<any>([]);
+    const type = ref<string>("");
+    const url = ref<string>("");
+    const searchType = ref<string>("");
+    const router = useRouter();
     const value = ref<string>("");
 
     const onSearch = (searchValue: string) => {
@@ -95,11 +84,34 @@ export default defineComponent({
       console.log("or use this.value", value.value);
     };
 
+    onMounted(async () => {
+      const role = localStorage.getItem("role");
+      if (!role) router.push("/dashboard");
+      else {
+        const search = role === "mentor" ? "mentee" : "mentor";
+        type.value = `${titleCase(search)}s`;
+        searchType.value = `Search ${titleCase(search)}s`;
+        const res = await profile.fetchYourProfileByRole(search);
+        const { data } = await res.json();
+        const { fetchProfileAccordingToRole } = data;
+        fetchProfileAccordingToRole.forEach((user: any) => {
+          users.push({
+            key: `/u/${user.user.email.split(".")[0]}`,
+            name: user.fullName,
+            address: user.address,
+            skills: JSON.parse(user.skills),
+          });
+        });
+      }
+    });
+
     return {
       value,
       onSearch,
       columns,
-      data,
+      users,
+      type,
+      searchType,
     };
   },
 });

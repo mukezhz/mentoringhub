@@ -147,5 +147,31 @@ export const gql = (q: any) => {
         username: q?.username,
       },
     },
+    fetchYourProfileByRole: {
+      query: `query fetchProfileAccordingToRole($role: String!) {
+                fetchProfileAccordingToRole(role: $role) {
+                  user {
+                    email
+                  }
+                  fullName
+                  dateOfBirth
+                  address
+                  city
+                  country
+                  gender
+                  mobilePhone
+                  role
+                  profession
+                  languages
+                  interests
+                  skills
+                  aboutUser
+                }
+              }
+        `,
+      variables: {
+        role: q?.role,
+      },
+    },
   };
 };
