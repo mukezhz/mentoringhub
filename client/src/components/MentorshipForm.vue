@@ -57,7 +57,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref, toRaw } from "vue";
+import { defineComponent, reactive, ref, toRaw, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import { message, type FormInstance } from "ant-design-vue";
 import { mentorship } from "@/graphql/mentorship";
 
@@ -72,6 +73,7 @@ export default defineComponent({
     email: String,
   },
   setup(props) {
+    const route = useRoute();
     const formRef = ref<FormInstance | any>({});
     const visible = ref(false);
     const questions = {
@@ -85,6 +87,18 @@ export default defineComponent({
       answer3: "",
     });
     const title = ref<string>("test");
+    onMounted(async () => {
+      const res = await mentorship.fetchMentorship();
+      const { data } = await res.json();
+      const { fetchMentorships } = data;
+      const mentorships = fetchMentorships.map((mentorship: any) => {
+        const email = `${route.params.username}.com`;
+        if (email === mentorship.mentorId) return mentorship;
+      });
+      if (mentorships.length) {
+        console.log("already applied!!!");
+      }
+    });
 
     const onOk = () => {
       formRef.value
@@ -117,6 +131,7 @@ export default defineComponent({
           );
           const { data } = await res.json();
           const { applyMentorship } = data;
+          console.log(applyMentorship);
           if (!applyMentorship.success)
             return message.warn("Failed to apply!!!");
           message.success("Applied successfully!");
