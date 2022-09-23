@@ -10,10 +10,10 @@
           </a-menu-item>
         </router-link>
 
-        <router-link to="/mentor">
+        <router-link v-if="type.length" :to="url">
           <a-menu-item key="2">
             <team-outlined style="font-size: 200%" />
-            <span class="nav-text">Mentors</span>
+            <span class="nav-text">{{ type }}s</span>
           </a-menu-item>
         </router-link>
 
@@ -54,12 +54,18 @@
                 </a-badge>
                 <template #overlay>
                   <a-list
-                    item-layout="horizontal"
+                    size="large"
+                    bordered
                     :data-source="notificationsData"
                   >
-                    <a-list-item>
-                      <a-list-item-meta> {{}} </a-list-item-meta>
-                    </a-list-item>
+                    <template #renderItem="{ item }">
+                      <a-list-item>
+                        <a>{{ item }}</a>
+                      </a-list-item>
+                    </template>
+                    <template #header>
+                      <div>Your Notifications</div>
+                    </template>
                   </a-list>
                 </template>
               </a-dropdown>
@@ -122,6 +128,16 @@ import {
 } from "@ant-design/icons-vue";
 import { defineComponent, ref } from "vue";
 import { message } from "ant-design-vue";
+
+const notificationsData: string[] = [
+  "Your Mentorship has been approved.",
+  "Your Mentorship for this person is rejected.",
+  "Notification 3",
+  "Notification 4",
+];
+account;
+import { account } from "@/graphql/account";
+import { titleCase } from "@/utils/string";
 export default defineComponent({
   components: {
     FileAddOutlined,
@@ -142,7 +158,26 @@ export default defineComponent({
       selectedKeys: ref<string[]>(["1"]),
       notified: ref<number>(0),
       notificationsData: ref<string>(""),
+      type: ref<string>(""),
+      url: ref<string>(""),
     };
+  },
+  mounted() {
+    const token = localStorage.getItem("authtoken");
+    if (!token) return;
+    account
+      .fetchYourProfile(token)
+      .then((d) => d.json())
+      .then((d) => {
+        const { data } = d;
+        const { me } = data;
+        const { userprofile = null } = me;
+        if (!userprofile) return message.warn("Please create user profile!!!");
+        const role = userprofile.role;
+        const search = role.toLowerCase() === "mentor" ? "mentee" : "mentor";
+        this.type = titleCase(search);
+        this.url = `/${search.toLowerCase()}`;
+      });
   },
   methods: {
     logout() {
@@ -151,6 +186,7 @@ export default defineComponent({
       this.$router.push("/");
     },
   },
+
   // onMounted(() => {
   //     setInterval(() => {
   //       this.notified = this.notified + 1;

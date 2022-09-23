@@ -13,6 +13,10 @@ psycopg2 = "^2.9.3"
 Pillow = "^9.2.0"
 django-cors-headers = "^3.13.0"
 django-anymail = {extras = ["mailgun"], version = "^8.6"}
+numpy = "^1.23.3"
+pandas = "^1.5.0"
+sklearn = "^0.0"
+nltk = "^3.7"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^22.3.0", allow-prereleases = true}

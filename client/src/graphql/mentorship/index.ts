@@ -61,6 +61,17 @@ class Mentorship {
       body: JSON.stringify(gql({ id }).fetchMentorshipById),
     });
   }
+
+  public async fetchYourMentorship(id: string) {
+    return await fetch(this.url, {
+      method: "POST",
+      headers: {
+        Authorization: `Jwt ${this.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(gql(null).fetchYourMentorship),
+    });
+  }
 }
 
 export const mentorship = new Mentorship();

@@ -157,6 +157,7 @@ export default defineComponent({
       const token = localStorage.getItem("authtoken");
       if (email?.length && token?.length) {
         const res = await account.resendActivationEmail(email);
+        console.log(res);
         const { data } = await res.json();
         const { resendActivationEmail } = data;
         const { errors, success } = resendActivationEmail;
