@@ -15,7 +15,7 @@
   <a-table :columns="columns" :data-source="users">
     <template #headerCell="{ column }">
       <template v-if="column.key === 'name'">
-        <span> Mentor's Name </span>
+        <span> Mentee's Name </span>
       </template>
     </template>
 

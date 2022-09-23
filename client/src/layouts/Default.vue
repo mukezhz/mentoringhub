@@ -10,39 +10,29 @@
           </a-menu-item>
         </router-link>
 
-        <template v-if="mentee">
-          <router-link to="/mentor">
-            <a-menu-item key="2">
-              <team-outlined style="font-size: 200%" />
-              <span class="nav-text">Mentors</span>
-            </a-menu-item>
-          </router-link>
-        </template>
-        <template v-else-if="mentor">
-          <router-link to="/mentee">
-            <a-menu-item key="3">
-              <team-outlined style="font-size: 200%" />
-              <span class="nav-text">Mentee</span>
-            </a-menu-item>
-          </router-link>
-        </template>
+        <router-link to="/mentor">
+          <a-menu-item key="2">
+            <team-outlined style="font-size: 200%" />
+            <span class="nav-text">Mentors</span>
+          </a-menu-item>
+        </router-link>
 
         <router-link to="/room">
-          <a-menu-item key="4">
+          <a-menu-item key="3">
             <apartment-outlined style="font-size: 200%" />
             <span class="nav-text">Rooms</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="/application">
-          <a-menu-item key="5">
+          <a-menu-item key="4">
             <file-add-outlined style="font-size: 200%" />
             <span class="nav-text">Applications</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="/premeet">
-          <a-menu-item key="6">
+          <a-menu-item key="5">
             <ClusterOutlined style="font-size: 200%" />
             <span class="nav-text">PreMeet</span>
           </a-menu-item>
