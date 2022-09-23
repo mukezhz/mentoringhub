@@ -1,8 +1,11 @@
 import json
+from datetime import datetime
 from graphql import GraphQLError
-from graphene import ObjectType, Boolean, String, JSONString, Mutation, DateTime
+from graphene import ObjectType, Boolean, String, JSONString, Mutation, DateTime, Int
 from graphql_jwt.decorators import login_required
 from django.db.models import Q
+
+from meetings.models import Meeting
 
 
 # from .types import CustomUserType
@@ -58,9 +61,13 @@ class ReplyMentorship(Mutation):
 
     class Arguments:
         status = String(required=True)
-        available_time = DateTime(required=True)
-        available_hour = DateTime(required=True)
+        available_time = String(required=True)
+        available_hour = Int(required=True)
         id = String(required=True)
+        room = String(required=True)
+        description = String(required=True)
+        participants = JSONString(required=True)
+        status = String(required=True)
 
     success = Boolean()
     msg = String()
@@ -75,11 +82,23 @@ class ReplyMentorship(Mutation):
             available_time = kwargs.get("available_time")
             available_hour = kwargs.get("available_hour")
             m = Mentorship.objects.get(id=id)
-            m.available = available_time
+            m.available = datetime.fromtimestamp(int(available_time) / 1000)
             m.available_hour = available_hour
             m.status = status
 
             m.save()
+            if status == "ACCEPTED":
+                room = kwargs.get("room")
+                description = kwargs.get("description")
+                participants = kwargs.get("participants")
+                status = kwargs.get("status")
+                meeting, _ = Meeting.objects.get_or_create(users=user)
+                meeting.room = room
+                meeting.title = m.title
+                meeting.description = description
+                meeting.participants = json.dumps(participants)
+                meeting.status = status
+                meeting.save()
 
             return ReplyMentorship(
                 success=True,
