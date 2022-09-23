@@ -42,6 +42,7 @@ class CreateMeeting(Mutation):
             app_id = kwargs.get("app_id")
             m, _ = Meeting.objects.get_or_create(users=user)
             m.room = room
+            m.app_id = app_id
             m.title = title
             m.description = description
             m.participants = participants
