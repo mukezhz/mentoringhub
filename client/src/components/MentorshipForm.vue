@@ -18,36 +18,36 @@
         name="form_in_modal"
       >
         <a-form-item
-          name="question1"
-          label="Q1. Why?"
+          name="answer1"
+          :label="questions.question1"
           :rules="[{ trigger: 'blur', required: true }]"
         >
           <a-textarea
-            v-model:value="formState.question1"
+            v-model:value="formState.answer1"
             placeholder="Please answer this questions carefully. "
             :auto-size="{ minRows: 3, maxRows: 6 }"
           />
         </a-form-item>
 
         <a-form-item
-          name="question2"
-          label="Q2. question2?"
+          name="answer2"
+          :label="questions.question2"
           :rules="[{ trigger: 'blur', required: true }]"
         >
           <a-textarea
-            v-model:value="formState.question2"
+            v-model:value="formState.answer2"
             placeholder="Please answer this questions carefully. "
             :auto-size="{ minRows: 3, maxRows: 6 }"
           />
         </a-form-item>
 
         <a-form-item
-          name="question3"
-          label="Q3. ......?"
+          name="answer3"
+          :label="questions.question3"
           :rules="[{ trigger: 'blur', required: true }]"
         >
           <a-textarea
-            v-model:value="formState.question3"
+            v-model:value="formState.answer3"
             placeholder="Please answer this questions carefully. "
             :auto-size="{ minRows: 3, maxRows: 6 }"
           />
@@ -58,31 +58,68 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, ref, toRaw } from "vue";
-import type { FormInstance } from "ant-design-vue";
+import { message, type FormInstance } from "ant-design-vue";
+import { mentorship } from "@/graphql/mentorship";
 
 interface Values {
-  question2: string;
-  question1: string;
-  question3: string;
+  answer1: string;
+  answer2: string;
+  answer3: string;
 }
 
 export default defineComponent({
-  setup() {
+  props: {
+    email: String,
+  },
+  setup(props) {
     const formRef = ref<FormInstance | any>({});
     const visible = ref(false);
+    const questions = {
+      question1: "Q1",
+      question2: "Q2",
+      question3: "Q3",
+    };
     const formState = reactive<Values>({
-      question1: "",
-      question2: "",
-      question3: "",
+      answer1: "",
+      answer2: "",
+      answer3: "",
     });
+    const title = ref<string>("test");
 
     const onOk = () => {
       formRef.value
         .validateFields()
-        .then((values: any) => {
-          const { question1, question2, question3 } = values;
-          console.log(question1, question2, question3);
+        .then(async (values: any) => {
+          const { answer1, answer2, answer3 } = values;
+          console.log(answer1, answer2, answer3);
           // TODO: send call apply for mentorship for applying mentorship
+          const email = localStorage.getItem("email");
+          if (!email) return message.error("Error occured!!!");
+          const qna = [
+            {
+              question1: questions.question1,
+              answer1: formState.answer1,
+            },
+            {
+              question2: questions.question2,
+              answer2: formState.answer2,
+            },
+            {
+              question3: questions.question3,
+              answer3: formState.answer3,
+            },
+          ];
+          const res = await mentorship.applyForMentorship(
+            email,
+            props.email || "",
+            JSON.stringify(qna),
+            title.value
+          );
+          const { data } = await res.json();
+          const { applyMentorship } = data;
+          if (!applyMentorship.success)
+            return message.warn("Failed to apply!!!");
+          message.success("Applied successfully!");
           visible.value = false;
           formRef.value.resetFields();
         })
@@ -96,6 +133,7 @@ export default defineComponent({
       formRef,
       visible,
       onOk,
+      questions,
     };
   },
 });

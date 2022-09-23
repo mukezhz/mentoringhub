@@ -68,5 +68,21 @@ export const gql = (q: any) => {
         id: q?.id,
       },
     },
+
+    fetchYourMentorship: {
+      query: `query fetchYourMentorship {
+                fetchYourMentorship {
+                  id
+                  title
+                  qna
+                  mentorId
+                  menteeId
+                  status
+                  available
+                  availableHour
+                }
+              }
+        `,
+    },
   };
 };

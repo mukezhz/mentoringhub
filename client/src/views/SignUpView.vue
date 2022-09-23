@@ -187,6 +187,7 @@ export default defineComponent({
         const { errors, success, token, refreshToken } = data.register;
         if (success) {
           localStorage.setItem("authtoken", token);
+          localStorage.setItem("email", email);
           localStorage.setItem("refreshToken", refreshToken);
           message.success("Account Created!");
           router.push("/dashboard");

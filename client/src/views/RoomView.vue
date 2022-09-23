@@ -50,7 +50,7 @@ export default defineComponent({
           key: "name",
         },
         {
-          title: "Owner",
+          title: "Mentor",
           dataIndex: "owner",
           key: "owner",
         },

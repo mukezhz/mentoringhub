@@ -12,23 +12,28 @@
     </a-col>
   </a-row>
 
-  <a-table :columns="columns" :data-source="data">
+  <a-table :columns="columns" :data-source="applications">
     <template #headerCell="{ column }">
-      <template v-if="column.key === 'name'">
-        <span> Mentor's Name </span>
+      <template v-if="column.key === 'email'">
+        <span> Mentor's Email </span>
       </template>
     </template>
 
     <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'name'">
+      <template v-if="column.key === 'title'">
         <a>
-          {{ record.name }}
+          {{ record.title }}
         </a>
       </template>
-      <template v-else-if="column.key === 'skills'">
+      <template v-else-if="column.key === 'email'">
+        <span>
+          <a>{{ record.email }}</a>
+        </span>
+      </template>
+      <template v-else-if="column.key === 'status'">
         <span>
           <a-tag
-            v-for="tag in record.skills"
+            v-for="tag in record.status"
             :key="tag"
             :color="
               tag === 'loser'
@@ -42,57 +47,39 @@
           </a-tag>
         </span>
       </template>
-      <template v-else-if="column.key === 'action'">
-        <span>
-          <a>Delete</a>
-        </span>
-      </template>
     </template>
   </a-table>
 </template>
 
 <script lang="ts">
+import { mentorship } from "@/graphql/mentorship";
+import { message } from "ant-design-vue";
 import { defineComponent, ref } from "vue";
+import { onMounted } from "vue";
 const columns = [
   {
-    name: "Name",
-    dataIndex: "name",
-    key: "name",
+    email: "Email",
+    dataIndex: "mentor",
+    key: "email",
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: "Title",
+    key: "title",
+    dataIndex: "title",
   },
   {
-    title: "Skills",
-    key: "skills",
-    dataIndex: "skills",
-  },
-  {
-    title: "Action",
-    key: "action",
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
   },
 ];
 
-const data = [
+const applications = [
   {
     key: "1",
-    name: "Harke Haldar",
-    address: "Sundhara",
-    skills: ["python", "architect"],
-  },
-  {
-    key: "2",
-    name: "Dhurmus",
-    address: "Butwal",
-    skills: ["mysql"],
-  },
-  {
-    key: "3",
-    name: "Suntali",
-    address: "Bharatpur",
-    skills: ["javaScript", "teacher"],
+    email: "mee@mee.com",
+    title: "Sundhara",
+    status: ["pending"],
   },
 ];
 export default defineComponent({
@@ -104,10 +91,26 @@ export default defineComponent({
       console.log("or use this.value", value.value);
     };
 
+    onMounted(async () => {
+      const email = localStorage.getItem("email");
+      if (!email) return message.error("Error login properly!!!");
+      const res = await mentorship.fetchYourMentorship(email);
+      const data = await res.json();
+      const { fetchYourMentorship } = data;
+      // fetchYourMentorship.forEach((app: any) => {
+      //   applications.push({
+      //     key: app.id,
+      //     status: app.status,
+      //     title: app.title,
+      //   });
+      // });
+      console.log(data);
+    });
+
     return {
       value,
       onSearch,
-      data,
+      applications,
       columns,
     };
   },
