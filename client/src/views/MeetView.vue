@@ -30,7 +30,7 @@
           >
         </a-space>
       </a-row>
-    </a-col>   
+    </a-col>
 
     <!-- remote div -->
     <a-col

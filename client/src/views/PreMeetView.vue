@@ -26,8 +26,7 @@
               { required: true, message: 'Please input your full name!' },
             ]"
           >
-            <a-input size="large"
-            v-model:value="formState.username" />
+            <a-input size="large" v-model:value="formState.username" />
           </a-form-item>
 
           <a-form-item
