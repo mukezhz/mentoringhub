@@ -10,6 +10,11 @@
       @ok="onOk"
     >
       <a-row justify="center">
+        <a-descriptions :column="1">
+          <a-descriptions-item label="Q1">{{answers.answer1}}</a-descriptions-item>
+          <a-descriptions-item label="Q2">{{answers.answer2}}</a-descriptions-item>
+          <a-descriptions-item label="Q3">{{answers.answer3}}</a-descriptions-item>
+        </a-descriptions>
         <a-col span="16">
           <a-form
             ref="formRef"
@@ -70,6 +75,11 @@ export default defineComponent({
   setup() {
     const formRef = ref<any>();
     const visible = ref(false);
+    const answers = {
+      answer1: "somw blabla 1",
+      answer2: "some blabla 2",
+      answer3: "some blabla 3",
+    };
     const formState = reactive<Values>({
       availDate: "",
       availTime: "",
@@ -95,6 +105,7 @@ export default defineComponent({
       formRef,
       visible,
       onOk,
+      answers,
     };
   },
 });
