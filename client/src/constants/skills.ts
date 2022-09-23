@@ -15,4 +15,16 @@ export const SKILLS = [
     value: "biology",
     label: "Biology",
   },
+  {
+    value: "programming",
+    label: "Programming",
+  },
+  {
+    value: "devops",
+    label: "Devops",
+  },
+  {
+    value: "artificial intelligence",
+    label: "Arificial Intelligence",
+  },
 ];
