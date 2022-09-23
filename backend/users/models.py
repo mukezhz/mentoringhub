@@ -39,7 +39,7 @@ class UserProfile(models.Model):
     city = models.CharField(
         verbose_name=("City"), max_length=256, blank=True, null=True
     )
-    country = CountryField(blank=True, null=True)
+    country = models.CharField(blank=True, null=True, max_length=20)
 
     gender = models.CharField(
         verbose_name="Enter your gender",
