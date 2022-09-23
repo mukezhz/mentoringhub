@@ -105,7 +105,7 @@ export default defineComponent({
           key: mentorship.id,
           email: email,
           title: mentorship.title,
-          status: mentorship.status,
+          status: [mentorship.status],
           url: `/u/${email.split(".")[0]}`,
         });
       }
