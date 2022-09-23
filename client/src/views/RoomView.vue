@@ -15,7 +15,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { meeting } from "@/graphql/meeting";
+import { message } from "ant-design-vue";
+import { defineComponent, ref, onMounted, reactive } from "vue";
 export default defineComponent({
   setup() {
     const value = ref<string>("");
@@ -24,42 +26,53 @@ export default defineComponent({
       console.log("use value", searchValue);
       console.log("or use this.value", value.value);
     };
+    const columns = [
+      {
+        title: "Room Name",
+        dataIndex: "name",
+        key: "name",
+      },
+      {
+        title: "Title",
+        dataIndex: "title",
+        key: "title",
+      },
+      {
+        title: "Status",
+        dataIndex: "status",
+        key: "status",
+      },
+      {
+        title: "Mentor",
+        dataIndex: "mentor",
+        key: "mentor",
+      },
+    ];
+    const roomData = reactive<any>([]);
+    onMounted(async () => {
+      const res = await meeting.fetchYourMeetings();
+      const { data } = await res.json();
+      const { fetchYourMeetings } = data;
+      console.log(fetchYourMeetings);
+      if (!fetchYourMeetings) return message.info("unable to fetch data");
+      console.log(fetchYourMeetings);
+      fetchYourMeetings;
+      fetchYourMeetings.forEach((meeting: any) => {
+        roomData.push({
+          key: meeting.id,
+          title: meeting.title,
+          name: meeting.room,
+          status: meeting.status,
+          mentor: meeting.users.email,
+        });
+      });
+    });
 
     return {
       value,
       onSearch,
-      roomData: [
-        {
-          key: "1",
-          name: "Python Study Room",
-          owner: "Sagar",
-          address: "Dang",
-        },
-        {
-          key: "2",
-          name: "C++ Study Room",
-          owner: "Basantey",
-          address: "Myagdi",
-        },
-      ],
-
-      columns: [
-        {
-          title: "Room Name",
-          dataIndex: "name",
-          key: "name",
-        },
-        {
-          title: "Mentor",
-          dataIndex: "owner",
-          key: "owner",
-        },
-        {
-          title: "Address",
-          dataIndex: "address",
-          key: "address",
-        },
-      ],
+      roomData,
+      columns,
     };
   },
 });

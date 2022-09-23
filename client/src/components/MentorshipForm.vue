@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a-button type="primary" size="large" @click="visible = true"
+    <a-button v-if="applied" type="danger" disabled>Already Applied</a-button>
+    <a-button v-else type="primary" size="large" @click="visible = true"
       >Request for Mentorship</a-button
     >
     <a-modal
@@ -87,16 +88,21 @@ export default defineComponent({
       answer3: "",
     });
     const title = ref<string>("test");
+    const applied = ref<boolean>(false);
     onMounted(async () => {
-      const res = await mentorship.fetchMentorship();
+      const res = await mentorship.fetchYourMentorship();
       const { data } = await res.json();
-      const { fetchMentorships } = data;
-      const mentorships = fetchMentorships.map((mentorship: any) => {
+      console.log(data);
+      const { fetchYourMentorship } = data;
+      const mentorships = fetchYourMentorship.filter((mentorship: any) => {
         const email = `${route.params.username}.com`;
         if (email === mentorship.mentorId) return mentorship;
       });
+      console.log(mentorships);
       if (mentorships.length) {
-        console.log("already applied!!!");
+        console.log(mentorships);
+        applied.value = true;
+        console.log(applied.value);
       }
     });
 
@@ -105,8 +111,6 @@ export default defineComponent({
         .validateFields()
         .then(async (values: any) => {
           const { answer1, answer2, answer3 } = values;
-          console.log(answer1, answer2, answer3);
-          // TODO: send call apply for mentorship for applying mentorship
           const email = localStorage.getItem("email");
           if (!email) return message.error("Error occured!!!");
           const qna = [
@@ -131,11 +135,11 @@ export default defineComponent({
           );
           const { data } = await res.json();
           const { applyMentorship } = data;
-          console.log(applyMentorship);
           if (!applyMentorship.success)
             return message.warn("Failed to apply!!!");
           message.success("Applied successfully!");
           visible.value = false;
+          applied.value = true;
           formRef.value.resetFields();
         })
         .catch((info: any) => {
@@ -149,6 +153,7 @@ export default defineComponent({
       visible,
       onOk,
       questions,
+      applied,
     };
   },
 });

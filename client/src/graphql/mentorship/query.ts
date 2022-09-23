@@ -19,19 +19,38 @@ export const gql = (q: any) => {
     },
 
     replyOfMentorship: {
-      query: `mutation replyOfMentorship($id: String!, $status: String!, $availableHour: DateTime!, $availableTime: DateTime!) {
-                replyMentorship(id: $id, status: $status, availableHour: $availableHour, availableTime: $availableTime) {
-                    success
-                    status
-                    msg
+      query: `mutation replyMentorShip(
+                $availableHour: Int!,
+                $availableTime: String!,
+                $description: String!,
+                $id: String!,
+                $participants: JSONString!,
+                $room: String!,
+                $status: String!
+              ){
+                replyMentorship(
+                  availableHour: $availableHour,
+                  availableTime: $availableTime,
+                  id: $id,
+                  participants: $participants
+                  room: $room,
+                  status: $status,
+                  description: $description
+                ) {
+                  success
+                  msg
+                  status
                 }
-            }
+              }
         `,
       variables: {
         id: q?.id,
         status: q?.status,
         availableHour: q?.availableHour,
         availableTime: q?.availableTime,
+        participants: q?.participants,
+        room: q?.room,
+        description: q?.description,
       },
     },
 

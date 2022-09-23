@@ -1,5 +1,6 @@
 import { checkVerified } from "@/utils/account/checkVerified";
 import { createRouter, createWebHistory, routerKey } from "vue-router";
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import PageNotFound from "@/views/404.vue";
 import LandingView from "@/views/LandingView.vue";
 import DashboardView from "../views/DashboardView.vue";
@@ -75,7 +76,7 @@ export const router = createRouter({
     {
       path: "/dashboard",
       name: "dashboard",
-      component: () => import("../layouts/Default.vue"),
+      component: DefaultLayout,
       meta: {
         requiresAuth: true,
       },
