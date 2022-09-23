@@ -53,14 +53,17 @@
                   </a>
                 </a-badge>
                 <template #overlay>
-                  <a-list
-                    item-layout="horizontal"
-                    :data-source="notificationsData"
-                  >
-                    <a-list-item>
-                      <a-list-item-meta> {{}} </a-list-item-meta>
-                    </a-list-item>
-                  </a-list>
+                  <a-list size="large" bordered :data-source="notificationsData">
+                      <template #renderItem="{ item }">
+                        <a-list-item>
+                          <a>{{ item }}</a>
+                        </a-list-item>
+                      </template>
+                      <template #header>
+                        <div>Your Notifications</div>
+                      </template>
+                      
+                    </a-list>
                 </template>
               </a-dropdown>
             </a-col>
@@ -122,6 +125,10 @@ import {
 } from "@ant-design/icons-vue";
 import { defineComponent, ref } from "vue";
 import { message } from "ant-design-vue";
+
+const notificationsData : string[] = [
+    'Your Mentorship has been approved.','Your Mentorship for this person is rejected.', 'Notification 3', 'Notification 4',
+  ];
 export default defineComponent({
   components: {
     FileAddOutlined,
@@ -141,7 +148,7 @@ export default defineComponent({
       collapsed: ref<boolean>(false),
       selectedKeys: ref<string[]>(["1"]),
       notified: ref<number>(0),
-      notificationsData: ref<string>(""),
+      notificationsData,
     };
   },
   methods: {
