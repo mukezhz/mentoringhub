@@ -232,9 +232,7 @@ export default defineComponent({
       },
     };
     onMounted(async () => {
-      console.log("Fetch the user profile and fill the value!!!");
       const { data } = await (await profile.fetchYourProfile()).json();
-      console.log(data);
       const { fetchYourProfile } = data;
       if (fetchYourProfile?.fullName.length) {
         router.push("/profile");
@@ -258,6 +256,7 @@ export default defineComponent({
       },
     });
     const onFinish = async (values: any) => {
+      console.log(values);
       const { user } = values;
       const {
         country,
@@ -304,7 +303,7 @@ export default defineComponent({
       if (!success) message.error(msg);
       else {
         message.success(msg);
-        router.push("/profile");
+        router.push("/");
       }
     };
     return {

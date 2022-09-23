@@ -1,11 +1,8 @@
-from unittest import result
 import numpy as np
 import pandas as pd
 import ast
 from sklearn.feature_extraction.text import CountVectorizer
-import nltk
 from nltk.stem.porter import PorterStemmer
-from sklearn.metrics import jaccard_score
 from sklearn.metrics.pairwise import cosine_similarity
 
 

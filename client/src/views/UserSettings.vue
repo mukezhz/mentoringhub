@@ -283,7 +283,6 @@ export default defineComponent({
           else formState.user[k] = fetchYourProfile[k];
         }
         formState.user.email = fetchYourProfile.user.email;
-        console.log(formState.user);
       }
     });
 

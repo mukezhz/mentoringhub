@@ -147,7 +147,6 @@ export default defineComponent({
         if (!data.tokenAuth) message.error("Unable to Login!!!");
         else {
           const { errors, success, token, refreshToken } = data.tokenAuth;
-          console.log(errors);
           for (const i in errors) {
             for (const j of errors[i]) {
               message.error(j.message);

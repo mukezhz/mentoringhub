@@ -112,7 +112,7 @@
             <a-col :span="8">
               <a-divider></a-divider>
               <a-row justify="center">
-                <MentorshipForm />
+                <MentorshipForm :email="formState.user.email" />
               </a-row>
             </a-col>
           </a-row>
@@ -157,19 +157,16 @@ export default defineComponent({
           await profile.fetchYourProfileByUsername(username)
         ).json();
         const { errors, data } = res;
-        console.log(errors, data);
         const { fetchProfileAccordingToUsername } = data;
         if (!errors?.length) {
           hasProfile.value = true;
           for (const k in fetchProfileAccordingToUsername) {
-            console.log(k, fetchProfileAccordingToUsername[k]);
             if (k === "skills" || k === "interests" || k === "languages")
               formState.user[k] = JSON.parse(
                 fetchProfileAccordingToUsername[k]
               );
             else formState.user[k] = fetchProfileAccordingToUsername[k];
           }
-          console.log(fetchProfileAccordingToUsername);
           formState.user.email = fetchProfileAccordingToUsername.user.email;
         } else {
           for (const error of errors) {
