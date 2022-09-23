@@ -33,7 +33,7 @@
 
         <router-link to="/premeet">
           <a-menu-item key="5">
-            <ClusterOutlined style="font-size: 200%" />
+            <cluster-outlined style="font-size: 200%" />
             <span class="nav-text">PreMeet</span>
           </a-menu-item>
         </router-link>
@@ -126,18 +126,13 @@ import {
   LogoutOutlined,
   ClusterOutlined,
 } from "@ant-design/icons-vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted, reactive } from "vue";
 import { message } from "ant-design-vue";
 
-const notificationsData: string[] = [
-  "Your Mentorship has been approved.",
-  "Your Mentorship for this person is rejected.",
-  "Notification 3",
-  "Notification 4",
-];
 account;
 import { account } from "@/graphql/account";
 import { titleCase } from "@/utils/string";
+import { useRouter } from "vue-router";
 export default defineComponent({
   components: {
     FileAddOutlined,
@@ -152,50 +147,55 @@ export default defineComponent({
     LogoutOutlined,
     ClusterOutlined,
   },
-  data() {
-    return {
-      collapsed: ref<boolean>(false),
-      selectedKeys: ref<string[]>(["1"]),
-      notified: ref<number>(0),
-      notificationsData: ref<string>(""),
-      type: ref<string>(""),
-      url: ref<string>(""),
-    };
-  },
-  mounted() {
-    const token = localStorage.getItem("authtoken");
-    if (!token) return;
-    account
-      .fetchYourProfile(token)
-      .then((d) => d.json())
-      .then((d) => {
-        const { data } = d;
-        const { me } = data;
-        const { userprofile = null } = me;
-        if (!userprofile) return message.warn("Please create user profile!!!");
-        const role = userprofile.role;
-        const search = role.toLowerCase() === "mentor" ? "mentee" : "mentor";
-        this.type = titleCase(search);
-        this.url = `/${search.toLowerCase()}`;
-      });
-  },
-  methods: {
-    logout() {
+  setup() {
+    // const collapsed = ref<boolean>(false);
+    // const selectedKeys = ref<string[]>(["1"]);
+    const notified = ref<number>(0);
+    const notificationsData = reactive<string[]>([
+      "Your Mentorship has been approved.",
+      "Your Mentorship for this person is rejected.",
+      "Notification 3",
+      "Notification 4",
+    ]);
+    const type = ref<string>("");
+    const url = ref<string>("");
+    const router = useRouter();
+
+    onMounted(() => {
+      const token = localStorage.getItem("authtoken");
+      if (!token) return;
+      account
+        .fetchYourProfile(token)
+        .then((d) => d.json())
+        .then((d) => {
+          const { data } = d;
+          const { me } = data;
+          const { userprofile = null } = me;
+          if (!userprofile)
+            return message.warn("Please create user profile!!!");
+          const role = userprofile.role;
+          const search = role.toLowerCase() === "mentor" ? "mentee" : "mentor";
+          type.value = titleCase(search);
+          url.value = `/${search.toLowerCase()}`;
+        });
+    });
+
+    function logout() {
       localStorage.clear();
       message.success("Logout Successful!");
-      this.$router.push("/");
-    },
+      router.push("/");
+    }
+    return {
+      logout,
+      // collapsed,
+      // selectedKeys,
+      notified,
+      notificationsData,
+      type,
+      url,
+      router,
+    };
   },
-
-  // onMounted(() => {
-  //     setInterval(() => {
-  //       this.notified = this.notified + 1;
-  //     }, 5000);
-  // })
-  // watch: {
-  //   notified: function (val) {
-  //     console.log(val);
-  // },
 });
 </script>
 <style>
