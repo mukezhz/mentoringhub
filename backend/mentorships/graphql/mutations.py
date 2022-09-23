@@ -23,6 +23,7 @@ class RequestMentorship(Mutation):
 
     success = Boolean()
     msg = String()
+    status = String()
     id = String()
 
     @login_required
@@ -44,9 +45,7 @@ class RequestMentorship(Mutation):
             m.save()
 
             return RequestMentorship(
-                success=True,
-                msg="Applied for mentorship",
-                id=m.id,
+                success=True, msg="Applied for mentorship", id=m.id, status=m.status
             )
         except Exception as e:
             return RequestMentorship(success=False, msg=e)

@@ -4,6 +4,7 @@ export const gql = (q: any) => {
       query: `mutation applyforMentorship($menteeId: String!, $mentorId: String!, $qna: String!, $title: String!) {
                 applyMentorship(menteeId: $menteeId, mentorId: $mentorId, qna: $qna, title: $title) {
                     success
+                    status
                     msg
                     id
                 }

@@ -20,16 +20,19 @@
     </template>
 
     <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'title'">
-        <a>
-          {{ record.title }}
-        </a>
-      </template>
-      <template v-else-if="column.key === 'email'">
+      <template v-if="column.key === 'email'">
         <span>
-          <a>{{ record.email }}</a>
+          <router-link :to="record.url">
+            <a>{{ record.email }}</a>
+          </router-link>
         </span>
       </template>
+      <template v-else-if="column.key === 'title'">
+        <router-link :to="url">
+          {{ record.title }}
+        </router-link>
+      </template>
+
       <template v-else-if="column.key === 'status'">
         <span>
           <a-tag
@@ -54,7 +57,7 @@
 <script lang="ts">
 import { mentorship } from "@/graphql/mentorship";
 import { message } from "ant-design-vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, reactive } from "vue";
 import { onMounted } from "vue";
 const columns = [
   {
@@ -74,29 +77,38 @@ const columns = [
   },
 ];
 
-const applications = [
-  {
-    key: "1",
-    email: "mee@mee.com",
-    title: "Sundhara",
-    status: ["pending"],
-  },
-];
 export default defineComponent({
   setup() {
+    const applications = reactive<any>([]);
     const value = ref<string>("");
-
+    const url = ref<string>("");
     const onSearch = (searchValue: string) => {
       console.log("use value", searchValue);
       console.log("or use this.value", value.value);
     };
 
     onMounted(async () => {
+      const whoami = localStorage.getItem("role");
+      if (!whoami) return;
       const email = localStorage.getItem("email");
       if (!email) return message.error("Error login properly!!!");
       const res = await mentorship.fetchYourMentorship(email);
       const data = await res.json();
-      const { fetchYourMentorship } = data;
+      const {
+        data: { fetchYourMentorship },
+      } = data;
+      if (!fetchYourMentorship) return;
+      for (const mentorship of fetchYourMentorship) {
+        const email =
+          whoami === "mentee" ? mentorship?.mentorId : mentorship?.menteeId;
+        applications.push({
+          key: mentorship.id,
+          email: email,
+          title: mentorship.title,
+          status: mentorship.status,
+          url: `/u/${email.split(".")[0]}`,
+        });
+      }
       // fetchYourMentorship.forEach((app: any) => {
       //   applications.push({
       //     key: app.id,
@@ -112,6 +124,7 @@ export default defineComponent({
       onSearch,
       applications,
       columns,
+      url,
     };
   },
 });
