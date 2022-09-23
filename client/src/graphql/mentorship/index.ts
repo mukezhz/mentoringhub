@@ -62,7 +62,7 @@ class Mentorship {
     });
   }
 
-  public async fetchYourMentorship(id: string) {
+  public async fetchYourMentorship() {
     return await fetch(this.url, {
       method: "POST",
       headers: {

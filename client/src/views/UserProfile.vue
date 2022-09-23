@@ -112,7 +112,7 @@
             <a-col :span="8">
               <a-divider></a-divider>
               <a-row justify="center">
-                <MentorshipForm :email="formState.user.email" />
+                <MentorshipForm v-if="visible" :email="formState.user.email" />
               </a-row>
             </a-col>
           </a-row>
@@ -138,8 +138,10 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const router = useRouter();
+    const visible = ref<boolean>(true);
     onMounted(async () => {
       if (route.path === "/profile") {
+        visible.value = false;
         const res = await profile.fetchYourProfile();
         const { data } = await res.json();
         const { fetchYourProfile } = data;
@@ -147,12 +149,17 @@ export default defineComponent({
         else {
           hasProfile.value = true;
           for (const k in fetchYourProfile) {
-            formState.user[k] = fetchYourProfile[k];
+            if (k === "skills" || k === "interests" || k === "languages")
+              formState.user[k] = JSON.parse(fetchYourProfile[k]);
+            else formState.user[k] = fetchYourProfile[k];
           }
           formState.user.email = fetchYourProfile.user.email;
         }
       } else {
         const { username } = route.params;
+        const whoami = localStorage.getItem("role");
+        if (whoami === "mentee") visible.value = true;
+        else visible.value = false;
         const res = await (
           await profile.fetchYourProfileByUsername(username)
         ).json();
@@ -192,6 +199,7 @@ export default defineComponent({
         gender: "",
         mobilePhone: "",
         profession: "",
+        // aboutUser: "",
       },
     });
     function createProfile() {
@@ -201,6 +209,7 @@ export default defineComponent({
       formState,
       hasProfile,
       createProfile,
+      visible,
     };
   },
 });
