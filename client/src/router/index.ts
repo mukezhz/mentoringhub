@@ -7,6 +7,7 @@ import MentorView from "@/views/MentorView.vue";
 import MenteeView from "@/views/MenteeView.vue";
 import RoomView from "@/views/RoomView.vue";
 import ApplicationView from "@/views/ApplicationView.vue";
+import ApplicationDetails from "@/views/ApplicationDetails.vue"
 import { regenerateTokenFromRefreshToken } from "@/utils/auth/refreshToken";
 
 export const router = createRouter({
@@ -109,6 +110,11 @@ export const router = createRouter({
           path: "/application",
           name: "application",
           component: ApplicationView,
+        },
+        {
+          path: "/applicationdetails",
+          name: "details application",
+          component: ApplicationDetails,
         },
         {
           path: "/profile",
