@@ -44,12 +44,21 @@
       >
     </a-space>
   </a-row>
+  <!-- <vue-advanced-chat
+    :current-user-id="currentUserId"
+    :rooms="JSON.stringify(rooms)"
+    :messages="JSON.stringify(messages)"
+    :room-actions="JSON.stringify(roomActions)"
+  /> -->
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, reactive } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { message } from "ant-design-vue";
 import {
   LocalParticipant,
+  LocalVideoTrack,
   RemoteParticipant,
   RemoteTrack,
   RemoteTrackPublication,
@@ -60,8 +69,7 @@ import {
 import { enableTrack, toggleMute } from "@/utils/livekit/track";
 import { useAudioVideo } from "@/refs/useAudioVideo";
 import { connect } from "@/utils/livekit";
-import { message } from "ant-design-vue";
-import { useRoute, useRouter } from "vue-router";
+import { sendText } from "@/utils/livekit/chat";
 
 interface RemoteParticipantInfo {
   sid: string;
@@ -117,6 +125,12 @@ onMounted(async () => {
   room?.on(RoomEvent.TrackSubscribed, handleTrackSubscribed);
 });
 
+onUnmounted(async () => {
+  console.log("unmounted");
+  if (!video.value?.isMuted) await video.value?.mute();
+  if (!audio.value?.isMuted) await video.value?.mute();
+});
+
 function handleTrackSubscribed(
   track: RemoteTrack,
   publication: RemoteTrackPublication,
@@ -150,11 +164,6 @@ function handleTrackSubscribed(
   // console.log("remote participants", remoteParticipants);
   console.log("all in one", remoteParticipants);
 }
-onUnmounted(async () => {
-  console.log("unmounted");
-  if (!video.value?.isMuted) await video.value?.mute();
-  if (!audio.value?.isMuted) await video.value?.mute();
-});
 
 const { functionVideoRef, functionAudioRef } = useAudioVideo();
 
@@ -167,4 +176,33 @@ const toggleAudio = async () => {
   const value = await toggleMute(audio.value);
   localStorage.setItem("audio", !value ? "1" : "");
 };
+
+const onSend = async () => {
+  // https://docs.livekit.io/client-sdk-js/enums/DataPacket_Kind.html
+  const kind = 0;
+  if (!localParticipant.value) return;
+  // https://stackoverflow.com/questions/8936984/uint8array-to-string-in-javascript
+  const data = new TextEncoder().encode("hello");
+  await sendText(localParticipant.value, data, kind);
+};
+</script>
+
+<script>
+// import { register } from "vue-advanced-chat";
+// register();
+
+// export default {
+//   data() {
+//     return {
+//       currentUserId: "1234",
+//       rooms: [],
+//       messages: [],
+//       roomActions: [
+//         { name: "inviteUser", title: "Invite User" },
+//         { name: "removeUser", title: "Remove User" },
+//         { name: "deleteRoom", title: "Delete Room" },
+//       ],
+//     };
+//   },
+// };
 </script>

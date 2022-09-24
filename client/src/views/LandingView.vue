@@ -21,10 +21,6 @@
           <a-menu-item key="4">About </a-menu-item>
         </router-link>
 
-        <router-link :to="{ name: 'premeet' }">
-          <a-menu-item key="5">Pre Meet </a-menu-item>
-        </router-link>
-
         <router-link :to="{ name: 'login' }">
           <a-menu-item key="6">Login </a-menu-item>
         </router-link>
@@ -94,13 +90,13 @@
         <div>
           <a-row>
             <a-col
+              v-for="mentor in mentors"
+              :key="mentor.id"
               :xs="20"
               :sm="16"
               :md="16"
               :lg="12"
               :xl="8"
-              v-for="mentor in mentors"
-              :key="mentor.id"
               style="margin: 0 auto"
             >
               <a-card hoverable style="padding: 1rem; margin: 1rem">
@@ -110,9 +106,9 @@
                 <a-card :title="mentor.name" :bordered="false"></a-card>
                 <div>
                   <a-tag
-                    color="purple"
                     v-for="(skill, index) in mentor.skills"
                     :key="index"
+                    color="purple"
                     :style="{ display: 'flex', justifyContent: 'center' }"
                   >
                     {{ skill }}
