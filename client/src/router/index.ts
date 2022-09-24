@@ -142,12 +142,12 @@ export const router = createRouter({
           component: () => import("../views/UserSettings.vue"),
         },
         {
-          path: "/premeet",
+          path: "/premeet/:meetingId",
           name: "premeet",
           component: () => import("../views/PreMeetView.vue"),
         },
         {
-          path: "/meet",
+          path: "/meet/:meetingId",
           name: "meet",
           component: () => import("../views/MeetView.vue"),
         },

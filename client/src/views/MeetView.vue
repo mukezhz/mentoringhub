@@ -1,62 +1,55 @@
 <template>
-  <!-- <ul>
-    <li v-for="(name, i) in names" :key="name" :ref="functionRef(i)">
-      {{ name }}
-    </li>
-    <li v-for="(name, i) in surNames" :key="name" :ref="surFunctionRef(i)">
-      {{ name }}
-    </li>
-  </ul> -->
   <a-row justify="center">
     <a-typography-title>Meet</a-typography-title>
   </a-row>
 
   <!-- Local div -->
   <a-row type="flex" justify="center" align="center">
-    <a-col :span="12">
+    <a-col>
       <video
-        autoplay="true"
         ref="videoRef"
-        :style="{ width: '85%', height: '85%', margin: '0 auto' }"
+        autoplay="true"
+        :style="{ width: '100%', height: '100%' }"
       />
-      <audio autoplay="true" ref="audioRef" />
-      <a-row justify="start">
-        <a-space style="margin-top: 1vh">
-          <a-button type="primary" @click="toggleVideo"
-            >Camera {{ !video?.isMuted ? "enable" : "disable" }}</a-button
-          >
-          <a-button type="secondary" @click="toggleAudio"
-            >Mic {{ !audio?.isMuted ? "enable" : "disable" }}</a-button
-          >
-        </a-space>
-      </a-row>
+      <audio ref="audioRef" autoplay="true" />
+      <a-tag>{{ localParticipant?.name }}</a-tag>
     </a-col>
 
     <!-- remote div -->
     <a-col
-      :span="12"
       v-for="(participant, i) in remoteParticipants"
-      :key="participant.sid"
+      :key="participant.identity"
     >
-      {{ participant.identity }}
-      {{ participant.videoSid }}
-      {{ participant.audioSid }}
       <video
-        v-show="participant.videoSid?.length"
+        v-show="participant.remoteParticiapants?.videoTracks.size"
         :ref="functionVideoRef(i, getTrack(participant.videoSid))"
-        :style="{ width: '50%', height: '50%', margin: '0 auto' }"
+        :style="{ width: '100%', height: '100%' }"
       ></video>
       <audio
-        v-show="participant.audioSid?.length"
+        v-show="participant.remoteParticiapants?.videoTracks.size"
         :ref="functionAudioRef(i, getTrack(participant.audioSid))"
       ></audio>
+      <a-tag>
+        {{ participant.name }}
+      </a-tag>
     </a-col>
+  </a-row>
+  <a-row justify="start">
+    <a-space style="margin-top: 1vh">
+      <a-button type="primary" @click="toggleVideo"
+        >Camera {{ !video?.isMuted ? "enable" : "disable" }}</a-button
+      >
+      <a-button type="secondary" @click="toggleAudio"
+        >Mic {{ !audio?.isMuted ? "enable" : "disable" }}</a-button
+      >
+    </a-space>
   </a-row>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, reactive } from "vue";
 import {
+  LocalParticipant,
   RemoteParticipant,
   RemoteTrack,
   RemoteTrackPublication,
@@ -67,6 +60,8 @@ import {
 import { enableTrack, toggleMute } from "@/utils/livekit/track";
 import { useAudioVideo } from "@/refs/useAudioVideo";
 import { connect } from "@/utils/livekit";
+import { message } from "ant-design-vue";
+import { useRoute, useRouter } from "vue-router";
 
 interface RemoteParticipantInfo {
   sid: string;
@@ -75,15 +70,19 @@ interface RemoteParticipantInfo {
   isSpeaking: boolean;
   audioSid?: string;
   videoSid?: string;
+  remoteParticiapants?: RemoteParticipant;
 }
 
 const videoRef = ref<HTMLVideoElement>();
 const audioRef = ref<HTMLAudioElement>();
 const video = ref<LocalTrack>();
 const audio = ref<LocalTrack>();
+const router = useRouter();
+const route = useRoute();
 
 const remoteTracks = ref<Track[]>([]);
-const remoteParticipants = ref<RemoteParticipantInfo[]>([]);
+const remoteParticipants = reactive<RemoteParticipantInfo[]>([]);
+const localParticipant = ref<LocalParticipant>();
 
 function getTrack(sid: string | undefined) {
   if (!sid) return;
@@ -101,8 +100,20 @@ onMounted(async () => {
   audio.value = audioTracks[0];
   if (!localStorage.getItem("audio")?.length) toggleAudio();
   if (!localStorage.getItem("video")?.length) toggleVideo();
-  const room = await connect([...videoTracks, ...audioTracks]);
+  const token = localStorage.getItem("token");
+  const livekitUrl = import.meta.env.VITE_LIVEKIT_URL;
+
+  if (!livekitUrl || !token) {
+    const { meetingId } = route.params;
+    message.error("Unable to connect!!!");
+    return router.push(`/premeet/${meetingId}`);
+  }
+  const room = await connect(livekitUrl, token, [
+    ...videoTracks,
+    ...audioTracks,
+  ]);
   console.log(room);
+  localParticipant.value = room?.localParticipant;
   room?.on(RoomEvent.TrackSubscribed, handleTrackSubscribed);
 });
 
@@ -111,14 +122,16 @@ function handleTrackSubscribed(
   publication: RemoteTrackPublication,
   participant: RemoteParticipant
 ) {
-  const remoteParticipant = remoteParticipants.value.find(
+  console.log(participant);
+  const remoteParticipant = remoteParticipants.find(
     (data) => data.sid === participant.sid
   );
   if (!remoteParticipant) {
-    remoteParticipants.value?.push({
+    remoteParticipants?.push({
       sid: participant.sid,
       identity: participant.identity,
       name: participant.name || "",
+      remoteParticiapants: participant,
       isSpeaking: participant.isSpeaking,
       audioSid: track.kind === "audio" ? track.sid : "",
       videoSid: track.kind === "video" ? track.sid : "",
@@ -126,14 +139,16 @@ function handleTrackSubscribed(
   } else {
     remoteParticipant.audioSid = track.kind === "audio" ? track.sid : "";
     remoteParticipant.videoSid = track.kind === "video" ? track.sid : "";
+    remoteParticipant.remoteParticiapants = participant;
   }
 
   const remoteTrack = remoteTracks.value.find(
     (remoteTrack) => remoteTrack.sid === track.sid
   );
   if (!remoteTrack) remoteTracks.value.push(track);
-  console.log("remote tracks", remoteTracks.value);
-  console.log("remote participants", remoteParticipants.value);
+  // console.log("remote tracks", remoteTracks.value);
+  // console.log("remote participants", remoteParticipants);
+  console.log("all in one", remoteParticipants);
 }
 onUnmounted(async () => {
   console.log("unmounted");

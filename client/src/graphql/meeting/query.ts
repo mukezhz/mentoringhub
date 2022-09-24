@@ -34,6 +34,7 @@ export const gql = (q: any) => {
                   users {
                     email
                   }
+                }
               }
           `,
       variables: {

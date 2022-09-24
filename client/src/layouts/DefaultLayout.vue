@@ -30,13 +30,6 @@
             <span class="nav-text">Applications</span>
           </a-menu-item>
         </router-link>
-
-        <router-link to="/premeet">
-          <a-menu-item key="5">
-            <cluster-outlined style="font-size: 200%" />
-            <span class="nav-text">PreMeet</span>
-          </a-menu-item>
-        </router-link>
       </a-menu>
     </a-layout-sider>
 

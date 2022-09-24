@@ -15,7 +15,7 @@ class Meeting {
     });
   }
 
-  public async fetchMeetingById(id: string) {
+  public async fetchMeetingById(id: string | string[]) {
     return await fetch(this.url, {
       method: "POST",
       headers: {
