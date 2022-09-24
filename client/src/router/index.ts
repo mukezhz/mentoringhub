@@ -16,6 +16,14 @@ export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: "/",
+      name: "home",
+      component: LandingView,
+      meta: {
+        requiresAuth: false,
+      },
+    },
+    {
       // will match everything
       path: "/:pathMatch(.*)*",
       name: "Error Page",
@@ -28,14 +36,6 @@ export const router = createRouter({
       path: "/activate/:token",
       name: "Activate Account",
       component: () => import("../views/ActivateAccount.vue"),
-    },
-    {
-      path: "/",
-      name: "home",
-      component: LandingView,
-      meta: {
-        requiresAuth: false,
-      },
     },
     {
       path: "/about",
@@ -132,9 +132,6 @@ export const router = createRouter({
           path: "/create-profile",
           name: "Create Profile",
           component: () => import("../views/CreateProfile.vue"),
-          meta: {
-            requiresAuth: true,
-          },
         },
         {
           path: "/settings",

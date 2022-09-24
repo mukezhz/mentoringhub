@@ -152,7 +152,7 @@ onMounted(async () => {
   audio.value = audioTracks[0];
   if (!localStorage.getItem("audio")?.length) toggleAudio();
   if (!localStorage.getItem("video")?.length) toggleVideo();
-  const meetingId = route.params.meetingId;
+  const { meetingId } = route.params;
   const res = await meeting.fetchMeetingById(meetingId);
   const {
     data: { fetchMeetingById },
