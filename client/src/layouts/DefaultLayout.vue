@@ -17,15 +17,22 @@
           </a-menu-item>
         </router-link>
 
-        <router-link to="/room">
+        <router-link v-if="type == 'Mentor'" to="/recom">
           <a-menu-item key="3">
+            <usergroup-add-outlined style="font-size: 200%" />
+            <span class="nav-text">Recommend</span>
+          </a-menu-item>
+        </router-link>
+
+        <router-link to="/room">
+          <a-menu-item key="4">
             <apartment-outlined style="font-size: 200%" />
             <span class="nav-text">Rooms</span>
           </a-menu-item>
         </router-link>
 
         <router-link to="/application">
-          <a-menu-item key="4">
+          <a-menu-item key="5">
             <file-add-outlined style="font-size: 200%" />
             <span class="nav-text">Applications</span>
           </a-menu-item>
