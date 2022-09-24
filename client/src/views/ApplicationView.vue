@@ -92,7 +92,7 @@ export default defineComponent({
       if (!whoami) return;
       const email = localStorage.getItem("email");
       if (!email) return message.error("Error login properly!!!");
-      const res = await mentorship.fetchYourMentorship(email);
+      const res = await mentorship.fetchYourMentorship();
       const data = await res.json();
       const {
         data: { fetchYourMentorship },
