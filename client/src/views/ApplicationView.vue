@@ -106,7 +106,7 @@ export default defineComponent({
           email: email,
           title: mentorship.title,
           status: [mentorship.status],
-          url: `/u/${email.split(".")[0]}`,
+          url: `/a/${mentorship.id}`,
         });
       }
       // fetchYourMentorship.forEach((app: any) => {
