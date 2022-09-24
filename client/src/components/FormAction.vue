@@ -11,9 +11,15 @@
     >
       <a-row justify="center">
         <a-descriptions :column="1">
-          <a-descriptions-item label="Q1">{{answers.answer1}}</a-descriptions-item>
-          <a-descriptions-item label="Q2">{{answers.answer2}}</a-descriptions-item>
-          <a-descriptions-item label="Q3">{{answers.answer3}}</a-descriptions-item>
+          <a-descriptions-item label="Q1">{{
+            answers.answer1
+          }}</a-descriptions-item>
+          <a-descriptions-item label="Q2">{{
+            answers.answer2
+          }}</a-descriptions-item>
+          <a-descriptions-item label="Q3">{{
+            answers.answer3
+          }}</a-descriptions-item>
         </a-descriptions>
         <a-col span="16">
           <a-form

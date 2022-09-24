@@ -5,11 +5,11 @@ import PageNotFound from "@/views/404.vue";
 import LandingView from "@/views/LandingView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import MentorView from "@/views/MentorView.vue";
-import RecommendedMentor from "@/views/RecommendMentor.vue"
+import RecommendedMentor from "@/views/RecommendMentor.vue";
 import MenteeView from "@/views/MenteeView.vue";
 import RoomView from "@/views/RoomView.vue";
 import ApplicationView from "@/views/ApplicationView.vue";
-import ApplicationDetails from "@/views/ApplicationDetails.vue"
+import ApplicationDetails from "@/views/ApplicationDetails.vue";
 import { regenerateTokenFromRefreshToken } from "@/utils/auth/refreshToken";
 
 export const router = createRouter({
