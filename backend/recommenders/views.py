@@ -1,3 +1,4 @@
+from traceback import print_tb
 import numpy as np
 import pandas as pd
 import ast
@@ -30,15 +31,17 @@ def init():
     mentorships = Mentorship.objects.values()
     df_users = pd.DataFrame(users)
     df_profiles = pd.DataFrame(profiles)
-    df_mentorships = pd.DataFrame(mentorships)
-    df_users_mentorships = df_users.merge(df_profiles, on="id")
+    df_users_mentorships = pd.merge(
+        df_users, df_profiles, left_on=["id"], right_on=["user_id"]
+    )
+
     return df_users_mentorships
 
 
 def cleaner(df):
     required_columns = df[
         [
-            "id",
+            "id_x",
             "email",
             "role",
             "gender",
@@ -143,12 +146,13 @@ def recommend_content(email):
     result = []
     for i, v in enumerate(emails):
         users = CustomUser.objects.get(email=emails[i])
-        result.append(
-            {
-                "email": emails[i],
-                "full_name": users.userprofile.full_name,
-            }
-        )
+        if users.userprofile.role == "mentor":
+            result.append(
+                {
+                    "email": emails[i],
+                    "full_name": users.userprofile.full_name,
+                }
+            )
     return result
 
 
@@ -168,16 +172,19 @@ def recommend_colaborate():
     probabilities = joined_tags[joined_tags["probability"] > 40]["probability"]
     emails = joined_tags[joined_tags["probability"] > 40]["email"]
     result = []
-    for i, v in enumerate(probabilities):
-        users = CustomUser.objects.get(email=emails[i])
-        result.append(
-            {
-                "email": emails[i],
-                "probability": probabilities[i],
-                "full_name": users.userprofile.full_name,
-            }
-        )
-    return result
+    for i, v in enumerate(emails):
+        try:
+            users = CustomUser.objects.get(email=v)
+            result.append(
+                {
+                    "email": v,
+                    "probability": probabilities[i],
+                    "full_name": users.userprofile.full_name,
+                }
+            )
+        except Exception:
+            continue
+    return sorted(result, key=lambda d: d["probability"], reverse=True)
 
 
 def jaccard_index(text: str):

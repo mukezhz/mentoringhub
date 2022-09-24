@@ -14,21 +14,21 @@
 
   <a-table :columns="columns" :data-source="users">
     <template #headerCell="{ column }">
-      <template v-if="column.key === 'name'">
-        <span> Mentor's Name </span>
+      <template v-if="column.key === 'email'">
+        <span> Mentor's Email </span>
       </template>
     </template>
 
     <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'name'">
+      <template v-if="column.key === 'fullName'">
         <router-link :to="record.key">
-          {{ record.name }}
+          {{ record.fullName }}
         </router-link>
       </template>
-      <template v-else-if="column.key === 'skills'">
+      <template v-else-if="column.key === 'probability'">
         <span>
           <a-tag
-            v-for="tag in record.skills"
+            v-for="tag in record.probability"
             :key="tag"
             :color="
               tag === 'loser'
@@ -52,21 +52,22 @@ import { defineComponent, ref, reactive } from "vue";
 import { onMounted } from "vue";
 import { profile } from "@/graphql/userprofile";
 import { titleCase } from "@/utils/string";
+import { recommend } from "@/graphql/recommend";
 const columns = [
   {
-    name: "Name",
-    dataIndex: "name",
-    key: "name",
+    name: "Email",
+    dataIndex: "email",
+    key: "email",
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: "Probability",
+    dataIndex: "probability",
+    key: "probability",
   },
   {
-    title: "Skills",
-    key: "skills",
-    dataIndex: "skills",
+    title: "Fullname",
+    key: "fullName",
+    dataIndex: "fullName",
   },
 ];
 
@@ -85,8 +86,12 @@ export default defineComponent({
     };
 
     onMounted(async () => {
+      const res = await recommend.collaborateFiltering();
+      const { data } = await res.json();
+      const { collaborateFiltering } = data;
+      console.log(collaborateFiltering);
       const role = localStorage.getItem("role");
-      if (!role) router.push("/dashboard");
+      if (!role) return router.push("/dashboard");
       else {
         const search = role === "mentor" ? "mentee" : "mentor";
         type.value = `${titleCase(search)}s`;
@@ -94,12 +99,12 @@ export default defineComponent({
         const res = await profile.fetchYourProfileByRole(search);
         const { data } = await res.json();
         const { fetchProfileAccordingToRole } = data;
-        fetchProfileAccordingToRole.forEach((user: any) => {
+        collaborateFiltering.forEach((recommend: any) => {
           users.push({
-            key: `/u/${user.user.email.split(".")[0]}`,
-            name: user.fullName,
-            address: user.address,
-            skills: JSON.parse(user.skills),
+            key: `/u/${recommend.email.split(".")[0]}`,
+            email: recommend.email,
+            probability: [recommend.probability],
+            fullName: recommend.fullName,
           });
         });
       }
