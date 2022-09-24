@@ -24,9 +24,11 @@
         </div>
       </a-descriptions-item>
     </a-descriptions>
+    <FormActionVue />
   </a-card>
 </template>
 <script lang="ts" setup>
+import FormActionVue from "@/components/FormAction.vue";
 import { mentorship } from "@/graphql/mentorship";
 import { ref, onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";

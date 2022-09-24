@@ -82,33 +82,36 @@
 import { reactive, ref, onMounted, onUnmounted, defineComponent } from "vue";
 import type { LocalTrack } from "livekit-client";
 import { enableTrack, toggleMute } from "@/utils/livekit/track";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import {
   VideoCameraTwoTone,
   VideoCameraFilled,
   AudioTwoTone,
   AudioFilled,
 } from "@ant-design/icons-vue";
+import { meeting } from "@/graphql/meeting";
+import { fetchAdminToken, fetchParticipantToken } from "@/utils/livekit/token";
 
 interface FormState {
   username: string;
   about: string;
   remember: boolean;
 }
+const router = useRouter();
+const route = useRoute();
 
 const formState = reactive<FormState>({
   username: localStorage.getItem("name") || "",
   about: localStorage.getItem("about") || "",
   remember: !!localStorage.getItem("name") || true,
 });
+const meetings = reactive<any>({});
 const videoRef = ref<HTMLVideoElement>();
 const audioRef = ref<HTMLAudioElement>();
 const video = ref<LocalTrack>();
 const audio = ref<LocalTrack>();
 
-const router = useRouter();
-
-const onFinish = (values: FormState) => {
+const onFinish = async (values: FormState) => {
   const { username, about, remember } = values;
   if (remember) {
     localStorage.setItem("name", username);
@@ -119,10 +122,20 @@ const onFinish = (values: FormState) => {
     localStorage.removeItem("about");
     localStorage.removeItem("remember");
   }
-  router.push({
-    name: "meet",
-    force: true,
-  });
+  const whoami = localStorage.getItem("role");
+  if (whoami === "mentor") {
+    const token = await fetchAdminToken(meetings.room, username, username, "");
+    localStorage.setItem("token", token);
+  } else {
+    const token = await fetchParticipantToken(
+      meetings.room,
+      username,
+      username
+    );
+    localStorage.setItem("token", token);
+  }
+  const { meetingId } = route.params;
+  router.push(`/meet/${meetingId}`);
 };
 
 const onFinishFailed = (errorInfo: any) => {
@@ -139,6 +152,21 @@ onMounted(async () => {
   audio.value = audioTracks[0];
   if (!localStorage.getItem("audio")?.length) toggleAudio();
   if (!localStorage.getItem("video")?.length) toggleVideo();
+  const meetingId = route.params.meetingId;
+  const res = await meeting.fetchMeetingById(meetingId);
+  const {
+    data: { fetchMeetingById },
+  } = await res.json();
+
+  console.log(fetchMeetingById);
+  meetings.id = fetchMeetingById.id;
+  meetings.room = fetchMeetingById.room;
+  meetings.description = fetchMeetingById.description;
+  meetings.mentees = JSON.parse(fetchMeetingById.participants);
+  meetings.title = fetchMeetingById.title;
+  meetings.mentor = fetchMeetingById.users.email;
+  console.log(meetings);
+  formState.username = localStorage.getItem("email") || "";
 });
 
 onUnmounted(async () => {

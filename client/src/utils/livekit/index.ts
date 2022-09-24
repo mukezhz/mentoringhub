@@ -33,7 +33,11 @@ export const room = new Room({
   },
 });
 
-export async function connect(tracks: LocalTrack[]) {
+export async function connect(
+  url: string,
+  token: string,
+  tracks: LocalTrack[]
+) {
   // // connect to room
   try {
     await room.connect(url, token, {
