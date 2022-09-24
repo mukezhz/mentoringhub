@@ -115,16 +115,16 @@ export default defineComponent({
           if (!email) return message.error("Error occured!!!");
           const qna = [
             {
-              question1: questions.question1,
-              answer1: formState.answer1,
+              question: questions.question1,
+              answer: formState.answer1,
             },
             {
-              question2: questions.question2,
-              answer2: formState.answer2,
+              question: questions.question2,
+              answer: formState.answer2,
             },
             {
-              question3: questions.question3,
-              answer3: formState.answer3,
+              question: questions.question3,
+              answer: formState.answer3,
             },
           ];
           const res = await mentorship.applyForMentorship(

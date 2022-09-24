@@ -119,7 +119,7 @@ export const router = createRouter({
           component: ApplicationView,
         },
         {
-          path: "/applicationdetails",
+          path: "/a/:application",
           name: "details application",
           component: ApplicationDetails,
         },
