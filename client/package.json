@@ -7,13 +7,19 @@
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier .  --write"
   },
   "dependencies": {
+    "@dafcoe/vue-notification": "^0.1.6",
     "ant-design-vue": "^3.2.6",
+    "axios": "^0.27.2",
+    "livekit-client": "^1.3.1",
     "pinia": "^2.0.14",
     "vue": "^3.2.36",
-    "vue-router": "^4.0.15"
+    "vue-axios": "^3.4.1",
+    "vue-router": "^4.0.15",
+    "vue-toasted": "^1.1.28"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
@@ -25,9 +31,14 @@
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^8.2.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.5.1",
+    "prettier": "2.7.1",
     "typescript": "~4.7.2",
     "vite": "^2.9.9",
     "vue-tsc": "^0.35.2"
-  }
+  },
+  "extends": [
+    "plugin:vue/essential",
+    "plugin:prettier/recommended",
+    "eslint:recommended"
+  ]
 }
