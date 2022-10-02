@@ -24,7 +24,7 @@
         </div>
       </a-descriptions-item>
     </a-descriptions>
-    <FormActionVue />
+    <FormActionVue app_id="application" />
   </a-card>
 </template>
 <script lang="ts" setup>
@@ -35,6 +35,7 @@ import { useRoute } from "vue-router";
 const applications = reactive<any>({});
 
 const route = useRoute();
+const { application } = route.params;
 onMounted(async () => {
   const applicationId = route.params.application;
   const res = await mentorship.fetchMentorshipById(applicationId);

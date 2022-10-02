@@ -20,7 +20,7 @@ export const gql = (q: any) => {
 
     replyOfMentorship: {
       query: `mutation replyMentorShip(
-                $availableHour: Int!,
+                $availableDate: String!,
                 $availableTime: String!,
                 $description: String!,
                 $id: String!,
@@ -29,7 +29,7 @@ export const gql = (q: any) => {
                 $status: String!
               ){
                 replyMentorship(
-                  availableHour: $availableHour,
+                  availableDate: $availableDate,
                   availableTime: $availableTime,
                   id: $id,
                   participants: $participants
@@ -46,7 +46,7 @@ export const gql = (q: any) => {
       variables: {
         id: q?.id,
         status: q?.status,
-        availableHour: q?.availableHour,
+        availableDate: q?.availableDate,
         availableTime: q?.availableTime,
         participants: q?.participants,
         room: q?.room,
