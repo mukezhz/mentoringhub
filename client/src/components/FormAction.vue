@@ -18,7 +18,7 @@
             name="form_in_modal"
           >
             <a-form-item
-              name="availDate"
+              name="availableDate"
               label="Available Date"
               :rules="[
                 {
@@ -29,13 +29,13 @@
             >
               <a-date-picker
                 style="width: 100%"
-                v-model:value="formState.availDate"
+                v-model:value="formState.availableDate"
                 value-format="YYYY-MM-DD"
               />
             </a-form-item>
             <a-form-item
-              name="availTime"
-              label="Available Time"
+              name="availableTime"
+              label="Available Hour"
               class="collection-create-form_last-form-item"
               :rules="[
                 {
@@ -46,9 +46,15 @@
             >
               <a-time-picker
                 style="width: 100%"
-                v-model:value="formState.availTime"
+                v-model:value="formState.availableTime"
                 :minute-step="15"
                 format="HH:mm a"
+              />
+            </a-form-item>
+            <a-form-item name="description" label="Description">
+              <a-textarea
+                placeholder="A few words to introduce yourself."
+                v-model:value="formState.description"
               />
             </a-form-item>
             <a-form-item
@@ -62,12 +68,11 @@
                 },
               ]"
             >
-              <a-select>
-                <a-select-option key="approve" value="APPROVED"
-                  >approve</a-select-option
-                >
-                <a-select-option key="reject" value="REJECTED"
-                  >reject</a-select-option
+              <a-select v-model:value="formState.status">
+                <a-select-option key="ACCEPTED" value="ACCEPTED"
+                  >APPROVED</a-select-option
+                ><a-select-option key="REJECTED" value="REJECTED"
+                  >REJECTED</a-select-option
                 >
               </a-select>
             </a-form-item>
@@ -80,14 +85,21 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, toRaw } from "vue";
 import type { FormInstance } from "ant-design-vue";
+import { mentorship } from "@/graphql/mentorship";
+import { useRoute } from "vue-router";
 
 interface Values {
-  availDate: string;
-  availTime: string;
+  availableDate: string;
+  availableTime: string;
+  status: string;
+  description: string;
 }
 
 export default defineComponent({
-  setup() {
+  props: {
+    app_id: String,
+  },
+  setup(props) {
     const formRef = ref<any>();
     const visible = ref(false);
     const answers = {
@@ -96,15 +108,31 @@ export default defineComponent({
       answer3: "some blabla 3",
     };
     const formState = reactive<Values>({
-      availDate: "",
-      availTime: "",
+      availableDate: "",
+      availableTime: "",
+      status: "PENDING",
+      description: "",
     });
 
     const onOk = () => {
+      const route = useRoute();
+      const applicationId = props.app_id;
+      if (!applicationId) return;
       formRef.value
         .validateFields()
-        .then((values: any) => {
+        .then(async (values: any) => {
           console.log("Received values of form: ", values);
+          const { status, availableTime, availableDate, description } = values;
+          console.log(status, availableTime, availableDate, description);
+          const participants = JSON.stringify([]);
+          const res = await mentorship.replyOfMentorship(
+            applicationId,
+            status,
+            availableDate,
+            availableTime,
+            participants,
+            description
+          );
           console.log("formState: ", toRaw(formState));
           visible.value = false;
           formRef.value.resetFields();
