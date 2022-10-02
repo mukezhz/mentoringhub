@@ -62,7 +62,7 @@ class ReplyMentorship(Mutation):
     class Arguments:
         status = String(required=True)
         available_time = String(required=True)
-        available_hour = Int(required=True)
+        available_date = String(required=True)
         id = String(required=True)
         room = String(required=True)
         description = String(required=True)

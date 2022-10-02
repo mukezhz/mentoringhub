@@ -24,6 +24,7 @@ ALLOWED_HOSTS = [DOMAIN]
 DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "django.contrib.sites",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -34,6 +35,7 @@ LIBRARY_APPS = [
     "graphene_django",
     "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
     "graphql_auth",
+    "channels",
     "django_filters",
     "django_countries",
     "corsheaders",
@@ -43,7 +45,7 @@ USER_APPS = [
     "users.apps.UsersConfig",
     "meetings.apps.MeetingsConfig",
     "mentorships.apps.MentorshipsConfig",
-    "recommenders.apps.RecommendersConfig"
+    "recommenders.apps.RecommendersConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + LIBRARY_APPS + USER_APPS
 
@@ -78,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "core.wsgi.application"
+ASGI_APPLICATION = "core.asgi.application"
 
 
 # Database
@@ -94,6 +96,8 @@ DATABASES = {
         "PORT": DB_PORT,
     }
 }
+
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -180,6 +184,7 @@ GRAPHQL_AUTH = {
     },
 }
 
+SITE_ID = 1
 # EMAIL_HOST = os.getenv("EMAIL_HOST")
 # EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 # EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
