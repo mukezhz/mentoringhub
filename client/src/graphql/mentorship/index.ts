@@ -1,4 +1,5 @@
 import { gql } from "./query";
+import { v4 as uuidv4 } from "uuid";
 
 class Mentorship {
   private url = import.meta.env.VITE_API_URL;
@@ -23,11 +24,14 @@ class Mentorship {
   }
 
   public async replyOfMentorship(
-    id: string,
+    id: string | string[],
     status: string,
-    availableHour: string,
-    availableTime: string
+    availableDate: string,
+    availableTime: string,
+    participants: string,
+    description: string
   ) {
+    const room_id = uuidv4();
     return await fetch(this.url, {
       method: "POST",
       headers: {
@@ -35,7 +39,15 @@ class Mentorship {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(
-        gql({ id, status, availableHour, availableTime }).replyOfMentorship
+        gql({
+          id,
+          status,
+          availableDate,
+          availableTime,
+          participants,
+          room_id,
+          description,
+        }).replyOfMentorship
       ),
     });
   }
