@@ -2,7 +2,11 @@
 import graphene
 from users.schema import Query as UserQuery, Mutation as UserMutation
 from meetings.schema import Query as MeetingQuery, Mutation as MeetingMutation
-from mentorships.schema import Query as MentorshipQuery, Mutation as MentorshipMutation
+from mentorships.schema import (
+    Query as MentorshipQuery,
+    Mutation as MentorshipMutation,
+    Subscription as MentorshipSubscription,
+)
 from recommenders.schema import Query as RecommenderQuery
 
 
@@ -20,4 +24,10 @@ class Mutation(UserMutation, MeetingMutation, MentorshipMutation, graphene.Objec
     pass
 
 
-schema = graphene.Schema(query=Query, mutation=Mutation)
+class Subscription(MentorshipSubscription, graphene.ObjectType):
+    """Project Graphql Subscription."""
+
+    pass
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation, subscription=Subscription)
