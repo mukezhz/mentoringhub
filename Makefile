@@ -1,4 +1,6 @@
-IP := 192.168.1.118
+#IP := 192.168.1.118
+#IP := 172.16.2.166
+IP := 172.16.2.166
 SHELL := /bin/bash
 
 .PHONY: client format backend serve livekit up updaemon

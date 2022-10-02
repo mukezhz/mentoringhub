@@ -4,7 +4,6 @@ import * as cookieParser from 'cookie-parser'
 import * as cors from 'cors'
 import * as router from "./routes"
 import * as mw from "./middlewares"
-import * as c from "./controllers"
 
 
 const app: Express = express();

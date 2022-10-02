@@ -1,14 +1,8 @@
 <template>
   <div>
     <a-button type="primary" @click="visible = true">Action</a-button>
-    <a-modal
-      centered
-      v-model:visible="visible"
-      title="Select your Available Date and Time"
-      ok-text="Approve"
-      cancel-text="Reject"
-      @ok="onOk"
-    >
+    <a-modal centered v-model:visible="visible" title="Select your Available Date and Time" ok-text="Approve"
+      cancel-text="Reject" @ok="onOk">
       <a-row justify="center">
         <a-col span="16">
           <a-form
@@ -103,7 +97,7 @@ export default defineComponent({
     const formRef = ref<any>();
     const visible = ref(false);
     const answers = {
-      answer1: "somw blabla 1",
+      answer1: "some blabla 1",
       answer2: "some blabla 2",
       answer3: "some blabla 3",
     };
