@@ -112,7 +112,10 @@
             <a-col :span="8">
               <a-divider></a-divider>
               <a-row justify="center">
-                <MentorshipForm v-if="visible" :email="formState.user.email" />
+                <div v-if="visible">
+                  <MentorshipForm :email="formState.user.email" />
+                  <a-button type="primary" block="1">Recommend</a-button>
+                </div>
               </a-row>
             </a-col>
           </a-row>
