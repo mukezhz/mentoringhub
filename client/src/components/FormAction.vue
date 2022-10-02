@@ -5,6 +5,7 @@
       cancel-text="Reject" @ok="onOk">
       <a-row justify="center">
         <a-col span="16">
+<<<<<<< HEAD
           <a-form
             ref="formRef"
             :model="formState"
@@ -68,6 +69,36 @@
                 ><a-select-option key="REJECTED" value="REJECTED"
                   >REJECTED</a-select-option
                 >
+=======
+          <a-form ref="formRef" :model="formState" layout="vertical" name="form_in_modal">
+            <a-form-item name="availDate" label="Available Date" :rules="[
+              {
+                required: true,
+                message: 'Please select your available date!',
+              },
+            ]">
+              <a-date-picker style="width: 100%" v-model:value="formState.availDate" value-format="YYYY-MM-DD" />
+            </a-form-item>
+            <a-form-item name="availTime" label="Available Hour" class="collection-create-form_last-form-item" :rules="[
+              {
+                required: true,
+                message: 'Please select your available hour!',
+              },
+            ]">
+              <a-time-picker style="width: 100%" v-model:value="formState.availTime" :minute-step="15"
+                format="HH:mm a" />
+            </a-form-item>
+            <a-form-item name="status" label="Status" class="collection-create-form_last-form-item" :rules="[
+              {
+                required: true,
+                message: 'Please select the status!',
+              },
+            ]">
+
+              <a-select v-model:value="formState.status">
+                <a-select-option key="approve" value="APPROVED">approve</a-select-option>
+                <a-select-option key="reject" value="REJECTED">reject</a-select-option>
+>>>>>>> 38c0a22 (fixed approved/reject formstate)
               </a-select>
             </a-form-item>
           </a-form>
@@ -79,6 +110,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, toRaw } from "vue";
 import type { FormInstance } from "ant-design-vue";
+<<<<<<< HEAD
 import { mentorship } from "@/graphql/mentorship";
 import { useRoute } from "vue-router";
 
@@ -87,6 +119,14 @@ interface Values {
   availableTime: string;
   status: string;
   description: string;
+=======
+import type { string } from "vue-types";
+
+interface Values {
+  availDate: string;
+  availTime: string;
+  status: string;
+>>>>>>> 38c0a22 (fixed approved/reject formstate)
 }
 
 export default defineComponent({
@@ -102,10 +142,16 @@ export default defineComponent({
       answer3: "some blabla 3",
     };
     const formState = reactive<Values>({
+<<<<<<< HEAD
       availableDate: "",
       availableTime: "",
       status: "PENDING",
       description: "",
+=======
+      availDate: "",
+      availTime: "",
+      status: "",
+>>>>>>> 38c0a22 (fixed approved/reject formstate)
     });
 
     const onOk = () => {
