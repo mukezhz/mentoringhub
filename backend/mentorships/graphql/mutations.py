@@ -10,6 +10,7 @@ from meetings.models import Meeting
 
 # from .types import CustomUserType
 from ..models import Mentorship
+from .subscriptions import NotifyMentorship
 
 
 class RequestMentorship(Mutation):
@@ -46,7 +47,7 @@ class RequestMentorship(Mutation):
             m.mentee_id = mentee_id
 
             m.save()
-
+            NotifyMentorship.send_notification(mentee_id, qna, mentor_id)
             return RequestMentorship(
                 success=True, msg="Applied for mentorship", id=m.id, status=m.status
             )
@@ -100,6 +101,7 @@ class ReplyMentorship(Mutation):
                 meeting.status = status
                 meeting.save()
 
+            NotifyMentorship.send_notification(m.mentor_id, m.qna, m.mentor_id)
             return ReplyMentorship(
                 success=True,
                 msg="Response for Mentorship",
