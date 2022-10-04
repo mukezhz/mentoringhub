@@ -154,8 +154,9 @@ GRAPHENE = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
     "graphql_auth.backends.GraphQLAuthBackend",
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 GRAPHQL_JWT = {
@@ -164,6 +165,8 @@ GRAPHQL_JWT = {
     "JWT_REUSE_REFRESH_TOKENS": True,
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
     "JWT_ALLOW_REFRESH": True,
+    "JWT_EXPIRATION_DELTA": timedelta(minutes=15),
+    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=1),
     "JWT_ALLOW_ANY_CLASSES": [
         "graphql_auth.mutations.Register",
         "graphql_auth.mutations.VerifyAccount",
