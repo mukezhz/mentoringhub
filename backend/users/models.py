@@ -3,7 +3,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
-from django_countries.fields import CountryField
 
 
 class CustomUser(AbstractUser):
