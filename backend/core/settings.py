@@ -2,6 +2,7 @@ from datetime import timedelta
 import os, warnings
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,14 +35,13 @@ LIBRARY_APPS = [
     # "django.contrib.staticfiles",
     "graphene_django",
     "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
-    "graphql_auth",
     "channels",
     "django_filters",
-    "django_countries",
     "corsheaders",
     "anymail",
 ]
 USER_APPS = [
+    "graphql_auth",
     "users.apps.UsersConfig",
     "meetings.apps.MeetingsConfig",
     "mentorships.apps.MentorshipsConfig",
@@ -154,13 +154,19 @@ GRAPHENE = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
     "graphql_auth.backends.GraphQLAuthBackend",
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 GRAPHQL_JWT = {
+    "JWT_VERIFY": True,
     "JWT_VERIFY_EXPIRATION": True,
+    "JWT_REUSE_REFRESH_TOKENS": True,
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+    "JWT_ALLOW_REFRESH": True,
+    "JWT_EXPIRATION_DELTA": timedelta(minutes=15),
+    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=1),
     "JWT_ALLOW_ANY_CLASSES": [
         "graphql_auth.mutations.Register",
         "graphql_auth.mutations.VerifyAccount",
@@ -176,8 +182,8 @@ GRAPHQL_JWT = {
 }
 
 GRAPHQL_AUTH = {
-    "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(days=1),
     "LOGIN_ALLOWED_FIELDS": ["email", "username"],
+    "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(days=1),
     "EMAIL_TEMPLATE_VARIABLES": {
         "frontend_domain": os.environ.get("FRONTEND_SITE") or "localhost:3000",
         "protocol": "http",
@@ -204,4 +210,23 @@ EMAIL_BACKEND = "anymail.backends.console.EmailBackend"
 
 AUTH_USER_MODEL = "users.CustomUser"
 
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "X-Amz-Date",
+    "Access-Control-Request-Headers",
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Origin",
+    "XMLHttpRequest",
+]
+CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = None
+
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = None
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
