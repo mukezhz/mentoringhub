@@ -46,6 +46,7 @@ USER_APPS = [
     "meetings.apps.MeetingsConfig",
     "mentorships.apps.MentorshipsConfig",
     "recommenders.apps.RecommendersConfig",
+    "socialauth.apps.SocialauthConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + LIBRARY_APPS + USER_APPS
 
@@ -189,6 +190,8 @@ GRAPHQL_AUTH = {
         "protocol": "http",
     },
 }
+REGISTER_MUTATION_FIELDS = ["username"]
+REGISTER_MUTATION_FIELDS_OPTIONAL = ["email"]
 
 SITE_ID = 1
 # EMAIL_HOST = os.getenv("EMAIL_HOST")
@@ -227,6 +230,28 @@ CSRF_COOKIE_SAMESITE = None
 
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_DOMAIN = os.environ.get("SESSION_COOKIE_DOMAIN", "localhost")
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+AUTHLIB_OAUTH_CLIENTS = {
+    "google": {
+        "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+        "client_secret": os.getenv("GOOGLE_CLIENT_SECRET"),
+    },
+    "twitter": {
+        "client_id": os.environ.get("TWITTER_CLIENT_ID"),
+        "client_secret": os.environ.get("TWITTER_CLIENT_SECRET"),
+    },
+    "github": {
+        "client_id": os.environ.get("GITHUB_CLIENT_ID"),
+        "client_secret": os.environ.get("GITHUB_CLIENT_SECRET"),
+    },
+    "facebook": {
+        "client_id": os.environ.get("FACEBOOK_CLIENT_ID"),
+        "client_secret": os.environ.get("FACEBOOK_CLIENT_SECRET"),
+    },
+}
+
+DOMAIN_NAME = os.environ.get("DOMAIN_NAME", "localhost")
