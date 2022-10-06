@@ -30,6 +30,7 @@ class AuthMutation(ObjectType):
     send_secondary_email_activation = mutations.SendSecondaryEmailActivation.Field()
     verify_secondary_email = mutations.VerifySecondaryEmail.Field()
     swap_emails = mutations.SwapEmails.Field()
+    password_set = mutations.PasswordSet.Field()
 
     # django-graphql-jwt authentication
     # with some extra features

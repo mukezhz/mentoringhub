@@ -19,6 +19,7 @@ django-channels-graphql-ws = "^0.9.1"
 django-graphql-jwt = "^0.3.4"
 django-filter = "^22.1"
 graphene = "<3,>=2.1.8"
+Authlib = "^1.1.0"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^22.3.0", allow-prereleases = true}

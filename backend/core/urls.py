@@ -1,10 +1,11 @@
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 from graphql_jwt.decorators import jwt_cookie
+from . import views
 
 
 class CustomGraphQLView(GraphQLView):
@@ -17,6 +18,8 @@ class CustomGraphQLView(GraphQLView):
 
 
 urlpatterns = [
+    # path("", path(views.frontend)),
+    path("", include("socialauth.urls")),
     path("admin/", admin.site.urls),
     path("graphql/", jwt_cookie(CustomGraphQLView.as_view(graphiql=True))),
 ]
