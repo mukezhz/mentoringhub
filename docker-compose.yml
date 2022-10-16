@@ -5,7 +5,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: gunicorn core.wsgi
+    # command: gunicorn core.asgi:application -k uvicorn.workers.UvicornWorker
     env_file:
       - ./backend/.env
     expose:
@@ -15,14 +15,14 @@ services:
     depends_on:
       - db
 
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    expose:
-      - 3000
-    ports:
-      - 3000:80
+  # client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #   expose:
+  #     - 3000
+  #   ports:
+  #     - 3000:80
   
   db:
     image: postgres:latest
