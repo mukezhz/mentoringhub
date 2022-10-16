@@ -61,8 +61,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
-
 ROOT_URLCONF = "core.urls"
 
 TEMPLATES = [
@@ -162,6 +160,10 @@ AUTHENTICATION_BACKENDS = [
 
 GRAPHQL_JWT = {
     "JWT_COOKIE_NAME": "JWT_token",
+    "JWT_COOKIE_SAMESITE": "None",
+    "JWT_COOKIE_DOMAIN": ["*"],
+    "JWT_COOKIE_SECURE": True,
+    "JWT_COOKIE_PATH": None,
     "JWT_VERIFY": True,
     "JWT_VERIFY_EXPIRATION": True,
     "JWT_REUSE_REFRESH_TOKENS": True,
@@ -186,6 +188,7 @@ GRAPHQL_JWT = {
 
 GRAPHQL_AUTH = {
     "LOGIN_ALLOWED_FIELDS": ["email", "username"],
+    "JWT_COOKIE_SAMESITE": "None",
     "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(days=1),
     "EMAIL_TEMPLATE_VARIABLES": {
         "frontend_domain": os.environ.get("FRONTEND_SITE") or "localhost:3000",
@@ -221,21 +224,20 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     "Access-Control-Allow-Headers",
     "Access-Control-Allow-Origin",
     "XMLHttpRequest",
+    "Access-Control-Allow-Credentials",
 ]
-CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
+# CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_USE_SESSIONS = False
+CSRF_USE_SESSIONS = True
 CSRF_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SAMESITE = None
+CSRF_COOKIE_SAMESITE = "None"
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
 
+SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = None
-SESSION_COOKIE_DOMAIN = os.environ.get("SESSION_COOKIE_DOMAIN", "localhost")
-
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
+SESSION_COOKIE_SAMESITE = "None"
 
 AUTHLIB_OAUTH_CLIENTS = {
     "google": {
