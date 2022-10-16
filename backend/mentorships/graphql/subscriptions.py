@@ -40,7 +40,7 @@ class NotifyMentorship(channels_graphql_ws.Subscription):
         )
 
     @classmethod
-    def notify_receiver(cls, receiver, message, sender):
+    def send_notification(cls, receiver, message, sender):
         """Auxiliary function to send subscription notifications.
 
         It is generally a good idea to encapsulate broadcast invocation
@@ -57,4 +57,4 @@ class NotifyMentorship(channels_graphql_ws.Subscription):
 class MentorshipSubscription(graphene.ObjectType):
     """GraphQL subscriptions."""
 
-    on_notify_receiver = NotifyMentorship.Field()
+    send_notification = NotifyMentorship.Field()

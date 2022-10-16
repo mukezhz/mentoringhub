@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from graphene import ObjectType, Mutation, Boolean, JSONString, String
 from graphql_auth import mutations
 from graphql_jwt.decorators import login_required
+import graphql_jwt
 
 # from .types import CustomUserType
 from ..models import UserProfile, UserInterest, UserSkill
@@ -29,6 +30,7 @@ class AuthMutation(ObjectType):
     send_secondary_email_activation = mutations.SendSecondaryEmailActivation.Field()
     verify_secondary_email = mutations.VerifySecondaryEmail.Field()
     swap_emails = mutations.SwapEmails.Field()
+    password_set = mutations.PasswordSet.Field()
 
     # django-graphql-jwt authentication
     # with some extra features
@@ -36,6 +38,8 @@ class AuthMutation(ObjectType):
     verify_token = mutations.VerifyToken.Field()
     refresh_token = mutations.RefreshToken.Field()
     revoke_token = mutations.RevokeToken.Field()
+    delete_token_cookie = graphql_jwt.DeleteJSONWebTokenCookie.Field()
+    delete_refresh_token_cookie = graphql_jwt.DeleteRefreshTokenCookie.Field()
 
 
 class CreateUserProfile(Mutation):

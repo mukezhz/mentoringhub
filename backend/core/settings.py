@@ -2,6 +2,7 @@ from datetime import timedelta
 import os, warnings
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,18 +35,18 @@ LIBRARY_APPS = [
     # "django.contrib.staticfiles",
     "graphene_django",
     "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
-    "graphql_auth",
     "channels",
     "django_filters",
-    "django_countries",
     "corsheaders",
     "anymail",
 ]
 USER_APPS = [
+    "graphql_auth",
     "users.apps.UsersConfig",
     "meetings.apps.MeetingsConfig",
     "mentorships.apps.MentorshipsConfig",
     "recommenders.apps.RecommendersConfig",
+    "socialauth.apps.SocialauthConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + LIBRARY_APPS + USER_APPS
 
@@ -154,13 +155,21 @@ GRAPHENE = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
     "graphql_auth.backends.GraphQLAuthBackend",
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 GRAPHQL_JWT = {
+    "JWT_COOKIE_NAME": "JWT_token",
+    "JWT_VERIFY": True,
     "JWT_VERIFY_EXPIRATION": True,
+    "JWT_REUSE_REFRESH_TOKENS": True,
     "JWT_LONG_RUNNING_REFRESH_TOKEN": True,
+    "JWT_ALLOW_REFRESH": True,
+    "JWT_ALLOW_ARGUMENT": True,
+    "JWT_EXPIRATION_DELTA": timedelta(minutes=15),
+    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=1),
     "JWT_ALLOW_ANY_CLASSES": [
         "graphql_auth.mutations.Register",
         "graphql_auth.mutations.VerifyAccount",
@@ -176,13 +185,15 @@ GRAPHQL_JWT = {
 }
 
 GRAPHQL_AUTH = {
-    "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(days=1),
     "LOGIN_ALLOWED_FIELDS": ["email", "username"],
+    "EXPIRATION_PASSWORD_RESET_TOKEN": timedelta(days=1),
     "EMAIL_TEMPLATE_VARIABLES": {
         "frontend_domain": os.environ.get("FRONTEND_SITE") or "localhost:3000",
         "protocol": "http",
     },
 }
+REGISTER_MUTATION_FIELDS = ["username"]
+REGISTER_MUTATION_FIELDS_OPTIONAL = ["email"]
 
 SITE_ID = 1
 # EMAIL_HOST = os.getenv("EMAIL_HOST")
@@ -204,4 +215,45 @@ EMAIL_BACKEND = "anymail.backends.console.EmailBackend"
 
 AUTH_USER_MODEL = "users.CustomUser"
 
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "X-Amz-Date",
+    "Access-Control-Request-Headers",
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Origin",
+    "XMLHttpRequest",
+]
+CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = None
+
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_DOMAIN = os.environ.get("SESSION_COOKIE_DOMAIN", "localhost")
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+AUTHLIB_OAUTH_CLIENTS = {
+    "google": {
+        "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+        "client_secret": os.getenv("GOOGLE_CLIENT_SECRET"),
+    },
+    "twitter": {
+        "client_id": os.environ.get("TWITTER_CLIENT_ID"),
+        "client_secret": os.environ.get("TWITTER_CLIENT_SECRET"),
+    },
+    "github": {
+        "client_id": os.environ.get("GITHUB_CLIENT_ID"),
+        "client_secret": os.environ.get("GITHUB_CLIENT_SECRET"),
+    },
+    "facebook": {
+        "client_id": os.environ.get("FACEBOOK_CLIENT_ID"),
+        "client_secret": os.environ.get("FACEBOOK_CLIENT_SECRET"),
+    },
+}
+
+DOMAIN_NAME = os.environ.get("DOMAIN_NAME", "localhost")
